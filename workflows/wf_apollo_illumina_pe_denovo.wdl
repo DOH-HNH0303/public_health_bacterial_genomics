@@ -63,8 +63,8 @@ workflow apollo_illumina_pe_denovo {
 
     Int fastqc_clean1 = read_QC_trim.fastqc_clean1
     Int fastqc_clean2 = read_QC_trim.fastqc_clean2
-    Int read1_clean = read_QC_trim.read1_clean
-    Int read2_clean = read_QC_trim.read2_clean
+    File read1_clean = read_QC_trim.read1_clean
+    File read2_clean = read_QC_trim.read2_clean
     String fastqc_clean_pairs = read_QC_trim.fastqc_clean_pairs
     String trimmomatic_version = read_QC_trim.trimmomatic_version
     String bbduk_docker = read_QC_trim.bbduk_docker
