@@ -58,6 +58,6 @@ workflow read_QC_trim {
     String	bbduk_docker	=	bbduk_pe.bbduk_docker
     String	trimmomatic_version	=	trimmomatic_pe.version
 
-    File	trimmomatic_pe_software	=	trimmomatic_pe.image_softwares
+    File	trimmomatic_pe_software	=	trimmomatic_pe.image_software
   }
 }
