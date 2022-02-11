@@ -57,5 +57,7 @@ workflow read_QC_trim {
     String	fastq_scan_version	=	fastq_scan_raw.version
     String	bbduk_docker	=	bbduk_pe.bbduk_docker
     String	trimmomatic_version	=	trimmomatic_pe.version
+
+    File	trimmomatic_pe_software	=	trimmomatic_pe.image_softwares
   }
 }
