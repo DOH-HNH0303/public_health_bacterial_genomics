@@ -42,6 +42,11 @@ task gambit {
       f.write('' if predicted is None else predicted['rank'])
     with open('PREDICTED_THRESHOLD', 'w') as f:
       f.write(fmt_dist(0 if predicted is None else predicted['distance_threshold']))
+    with open("PREDICTED_STRAIN", 'w') as f:
+      strain=line["top_strain"]
+      if not strain:
+        species="None"
+      f.write(strain)
 
     # Next taxon
     with open('NEXT_TAXON', 'w') as f:
@@ -93,6 +98,7 @@ task gambit {
     File closest_genomes_file = closest_genomes_path
     Float closest_distance = read_float("CLOSEST_DISTANCE")
     String predicted_taxon = read_string("PREDICTED_TAXON")
+    String predicted_strain = read_string("PREDICTED_STRAIN")
     String predicted_rank = read_string("PREDICTED_RANK")
     String predicted_threshold = read_string("PREDICTED_THRESHOLD")
     String next_taxon = read_string("NEXT_TAXON")

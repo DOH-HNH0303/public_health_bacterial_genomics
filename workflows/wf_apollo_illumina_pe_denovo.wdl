@@ -90,6 +90,7 @@ workflow apollo_illumina_pe_denovo {
     Float gambit_delta = gambit.gambit_delta
     String gambit_genus = gambit.gambit_genus
     String gambit_species = gambit.gambit_species
+    String gambit_strain = gambit.gambit_strain
 
     File trimmomatic_pe_software = read_QC_trim.trimmomatic_pe_software
 
