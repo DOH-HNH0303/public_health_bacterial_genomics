@@ -67,8 +67,8 @@ workflow apollo_illumina_pe_denovo {
     String fastqc_raw_pairs = read_QC_trim.fastqc_raw_pairs
     String fastqc_version = read_QC_trim.fastqc_version
 
-    String  kraken_version              = kraken2.kraken_version
-    Float   kraken_human                = kraken2.kraken_human
+    String  kraken_version              = kraken2.version
+    Float   kraken_human                = kraken2.percent_human
     String  kraken_report               = kraken2.kraken_report
 
     Int fastqc_clean1 = read_QC_trim.fastqc_clean1
