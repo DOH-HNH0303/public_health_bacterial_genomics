@@ -24,6 +24,12 @@ workflow apollo_illumina_pe_denovo {
       read1_raw = read1_raw,
       read2_raw = read2_raw
   }
+  call taxon_id.kraken2 {
+    input:
+    samplename = samplename,
+    read1 = read1_raw,
+    read2 = read2_raw
+  }
   call assembly.shovill_pe {
     input:
       samplename = samplename,
@@ -58,8 +64,12 @@ workflow apollo_illumina_pe_denovo {
 
     Int fastqc_raw1 = read_QC_trim.fastqc_raw1
     Int fastqc_raw2 = read_QC_trim.fastqc_raw2
-    String astqc_raw_pairs = read_QC_trim.fastqc_raw_pairs
-    String astqc_version = read_QC_trim.fastqc_version
+    String fastqc_raw_pairs = read_QC_trim.fastqc_raw_pairs
+    String fastqc_version = read_QC_trim.fastqc_version
+
+    String  kraken_version              = read_QC_trim.kraken_version
+    Float   kraken_human                = read_QC_trim.kraken_human
+    String  kraken_report               = read_QC_trim.kraken_report
 
     Int fastqc_clean1 = read_QC_trim.fastqc_clean1
     Int fastqc_clean2 = read_QC_trim.fastqc_clean2
