@@ -15,9 +15,9 @@ task gambit {
     # capture date and version
     date | tee DATE
     gambit --version | tee GAMBIT_VERSION
-    
+
     # set gambit reference dir; will assume that gambit genomes and signatures will be provided by user in tandem or not at all
-    if [[ ! -z "~{gambit_db_genomes}" ]]; then 
+    if [[ ! -z "~{gambit_db_genomes}" ]]; then
       echo "User gabmit db identified; ~{gambit_db_genomes} will be utilized for alignment"
       gambit_db_version="$(basename -- '~{gambit_db_genomes}'); $(basename -- '~{gambit_db_signatures}')"
       gambit_db_dir="${PWD}/gambit_database"
@@ -25,14 +25,14 @@ task gambit {
       cp ~{gambit_db_genomes} ${gambit_db_dir}
       cp ~{gambit_db_signatures} ${gambit_db_dir}
     else
-     gambit_db_dir="/gambit-db" 
+     gambit_db_dir="/gambit-db"
      gambit_db_version="unmodified from gambit container: ~{docker}"
     fi
-    
+
     echo ${gambit_db_version} | tee GAMBIT_DB_VERSION
-    
-    gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly} 
-    
+
+    gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly}
+
     python3 <<EOF
     import json
     import csv
@@ -57,6 +57,11 @@ task gambit {
       f.write('' if predicted is None else predicted['rank'])
     with open('PREDICTED_TAXON_THRESHOLD', 'w') as f:
       f.write(fmt_dist(0 if predicted is None else predicted['distance_threshold']))
+    with open("PREDICTED_STRAIN", 'w') as f:
+      strain=line["top_strain"]
+      if not strain:
+        species="None"
+      f.write(strain)
 
     # Next taxon
     with open('NEXT_TAXON', 'w') as f:
@@ -100,27 +105,27 @@ task gambit {
     EOF
     # set merlin tags
     predicted_taxon=$(cat PREDICTED_TAXON)
-    if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then 
+    if [[ ${predicted_taxon} == *"Escherichia"* ]] || [[ ${predicted_taxon} == *"Shigella"* ]] ; then
       merlin_tag="Escherichia"
-    elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Haemophilus"* ]]; then
       merlin_tag="Haemophilus"
-    elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Klebsiella"* ]]; then
       merlin_tag="Klebsiella"
-    elif [[ ${predicted_taxon} == *"Legionella"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Legionella"* ]]; then
       merlin_tag="Legionella"
-    elif [[ ${predicted_taxon} == *"Listeria"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Listeria"* ]]; then
       merlin_tag="Listeria"
-    elif [[ ${predicted_taxon} == *"Mycobacterium"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Mycobacterium"* ]]; then
       merlin_tag="Mycobacterium"
-    elif [[ ${predicted_taxon} == *"Neisseria"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Neisseria"* ]]; then
       merlin_tag="Neisseria"
-    elif [[ ${predicted_taxon} == *"Salmonella"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Salmonella"* ]]; then
       merlin_tag="Salmonella"
-    elif [[ ${predicted_taxon} == *"Staphylococcus"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Staphylococcus"* ]]; then
       merlin_tag="Staphylococcus"
-    elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then 
+    elif [[ ${predicted_taxon} == *"Streptococcus"* ]]; then
       merlin_tag="Streptococcus"
-    else 
+    else
       merlin_tag="None"
     fi
     echo ${merlin_tag} | tee MERLIN_TAG
@@ -129,7 +134,8 @@ task gambit {
     File gambit_report_file = report_path
     File gambit_closest_genomes_file = closest_genomes_path
     String gambit_predicted_taxon = read_string("PREDICTED_TAXON")
-    String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK") 
+    String gambit_predicted_strain = read_string("PREDICTED_STRAIN")
+    String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK")
     String gambit_next_taxon = read_string("NEXT_TAXON")
     String gambit_next_taxon_rank = read_string("NEXT_TAXON_RANK")
     String gambit_version = read_string("GAMBIT_VERSION")
