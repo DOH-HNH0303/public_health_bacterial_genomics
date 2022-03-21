@@ -58,7 +58,7 @@ task gambit {
     with open('PREDICTED_TAXON_THRESHOLD', 'w') as f:
       f.write(fmt_dist(0 if predicted is None else predicted['distance_threshold']))
     with open("PREDICTED_STRAIN", 'w') as f:
-      strain=line["top_strain"]
+      strain=f["top_strain"]
       if not strain:
         species="None"
       f.write(strain)
