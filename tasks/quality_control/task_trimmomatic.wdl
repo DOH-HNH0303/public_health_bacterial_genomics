@@ -21,7 +21,18 @@ task trimmomatic_pe {
     ~{read1} ~{read2} \
     -baseout ~{samplename}.fastq.gz \
     SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_minlen} &> ~{samplename}.trim.stats.txt
+    MINLEN:~{trimmomatic_minlen} > ~{samplename}.trim.stats.txt
+
+    cat DATE>trimmomatic_pe_software.txt
+    echo -e "docker image:\t${docker}">>trimmomatic_pe_software.txt
+    echo -e "docker image platform:">>trimmomatic_pe_software.txt
+    uname -a>>trimmomatic_pe_software.txt
+    echo -e "main tool used:">>trimmomatic_pe_software.txt
+    echo -e "\tTrimmomatic\t$trim_v\t\ta program for performs which preforms a variety of useful trimming tasks for illumina paired-end and single ended data">>trimmomatic_pe_software.txt
+    echo -e "licenses available at:">>trimmomatic_pe_software.txt
+    echo -e "\thttps://github.com/timflutre/trimmomatic/blob/master/distSrc/LICENSE">>trimmomatic_pe_software.txt
+    printf '%100s\n' | tr ' ' ->>trimmomatic_pe_software.txt
+    dpkg -l>>trimmomatic_pe_software.txt
   >>>
   output {
     File read1_trimmed = "~{samplename}_1P.fastq.gz"
@@ -29,6 +40,7 @@ task trimmomatic_pe {
     File trimmomatic_stats = "~{samplename}.trim.stats.txt"
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")
+    File	image_software="trimmomatic_pe_software.txt"
   }
   runtime {
     docker: "~{docker}"
