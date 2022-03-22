@@ -16,6 +16,8 @@ task gambit {
     date | tee DATE
     gambit --version | tee GAMBIT_VERSION
 
+    echo "None">PREDICTED_STRAIN
+
     # set gambit reference dir; will assume that gambit genomes and signatures will be provided by user in tandem or not at all
     if [[ ! -z "~{gambit_db_genomes}" ]]; then
       echo "User gabmit db identified; ~{gambit_db_genomes} will be utilized for alignment"
@@ -57,11 +59,6 @@ task gambit {
       f.write('' if predicted is None else predicted['rank'])
     with open('PREDICTED_TAXON_THRESHOLD', 'w') as f:
       f.write(fmt_dist(0 if predicted is None else predicted['distance_threshold']))
-    with open("PREDICTED_STRAIN", 'w') as f:
-      strain=f["top_strain"]
-      if not strain:
-        species="None"
-      f.write(strain)
 
     # Next taxon
     with open('NEXT_TAXON', 'w') as f:
@@ -134,10 +131,10 @@ task gambit {
     File gambit_report_file = report_path
     File gambit_closest_genomes_file = closest_genomes_path
     String gambit_predicted_taxon = read_string("PREDICTED_TAXON")
-    String gambit_predicted_strain = read_string("PREDICTED_STRAIN")
     String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK")
     String gambit_next_taxon = read_string("NEXT_TAXON")
     String gambit_next_taxon_rank = read_string("NEXT_TAXON_RANK")
+    String gambit_predicted_strain = read_string("PREDICTED_STRAIN")
     String gambit_version = read_string("GAMBIT_VERSION")
     String gambit_db_version = read_string("GAMBIT_DB_VERSION")
     String merlin_tag = read_string("MERLIN_TAG")
