@@ -17,6 +17,7 @@ task gambit {
     gambit --version | tee GAMBIT_VERSION
 
     gambit query -f json -o "~{report_path}" "~{assembly}"
+    echo "None">PREDICTED_STRAIN
 
     python3 <<EOF
     import json
@@ -42,11 +43,11 @@ task gambit {
       f.write('' if predicted is None else predicted['rank'])
     with open('PREDICTED_THRESHOLD', 'w') as f:
       f.write(fmt_dist(0 if predicted is None else predicted['distance_threshold']))
-    with open("PREDICTED_STRAIN", 'w') as f:
+    /* with open("PREDICTED_STRAIN", 'w') as f:
       strain=line["top_strain"]
       if not strain:
         species="None"
-      f.write(strain)
+      f.write(strain) */
 
     # Next taxon
     with open('NEXT_TAXON', 'w') as f:
