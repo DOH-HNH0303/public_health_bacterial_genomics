@@ -429,6 +429,7 @@ task kraken2 {
   }
   command <<<
     # date and version control
+    ls
     date | tee DATE
     kraken2 --version | head -n1 | tee VERSION
     num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
