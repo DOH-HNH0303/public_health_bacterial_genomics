@@ -437,8 +437,7 @@ task kraken2 {
     kraken2 --paired \
       --threads ~{cpu} \
       --db ~{kraken2_db} \
-      ~{read1} ~{read2} \
-      --report ~{samplename}_kraken2_report.txt #>/dev/null
+      ~{read1} ~{read2} --report ~{samplename}_kraken2_report.txt
     ls
 
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
