@@ -447,6 +447,7 @@ task kraken2 {
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
 
     echo $percentage_human | tee PERCENT_HUMAN
+    ls
   >>>
   output {
     String date = read_string("DATE")
