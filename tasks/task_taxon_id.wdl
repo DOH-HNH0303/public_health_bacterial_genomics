@@ -439,6 +439,7 @@ task kraken2 {
       --db ~{kraken2_db} \
       ~{read1} ~{read2} --report ~{samplename}_kraken2_report.txt
     ls
+    locate ~{samplename}_kraken2_report.txt
 
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
      # | tee PERCENT_HUMAN
