@@ -437,7 +437,7 @@ task kraken2 {
     kraken2 --paired \
       --threads ~{cpu} \
       --db ~{kraken2_db} \
-      ~{read1} ~{read2} --report ~{samplename}_kraken2_report.txt
+      ~{read1} ~{read2} --report ~{samplename}_kraken2_report.txt >/dev/null
     ls
      find -name "~{samplename}_kraken2_report.txt"
 
