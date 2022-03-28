@@ -513,3 +513,65 @@ task test_kraken2 {
     maxRetries: 3
   }
 }
+task midas {
+  input {
+    File assembly
+    String samplename
+    String docker = "quay.io/theiagen/midas_nsphl:1.0.0"
+  }
+  command <<<
+    # capture date and version
+    date | tee DATE
+
+    midas query ~{assembly} | tail -n2 > ~{samplename}_midas.csv
+
+    python3 <<CODE
+    import csv
+    #grab output genome length and number contigs by column header
+    with open("~{samplename}_midas.csv",'r') as csv_file:
+      csv_reader = list(csv.DictReader(csv_file, delimiter=","))
+      for line in csv_reader:
+        with open ("GAMBIT_SCORE", 'wt') as gambit_score:
+          top_score=float(line["top_score"])
+          top_score="{:.2f}".format(top_score)
+          gambit_score.write(str(top_score))
+        with open("GAMBIT_DELTA", 'wt') as gambit_delta:
+          top_score=float(line["top_score"])
+          species_threshold=float(line["species_threshold"])
+          delta=top_score - species_threshold
+          #format delta to two decimal placesn
+          delta="{:.2f}".format(delta)
+          gambit_delta.write(str(delta))
+        with open("PREDICTED_GENUS", 'wt') as predicted_genus:
+          genus=line["predicted_genus"]
+          if not genus:
+            genus="None"
+          predicted_genus.write(genus)
+        with open("PREDICTED_SPECIES", 'wt') as predicted_species:
+          species=line["predicted_species"]
+          if not species:
+            species="None"
+          predicted_species.write(species)
+        with open("PREDICTED_STRAIN", 'wt') as predicted_strain:
+          strain=line["predicted_species"]
+          if not strain:
+            strain="None"
+          predicted_strain.write(strain)
+    CODE
+  >>>
+  output {
+    File midas_report = "~{samplename}_midas.csv"
+    String midas_docker = docker
+    String pipeline_date = read_string("DATE")
+    String midas_genus = read_string("PREDICTED_GENUS")
+    String midas_species = read_string("PREDICTED_SPECIES")
+    String midas_strain = read_string("PREDICTED_STRAIN")
+  }
+  runtime {
+    docker:  "~{docker}"
+    memory:  "16 GB"
+    cpu:   8
+    disks: "local-disk 100 SSD"
+    preemptible:  0
+  }
+}
