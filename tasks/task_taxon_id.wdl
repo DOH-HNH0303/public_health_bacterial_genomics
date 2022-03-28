@@ -457,7 +457,7 @@ task kraken2 {
     Float percent_human = read_string("PERCENT_HUMAN")
   }
   runtime {
-    docker: "quay.io/staphb/kraken2:2.0.8-beta_hv"
+    docker: "staphb/kraken2:2.0.8-beta"
     memory: "8 GB"
     cpu: cpu
     disks: "local-disk 100 SSD"
