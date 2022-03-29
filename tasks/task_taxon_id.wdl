@@ -551,7 +551,7 @@ task midas {
             species="None"
           predicted_species.write(species)
         with open("PREDICTED_STRAIN", 'wt') as predicted_strain:
-          strain=line["predicted_strain"]
+          strain=line["top_strain"]
           if not strain:
             strain="None"
           predicted_strain.write(strain)
