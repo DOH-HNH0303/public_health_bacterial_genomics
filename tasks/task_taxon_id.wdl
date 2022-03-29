@@ -570,6 +570,7 @@ task midas {
     memory:  "16 GB"
     cpu:   8
     disks: "local-disk 100 SSD"
-    preemptible:  0
+    preemptible:  1
+    continueOnReturnCode: 127
   }
 }
