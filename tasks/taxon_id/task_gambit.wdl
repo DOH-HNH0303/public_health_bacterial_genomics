@@ -55,6 +55,8 @@ task gambit {
     # Predicted taxon
     with open('PREDICTED_TAXON', 'w') as f:
       f.write('' if predicted is None else predicted['name'])
+    with open('CLOSEST_TAXON', 'w') as f:
+      f.write('' if predicted is None else closest)
     with open('PREDICTED_TAXON_RANK', 'w') as f:
       f.write('' if predicted is None else predicted['rank'])
     with open('PREDICTED_TAXON_THRESHOLD', 'w') as f:
@@ -130,6 +132,7 @@ task gambit {
   output {
     File gambit_report_file = report_path
     File gambit_closest_genomes_file = closest_genomes_path
+    String gambit_closest_match = read_string("CLOSEST_TAXON")
     String gambit_predicted_taxon = read_string("PREDICTED_TAXON")
     String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK")
     String gambit_next_taxon = read_string("NEXT_TAXON")
