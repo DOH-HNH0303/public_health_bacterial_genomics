@@ -48,6 +48,8 @@ task gambit {
     predicted = item['predicted_taxon']
     next_taxon = item['next_taxon']
     closest = item['closest_genomes'][0]
+    print(type(closest))
+    print(closest)
 
     with open('CLOSEST_DISTANCE', 'w') as f:
       f.write(fmt_dist(closest['distance']))
@@ -56,7 +58,8 @@ task gambit {
     with open('PREDICTED_TAXON', 'w') as f:
       f.write('' if predicted is None else predicted['name'])
     with open('CLOSEST_TAXON', 'w') as f:
-      f.write('' if predicted is None else closest)
+      f.write('' if predicted is None else string(closest))
+      ######f.write('' if predicted is None else closest)
     with open('PREDICTED_TAXON_RANK', 'w') as f:
       f.write('' if predicted is None else predicted['rank'])
     with open('PREDICTED_TAXON_THRESHOLD', 'w') as f:
