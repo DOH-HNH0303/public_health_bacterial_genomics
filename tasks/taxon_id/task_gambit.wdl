@@ -58,7 +58,7 @@ task gambit {
     with open('PREDICTED_TAXON', 'w') as f:
       f.write('' if predicted is None else predicted['name'])
     with open('CLOSEST_TAXON', 'w') as f:
-      f.write('' if predicted is None else string(closest))
+      f.write('' if predicted is None else str(closest))
       ######f.write('' if predicted is None else closest)
     with open('PREDICTED_TAXON_RANK', 'w') as f:
       f.write('' if predicted is None else predicted['rank'])
