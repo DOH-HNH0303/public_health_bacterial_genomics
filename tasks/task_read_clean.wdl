@@ -154,3 +154,158 @@ task bbduk_se {
     maxRetries: 3
   }
 }
+version 1.0
+
+task ncbi_scrub_pe {
+  input {
+    File read1
+    File read2
+    String samplename
+    String docker = "gcr.io/ncbi-sys-gcr-public-research/sra-human-scrubber@sha256:b7dba71079344daea4ea3363e1a67fa54edb7ec65459d039669c68a66d38b140"
+  }
+  String r1_filename = basename(read1)
+  String r2_filename = basename(read2)
+  command <<<
+    # date and version control
+    date | tee DATE
+
+    # unzip fwd file as scrub tool does not take in .gz fastq files
+    if [[ "~{read1}" == *.gz ]]
+    then
+      gunzip -c ~{read1} > r1.fastq
+      read1_unzip=r1.fastq
+    else
+      read1_unzip=~{read1}
+    fi
+
+    # dehost reads
+    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+
+    # gzip dehosted reads
+    gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
+
+    # do the same on read
+    # unzip file if necessary
+    if [[ "~{read2}" == *.gz ]]
+    then
+      gunzip -c ~{read2} > r2.fastq
+      read2_unzip=r2.fastq
+    else
+      read2_unzip=~{read2}
+    fi
+
+    # dehost reads
+    /opt/scrubber/scripts/scrub.sh -n ${read2_unzip} |& tail -n1 | awk -F" " '{print $1}' > REV_SPOTS_REMOVED
+
+    # gzip dehosted reads
+    gzip ${read2_unzip}.clean -c > ~{samplename}_R2_dehosted.fastq.gz
+  >>>
+  output {
+    File read1_dehosted = "~{samplename}_R1_dehosted.fastq.gz"
+    File read2_dehosted = "~{samplename}_R2_dehosted.fastq.gz"
+    Int read1_human_spots_removed = read_int("FWD_SPOTS_REMOVED")
+    Int read2_human_spots_removed = read_int("REV_SPOTS_REMOVED")
+    String ncbi_scrub_docker = docker
+  }
+  runtime {
+      docker: "~{docker}"
+      memory: "8 GB"
+      cpu: 4
+      disks: "local-disk 100 SSD"
+      preemptible: 0
+      maxRetries: 3
+  }
+}
+
+task ncbi_scrub_se {
+  input {
+    File read1
+    String samplename
+    String docker = "gcr.io/ncbi-sys-gcr-public-research/sra-human-scrubber@sha256:b7dba71079344daea4ea3363e1a67fa54edb7ec65459d039669c68a66d38b140"
+  }
+  String r1_filename = basename(read1)
+  command <<<
+    # date and version control
+    date | tee DATE
+
+    # unzip fwd file as scrub tool does not take in .gz fastq files
+    if [[ "~{read1}" == *.gz ]]
+    then
+      gunzip -c ~{read1} > r1.fastq
+      read1_unzip=r1.fastq
+    else
+      read1_unzip=~{read1}
+    fi
+
+    # dehost reads
+    /opt/scrubber/scripts/scrub.sh -n ${read1_unzip} |& tail -n1 | awk -F" " '{print $1}' > FWD_SPOTS_REMOVED
+
+    # gzip dehosted reads
+    gzip ${read1_unzip}.clean -c > ~{samplename}_R1_dehosted.fastq.gz
+  >>>
+  output {
+    File read1_dehosted = "~{samplename}_R1_dehosted.fastq.gz"
+    Int read1_human_spots_removed = read_int("FWD_SPOTS_REMOVED")
+    String ncbi_scrub_docker = docker
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "8 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+
+task seqyclean {
+  input {
+    File read1
+    File read2
+    String samplename
+    String? adapters = "/Adapters_plus_PhiX_174.fasta"
+    Int? seqyclean_minlen = 15
+    String? seqyclean_qual = "20 20"
+    Boolean? compress = true
+    Boolean? seqyclean_dup = false
+    Boolean? seqyclean_no_adapter_trim = false
+    Int? cpu = 16
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+    echo "Seqyclean $(seqyclean -h | grep Version)" | tee VERSION
+
+    seqyclean \
+    -minlen ~{seqyclean_minlen} \
+    -qual ~{seqyclean_qual} \
+    -c ~{adapters} \
+    ~{true="-dup" false="" seqyclean_dup} \
+    ~{true="-no_adapter_trim" false="" seqyclean_no_adapter_trim} \
+    ~{true="-gz" false="" compress} \
+    -t ~{cpu} \
+    -1 ~{read1} \
+    -2 ~{read2} \
+    -o ~{samplename}
+
+    # Capture metrics for summary file
+    cut -f 58 ~{samplename}_SummaryStatistics.tsv | grep -v "PairsKept" | head -n 1 | tee PAIRS_KEPT
+    cut -f 59 ~{samplename}_SummaryStatistics.tsv | grep -v "Perc_Kept" | head -n 1 | tee PERCENT_KEPT
+  >>>
+  output {
+    File read1_clean = "~{samplename}_PE1.fastq.gz"
+    File read2_clean = "~{samplename}_PE2.fastq.gz"
+    String version = read_string("VERSION")
+    String pipeline_date = read_string("DATE")
+    Int seqy_pairs = read_string("PAIRS_KEPT")
+    Float seqy_percent = read_string("PERCENT_KEPT")
+  }
+  runtime {
+      docker: "quay.io/staphb/seqyclean:1.10.09"
+      memory: "8 GB"
+      cpu: 2
+      disks: "local-disk 100 SSD"
+      preemptible: 0
+      maxRetries: 3
+  }
+}
