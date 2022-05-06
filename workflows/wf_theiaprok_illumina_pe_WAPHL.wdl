@@ -11,10 +11,11 @@ import "../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder
 import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
+import "../tasks/task_read_clean.wdl" as read_clean
 import "../tasks/task_qc_utils.wdl" as qc
 import "../tasks/task_taxon_id.wdl" as taxon_id
 import "../tasks/task_denovo_assembly.wdl" as assembly
-import "../tasks/task_read_clean.wdl" as read_clean
+
 
 
 workflow theiaprok_illumina_pe {
