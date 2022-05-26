@@ -101,7 +101,7 @@ workflow theiaprok_illumina_pe {
   call versioning.version_capture{
     input:
   }
-  if(defined(taxon_tables)) {
+  /* if(defined(taxon_tables)) {
     call terra_tools.export_taxon_tables {
       input:
         terra_project = terra_project,
@@ -178,7 +178,7 @@ workflow theiaprok_illumina_pe {
         tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type,
         tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
     }
-  }
+  } */
   output {
     #Version Captures
     String theiaprok_illumina_pe_version = version_capture.phbg_version
