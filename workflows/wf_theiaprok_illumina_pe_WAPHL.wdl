@@ -142,7 +142,7 @@ workflow theiaprok_illumina_pe {
         gambit_version = gambit.gambit_version,
         gambit_db_version = gambit.gambit_db_version,
         gambit_docker = gambit.gambit_docker,
-        abricate_amr_results = abricate_amr.abricate_results,
+        #abricate_amr_results = abricate_amr.abricate_results,
         abricate_amr_database = abricate_amr.abricate_database,
         abricate_amr_version = abricate_amr.abricate_version,
         serotypefinder_report = merlin_magic.serotypefinder_report,
