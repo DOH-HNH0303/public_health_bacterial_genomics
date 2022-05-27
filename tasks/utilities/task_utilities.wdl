@@ -3,7 +3,7 @@ version 1.0
 task python {
   input {
     File kraken2_report
-    String docker_image = "amancevice/pandas:alpine"
+    String docker_image = "amancevice/pandas:1.4.2-alpine"
     Int mem_size_gb = 8
     Int CPUs = 4
   }
