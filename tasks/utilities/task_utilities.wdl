@@ -9,6 +9,7 @@ task python {
   }
   command <<<
   ls>list.txt
+  head ~{kraken2_report}
 
 
   >>>
