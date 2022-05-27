@@ -2,14 +2,14 @@ version 1.0
 
 task python {
   input {
-    File Kraken2_report
+    File kraken2_report
     String docker_image = "amancevice/pandas:alpine"
     Int mem_size_gb = 8
     Int CPUs = 4
   }
   command <<<
   ls>list.txt
-  
+
 
   >>>
   output {
