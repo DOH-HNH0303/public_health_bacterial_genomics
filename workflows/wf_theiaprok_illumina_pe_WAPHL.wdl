@@ -11,6 +11,7 @@ import "../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder
 import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
+import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/task_qc_utils.wdl" as qc
 import "../tasks/task_taxon_id.wdl" as taxon_id
 import "../tasks/task_denovo_assembly.wdl" as assembly
@@ -55,6 +56,12 @@ workflow theiaprok_illumina_pe {
     samplename = samplename,
     read1 = read1_raw,
     read2 = read2_raw
+  }
+  call utilities.python {
+    input:
+    samplename = samplename,
+    kraken2_report = test_kraken2.kraken_report
+
   }
   call shovill.shovill_pe {
     input:
@@ -206,6 +213,9 @@ workflow theiaprok_illumina_pe {
     String  kraken2_version              = test_kraken2.version
     Float   kraken2_human                = test_kraken2.percent_human
     String  kraken2_report               = test_kraken2.kraken_report
+
+    String  python_version              = python.python_docker_image
+
     #Assembly and Assembly QC
     File assembly_fasta = shovill_pe.assembly_fasta
     File contigs_gfa = shovill_pe.contigs_gfa
