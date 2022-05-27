@@ -59,7 +59,6 @@ workflow theiaprok_illumina_pe {
   }
   call utilities.python {
     input:
-    samplename = samplename,
     kraken2_report = test_kraken2.kraken_report
 
   }
