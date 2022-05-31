@@ -503,7 +503,7 @@ task test_kraken2 {
     Float percent_human = read_string("PERCENT_HUMAN")
   }
   runtime {
-    docker: "staphb/kraken2:2.0.9-beta"
+    docker: "hnh0303/kraken2:2.1.2-custom_db_19052022"
     memory: "16 GB"
     cpu: cpu
     disks: "local-disk 100 SSD"
