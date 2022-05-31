@@ -57,11 +57,7 @@ workflow theiaprok_illumina_pe {
     read1 = read1_raw,
     read2 = read2_raw
   }
-  call utilities.python {
-    input:
-    kraken2_report = test_kraken2.kraken_report
 
-  }
   call shovill.shovill_pe {
     input:
       samplename = samplename,
@@ -213,7 +209,7 @@ workflow theiaprok_illumina_pe {
     Float   kraken2_human                = test_kraken2.percent_human
     String  kraken2_report               = test_kraken2.kraken_report
 
-    String  python_version              = python.python_docker_image
+
 
     #Assembly and Assembly QC
     File assembly_fasta = shovill_pe.assembly_fasta
