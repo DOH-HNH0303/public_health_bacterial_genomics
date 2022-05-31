@@ -470,7 +470,7 @@ task test_kraken2 {
     File read1
     File? read2
     String samplename
-    String? kraken2_db = "../kraken2-db"
+    String? kraken2_db = "../kraken2_db"
     Int? cpu = 4
   }
   command <<<
