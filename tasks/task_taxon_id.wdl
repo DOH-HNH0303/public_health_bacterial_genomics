@@ -522,6 +522,9 @@ task kraken2 {
     String version = read_string("VERSION")
     File kraken_report = "~{samplename}_kraken2_report.txt"
     Float percent_human = read_string("PERCENT_HUMAN")
+    String kraken2_genus = read_string("TOPGENUS")
+    String kraken2_species = read_string("TOPSPECIES")
+    String kraken2_strain = read_string("TOPSTRAIN")
   }
   runtime {
     docker: "hnh0303/kraken2:2.1.2-custom_db_23062022_pandas"

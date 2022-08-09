@@ -199,6 +199,9 @@ workflow theiaprok_illumina_pe {
     String  kraken2_version              = kraken2.version
     Float   kraken2_human                = kraken2.percent_human
     String  kraken2_report               = kraken2.kraken_report
+    String  kraken2_genus              = kraken2.kraken2_genus
+    Float   kraken2_species                = kraken2.kraken2_species
+    String  kraken2_strain               = kraken2.kraken2_strain
 
     #Assembly and Assembly QC
     File assembly_fasta = shovill_pe.assembly_fasta
