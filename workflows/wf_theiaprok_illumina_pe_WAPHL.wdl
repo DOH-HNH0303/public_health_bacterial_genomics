@@ -45,13 +45,8 @@ workflow theiaprok_illumina_pe {
       read1_raw = ncbi_scrub_pe.read1_dehosted,
       read2_raw = ncbi_scrub_pe.read2_dehosted
   }
+
   call taxon_id.kraken2 {
-    input:
-    samplename = samplename,
-    read1 = read1_raw,
-    read2 = read2_raw
-  }
-  call taxon_id.test_kraken2 {
     input:
     samplename = samplename,
     read1 = read1_raw,
@@ -201,15 +196,9 @@ workflow theiaprok_illumina_pe {
     Float r1_mean_q = cg_pipeline.r1_mean_q
     Float? r2_mean_q = cg_pipeline.r2_mean_q
 
-    String  kraken_version              = kraken2.version
-    Float   kraken_human                = kraken2.percent_human
-    String  kraken_report               = kraken2.kraken_report
-
-    String  kraken2_version              = test_kraken2.version
-    Float   kraken2_human                = test_kraken2.percent_human
-    String  kraken2_report               = test_kraken2.kraken_report
-
-
+    String  kraken2_version              = kraken2.version
+    Float   kraken2_human                = kraken2.percent_human
+    String  kraken2_report               = kraken2.kraken_report
 
     #Assembly and Assembly QC
     File assembly_fasta = shovill_pe.assembly_fasta

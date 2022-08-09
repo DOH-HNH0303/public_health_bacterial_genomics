@@ -465,52 +465,7 @@ task kraken2 {
     maxRetries: 3
   }
 }
-task test_kraken2 {
-  input {
-    File read1
-    File? read2
-    String samplename
-    String? kraken2_db = "../kraken2_db"
-    Int? cpu = 4
-  }
-  command <<<
-    # date and version control
-    date | tee DATE
-    kraken2 --version | head -n1 | tee VERSION
-    num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
-    if ! [ -z ~{read2} ]; then
-      mode="--paired"
-    fi
-    echo $mode
-    kraken2 $mode \
-      --threads ~{cpu} \
-      --db ~{kraken2_db} \
-      ~{read1} ~{read2} \
-      --report ~{samplename}_kraken2_report.txt >/dev/null
 
-    percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
-     # | tee PERCENT_HUMAN
-     # | tee PERCENT_COV
-    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
-
-    echo $percentage_human | tee PERCENT_HUMAN
-
-  >>>
-  output {
-    String date = read_string("DATE")
-    String version = read_string("VERSION")
-    File kraken_report = "~{samplename}_kraken2_report.txt"
-    Float percent_human = read_string("PERCENT_HUMAN")
-  }
-  runtime {
-    docker: "hnh0303/kraken2:2.1.2-custom_db_23062022"
-    memory: "16 GB"
-    cpu: cpu
-    disks: "local-disk 100 SSD"
-    preemptible: 0
-    maxRetries: 3
-  }
-}
 task midas {
   input {
     File assembly
@@ -572,5 +527,54 @@ task midas {
     disks: "local-disk 100 SSD"
     preemptible:  1
     continueOnReturnCode: [0, 1]
+  }
+}
+
+task kraken2 {
+  input {
+    File read1
+    File? read2
+    String samplename
+    String? kraken2_db = "../kraken2_db"
+    Int? cpu = 4
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+    kraken2 --version | head -n1 | tee VERSION
+    num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
+    if ! [ -z ~{read2} ]; then
+      mode="--paired"
+    fi
+    echo $mode
+    kraken2 $mode \
+      --threads ~{cpu} \
+      --db ~{kraken2_db} \
+      ~{read1} ~{read2} \
+      --report ~{samplename}_kraken2_report.txt >/dev/null
+
+    percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
+     # | tee PERCENT_HUMAN
+     # | tee PERCENT_COV
+    if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+
+    echo $percentage_human | tee PERCENT_HUMAN
+
+    python3 /data/pull_organism.py ~{samplename}_kraken2_report.txt
+
+  >>>
+  output {
+    String date = read_string("DATE")
+    String version = read_string("VERSION")
+    File kraken_report = "~{samplename}_kraken2_report.txt"
+    Float percent_human = read_string("PERCENT_HUMAN")
+  }
+  runtime {
+    docker: "hnh0303/kraken2:2.1.2-custom_db_23062022_pandas"
+    memory: "16 GB"
+    cpu: cpu
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
   }
 }
