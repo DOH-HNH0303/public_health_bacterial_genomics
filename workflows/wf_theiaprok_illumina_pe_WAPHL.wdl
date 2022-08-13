@@ -71,7 +71,7 @@ workflow theiaprok_illumina_pe {
         samplename=samplename,
         assembly=shovill_pe.assembly_fasta,
         genus=kraken2_clean.kraken2_genus
-  }
+  }}
   call quast.quast {
     input:
       assembly = shovill_pe.assembly_fasta,
