@@ -65,7 +65,7 @@ workflow theiaprok_illumina_pe {
       read1_cleaned = read_QC_trim.read1_clean,
       read2_cleaned = read_QC_trim.read2_clean
   }
-  call fastANI {
+  call taxon_id.fastANI {
     input:
       samplename=samplename,
       assembly=shovill_pe.assembly_fasta,
