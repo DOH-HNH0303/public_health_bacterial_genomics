@@ -65,11 +65,12 @@ workflow theiaprok_illumina_pe {
       read1_cleaned = read_QC_trim.read1_clean,
       read2_cleaned = read_QC_trim.read2_clean
   }
-  call taxon_id.fastANI {
-    input:
-      samplename=samplename,
-      assembly=shovill_pe.assembly_fasta,
-      genus=kraken2_clean.kraken2_genus
+  if (kraken2_genus=="Legionella" || kraken2_genus=="Tatlockia" ||kraken2_genus=="Corynebacterium" || kraken2_genus=="Fluoribacter"){
+    call taxon_id.fastANI {
+      input:
+        samplename=samplename,
+        assembly=shovill_pe.assembly_fasta,
+        genus=kraken2_clean.kraken2_genus
   }
   call quast.quast {
     input:
