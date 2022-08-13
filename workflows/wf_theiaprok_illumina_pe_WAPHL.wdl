@@ -208,19 +208,19 @@ workflow theiaprok_illumina_pe {
     Float r1_mean_q = cg_pipeline.r1_mean_q
     Float? r2_mean_q = cg_pipeline.r2_mean_q
 
-    String  kraken2_version              = kraken2_raw.version
-    Float   kraken2_human                = kraken2_raw.percent_human
-    String  kraken2_report               = kraken2_raw.kraken_report
-    String  kraken2_genus              = kraken2_raw.kraken2_genus
-    String   kraken2_species                = kraken2_raw.kraken2_species
-    String  kraken2_strain               = kraken2_raw.kraken2_strain
+    String  kraken2_raw_version              = kraken2_raw.version
+    Float   kraken2_raw_human                = kraken2_raw.percent_human
+    String  kraken2_raw_report               = kraken2_raw.kraken_report
+    String  kraken2_raw_genus              = kraken2_raw.kraken2_genus
+    String   kraken2_raw_species                = kraken2_raw.kraken2_species
+    String  kraken2_raw_strain               = kraken2_raw.kraken2_strain
 
-    String  kraken2_version              = kraken2_clean.version
-    Float   kraken2_human                = kraken2_clean.percent_human
-    String  kraken2_report               = kraken2_clean.kraken_report
-    String  kraken2_genus              = kraken2_clean.kraken2_genus
-    String   kraken2_species                = kraken2_clean.kraken2_species
-    String  kraken2_strain               = kraken2_clean.kraken2_strain
+    String  kraken2_clean_version              = kraken2_clean.version
+    Float   kraken2_clean_human                = kraken2_clean.percent_human
+    String  kraken2_clean_report               = kraken2_clean.kraken_report
+    String  kraken2_clean_genus              = kraken2_clean.kraken2_genus
+    String   kraken2_clean_species                = kraken2_clean.kraken2_species
+    String  kraken2_clean_strain               = kraken2_clean.kraken2_strain
 
     File?    fastani_report   =fastANI.fastani_report
     String?    fastani_genus   =fastANI.fastani_genus
