@@ -46,11 +46,17 @@ workflow theiaprok_illumina_pe {
       read2_raw = ncbi_scrub_pe.read2_dehosted
   }
 
-  call taxon_id.kraken2 {
+  call taxon_id.kraken2 as kraken2_raw {
     input:
     samplename = samplename,
     read1 = read1_raw,
     read2 = read2_raw
+  }
+  call taxon_id.kraken2 as kraken2_clean {
+    input:
+    samplename = samplename,
+    read1 = read_QC_trim.read1_clean,
+    read2 = read_QC_trim.read2_clean
   }
 
   call shovill.shovill_pe {
@@ -58,6 +64,12 @@ workflow theiaprok_illumina_pe {
       samplename = samplename,
       read1_cleaned = read_QC_trim.read1_clean,
       read2_cleaned = read_QC_trim.read2_clean
+  }
+  call fastANI {
+    input:
+      samplename=samplename,
+      assembly=shovill_pe.assembly_fasta,
+      genus=kraken2_clean.kraken2_genus
   }
   call quast.quast {
     input:
@@ -196,12 +208,25 @@ workflow theiaprok_illumina_pe {
     Float r1_mean_q = cg_pipeline.r1_mean_q
     Float? r2_mean_q = cg_pipeline.r2_mean_q
 
-    String  kraken2_version              = kraken2.version
-    Float   kraken2_human                = kraken2.percent_human
-    String  kraken2_report               = kraken2.kraken_report
-    String  kraken2_genus              = kraken2.kraken2_genus
-    String   kraken2_species                = kraken2.kraken2_species
-    String  kraken2_strain               = kraken2.kraken2_strain
+    String  kraken2_version              = kraken2_raw.version
+    Float   kraken2_human                = kraken2_raw.percent_human
+    String  kraken2_report               = kraken2_raw.kraken_report
+    String  kraken2_genus              = kraken2_raw.kraken2_genus
+    String   kraken2_species                = kraken2_raw.kraken2_species
+    String  kraken2_strain               = kraken2_raw.kraken2_strain
+
+    String  kraken2_version              = kraken2_clean.version
+    Float   kraken2_human                = kraken2_clean.percent_human
+    String  kraken2_report               = kraken2_clean.kraken_report
+    String  kraken2_genus              = kraken2_clean.kraken2_genus
+    String   kraken2_species                = kraken2_clean.kraken2_species
+    String  kraken2_strain               = kraken2_clean.kraken2_strain
+
+    File?    fastani_report   =fastANI.fastani_report
+    String?    fastani_genus   =fastANI.fastani_genus
+    String?    fastani_species   =fastANI.fastani_species
+    String?    fastani_strain   =fastANI.fastani_strain
+    Float?    fastani_ani_estimate   =fastANI.fastani_aniestimate
 
     #Assembly and Assembly QC
     File assembly_fasta = shovill_pe.assembly_fasta
