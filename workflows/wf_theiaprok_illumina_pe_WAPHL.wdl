@@ -231,7 +231,7 @@ workflow theiaprok_illumina_pe {
 
     #Assembly and Assembly QC
     File assembly_fasta = shovill_pe.assembly_fasta
-    File contigs_gfa = shovill_pe.contigs_gfa
+    File? contigs_gfa = shovill_pe.contigs_gfa
     String shovill_pe_version = shovill_pe.shovill_version
     File quast_report = quast.quast_report
     String quast_version = quast.version
