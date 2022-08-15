@@ -249,7 +249,7 @@ workflow theiaprok_illumina_pe {
     String gambit_version = gambit.gambit_version
     String gambit_db_version = gambit.gambit_db_version
     String gambit_docker = gambit.gambit_docker
-    String gambit_closest_taxon = gambit.gambit_closest_match
+    #String gambit_closest_taxon = gambit.gambit_closest_match
 
     #Midas taxonomy
     File midas_report = midas.midas_report
