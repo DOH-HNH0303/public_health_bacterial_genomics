@@ -65,3 +65,8 @@ workflows:
    primaryDescriptorPath: /workflows/wf_rasusa.wdl
    testParameterFiles:
     - empty.json
+ - name: build_bacterial_consensus
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_build_bacterial_consensus.wdl
+   testParameterFiles:
+    - empty.json
