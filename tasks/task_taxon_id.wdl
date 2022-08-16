@@ -558,7 +558,6 @@ task fastANI {
 
     python3 /data/pull_organism.py fastani_~{samplename}.txt
 
-
   >>>
 
   output {
