@@ -42,6 +42,41 @@ workflow theiaprok_illumina_pe {
     File? taxon_tables
     String terra_project="NA"
     String terra_workspace="NA"
+
+    Int? genome_size
+    String? collection_date
+    String? originating_lab
+    String? city
+    String? county
+    String? zip
+    # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
+    Boolean call_ani = false
+    Int min_reads = 7472
+    Int min_basepairs = 2241820
+    Int min_genome_size = 100000
+    Int max_genome_size = 18040666
+    Int min_coverage = 10
+    Int min_proportion = 50
+    Boolean call_resfinder = false
+    Boolean skip_screen = false
+  }
+  call screen.check_reads as raw_check_reads {
+    input:
+      read1 = read1_raw,
+      read2 = read2_raw,
+      min_reads = min_reads,
+      min_basepairs = min_basepairs,
+      min_genome_size = min_genome_size,
+      max_genome_size = max_genome_size,
+      min_coverage = min_coverage,
+      min_proportion = min_proportion,
+      skip_screen = skip_screen
+  }
+  call taxon_id.kraken2 as kraken2_raw {
+    input:
+    samplename = samplename,
+    read1 = read1_raw,
+    read2 = read2_raw
   }
   call read_clean.ncbi_scrub_pe {
     input:
@@ -49,32 +84,115 @@ workflow theiaprok_illumina_pe {
       read1 = read1_raw,
       read2 = read2_raw
   }
-  call read_qc.read_QC_trim {
+  if (raw_check_reads.read_screen=="PASS") {
+    call read_qc.read_QC_trim {
     input:
       samplename = samplename,
       read1_raw = ncbi_scrub_pe.read1_dehosted,
       read2_raw = ncbi_scrub_pe.read2_dehosted
-  }
-
-  call taxon_id.kraken2 as kraken2_raw {
-    input:
-    samplename = samplename,
-    read1 = read1_raw,
-    read2 = read2_raw
-  }
-  call taxon_id.kraken2 as kraken2_clean {
-    input:
-    samplename = samplename,
-    read1 = read_QC_trim.read1_clean,
-    read2 = read_QC_trim.read2_clean
-  }
-
-  call shovill.shovill_pe {
-    input:
+    }
+    call taxon_id.kraken2 as kraken2_clean {
+      input:
       samplename = samplename,
-      read1_cleaned = read_QC_trim.read1_clean,
-      read2_cleaned = read_QC_trim.read2_clean
-  }
+      read1 = read_QC_trim.read1_clean,
+      read2 = read_QC_trim.read2_clean
+    }
+    call screen.check_reads as clean_check_reads {
+      input:
+        read1 = read_QC_trim.read1_clean,
+        read2 = read_QC_trim.read2_clean,
+        min_reads = min_reads,
+        min_basepairs = min_basepairs,
+        min_genome_size = min_genome_size,
+        max_genome_size = max_genome_size,
+        min_coverage = min_coverage,
+        min_proportion = min_proportion,
+        skip_screen = skip_screen
+    }
+    if (clean_check_reads.read_screen=="PASS") {
+      call shovill.shovill_pe {
+        input:
+          samplename = samplename,
+          read1_cleaned = read_QC_trim.read1_clean,
+          read2_cleaned = read_QC_trim.read2_clean,
+          genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
+      }
+      call quast.quast {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call cg_pipeline.cg_pipeline {
+        input:
+          read1 = read1_raw,
+          read2 = read2_raw,
+          samplename = samplename,
+          genome_length = select_first([genome_size, clean_check_reads.est_genome_length])
+      }
+      call gambit.gambit {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call busco.busco {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      if (call_ani) {
+      call ani.animummer as ani {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      }
+      call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          organism = gambit.gambit_predicted_taxon
+      }
+      if (call_resfinder) {
+      call resfinder.resfinder as resfinder_task {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          organism = gambit.gambit_predicted_taxon
+        }
+      }
+      call ts_mlst.ts_mlst {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call prokka.prokka {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call plasmidfinder.plasmidfinder {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call merlin_magic.merlin_magic {
+        input:
+          merlin_tag = gambit.merlin_tag,
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename,
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean
+      }
+
+
+
+
+  #call shovill.shovill_pe {
+  #  input:
+  #    samplename = samplename,
+  #    read1_cleaned = read_QC_trim.read1_clean,
+  #    read2_cleaned = read_QC_trim.read2_clean
+  #}
   if (kraken2_clean.kraken2_genus=="Legionella" || kraken2_clean.kraken2_genus=="Tatlockia" ||kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_genus=="Fluoribacter"){
     call taxon_id.fastANI {
       input:
@@ -82,42 +200,15 @@ workflow theiaprok_illumina_pe {
         assembly=shovill_pe.assembly_fasta,
         genus=kraken2_clean.kraken2_genus
   }}
-  call quast.quast {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  call cg_pipeline.cg_pipeline {
-    input:
-      read1 = read1_raw,
-      read2 = read2_raw,
-      samplename = samplename,
-      genome_length = quast.genome_length
-  }
-  call gambit.gambit {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
-  call taxon_id.midas {
-    input:
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename
-  }
+
+
   call abricate.abricate as abricate_amr {
     input:
       assembly = shovill_pe.assembly_fasta,
       samplename = samplename,
       database = "ncbi"
   }
-  call merlin_magic.merlin_magic {
-    input:
-      merlin_tag = gambit.merlin_tag,
-      assembly = shovill_pe.assembly_fasta,
-      samplename = samplename,
-      read1 = read_QC_trim.read1_clean,
-      read2 = read_QC_trim.read2_clean
-  }
+
   call versioning.version_capture{
     input:
   }
@@ -205,18 +296,21 @@ workflow theiaprok_illumina_pe {
     String theiaprok_illumina_pe_analysis_date = version_capture.date
     #Read Metadata
     String seq_platform = seq_method
+    #Sample Screening
+    String raw_read_screen = raw_check_reads.read_screen
+    String? clean_read_screen = clean_check_reads.read_screen
     #Read QC
-    Int num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    String fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    String trimmomatic_version = read_QC_trim.trimmomatic_version
-    String trimmomatic_software = read_QC_trim.trimmomatic_pe_software
-    String bbduk_docker = read_QC_trim.bbduk_docker
-    Float r1_mean_q = cg_pipeline.r1_mean_q
+    Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
+    String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_software = read_QC_trim.trimmomatic_pe_software
+    String? bbduk_docker = read_QC_trim.bbduk_docker
+    Float? r1_mean_q = cg_pipeline.r1_mean_q
     Float? r2_mean_q = cg_pipeline.r2_mean_q
 
     String  kraken2_raw_version              = kraken2_raw.version
@@ -262,11 +356,11 @@ workflow theiaprok_illumina_pe {
     #String gambit_closest_taxon = gambit.gambit_closest_match
 
     #Midas taxonomy
-    File midas_report = midas.midas_report
-    String midas_predicted_genus = midas.midas_genus
-    String midas_predicted_species = midas.midas_species
-    String midas_predicted_strain = midas.midas_strain
-    String midas_docker = midas.midas_docker
+    #File midas_report = midas.midas_report
+    #String midas_predicted_genus = midas.midas_genus
+    #String midas_predicted_species = midas.midas_species
+    #String midas_predicted_strain = midas.midas_strain
+    #String midas_docker = midas.midas_docker
 
     #AMR Screening
     File abricate_amr_results = abricate_amr.abricate_results

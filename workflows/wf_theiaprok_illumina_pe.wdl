@@ -45,7 +45,7 @@ workflow theiaprok_illumina_pe {
     Int min_coverage = 10
     Int min_proportion = 50
     Boolean call_resfinder = false
-    Boolean skip_screen = false 
+    Boolean skip_screen = false
   }
   call versioning.version_capture{
     input:
@@ -133,7 +133,7 @@ workflow theiaprok_illumina_pe {
         }
       }
       call ts_mlst.ts_mlst {
-        input: 
+        input:
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
@@ -403,7 +403,7 @@ workflow theiaprok_illumina_pe {
     String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
     String? seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination
     # Salmonella serotype Typhi Typing
-    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
+    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json
     String? genotyphi_version = merlin_magic.genotyphi_version
     String? genotyphi_species = merlin_magic.genotyphi_species
