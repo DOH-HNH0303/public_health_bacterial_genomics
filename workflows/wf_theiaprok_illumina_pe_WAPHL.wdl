@@ -11,6 +11,16 @@ import "../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder
 import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
 
+#Theiagen packages added
+import "../tasks/quality_control/task_screen.wdl" as screen
+import "../tasks/quality_control/task_busco.wdl" as busco
+import "../tasks/quality_control/task_mummer_ani.wdl" as ani
+import "../tasks/gene_typing/task_amrfinderplus.wdl" as amrfinderplus
+import "../tasks/gene_typing/task_resfinder.wdl" as resfinder
+import "../tasks/species_typing/task_ts_mlst.wdl" as ts_mlst
+import "../tasks/gene_typing/task_prokka.wdl" as prokka
+import "../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder
+
 import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/task_qc_utils.wdl" as qc
 import "../tasks/task_taxon_id.wdl" as taxon_id
