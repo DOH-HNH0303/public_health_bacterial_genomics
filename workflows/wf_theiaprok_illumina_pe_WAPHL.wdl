@@ -267,9 +267,9 @@ workflow theiaprok_illumina_pe {
     String quast_version = quast.version
     Int genome_length = quast.genome_length
     Int number_contigs = quast.number_contigs
-    File cg_pipeline_report = cg_pipeline.cg_pipeline_report
-    String cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
-    Float est_coverage = cg_pipeline.est_coverage
+    File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
+    String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
+    Float? est_coverage = cg_pipeline.est_coverage
     #Taxon ID
     File gambit_report = gambit.gambit_report_file
     File gabmit_closest_genomes = gambit.gambit_closest_genomes_file
