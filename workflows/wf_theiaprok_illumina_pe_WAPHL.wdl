@@ -246,12 +246,12 @@ workflow theiaprok_illumina_pe {
     String   kraken2_raw_species                = kraken2_raw.kraken2_species
     String  kraken2_raw_strain               = kraken2_raw.kraken2_strain
 
-    String  kraken2_clean_version              = kraken2_clean.version
-    Float   kraken2_clean_human                = kraken2_clean.percent_human
-    String  kraken2_clean_report               = kraken2_clean.kraken_report
-    String  kraken2_clean_genus              = kraken2_clean.kraken2_genus
-    String   kraken2_clean_species                = kraken2_clean.kraken2_species
-    String  kraken2_clean_strain               = kraken2_clean.kraken2_strain
+    String?  kraken2_clean_version              = kraken2_clean.version
+    Float?   kraken2_clean_human                = kraken2_clean.percent_human
+    String?  kraken2_clean_report               = kraken2_clean.kraken_report
+    String?  kraken2_clean_genus              = kraken2_clean.kraken2_genus
+    String?   kraken2_clean_species                = kraken2_clean.kraken2_species
+    String?  kraken2_clean_strain               = kraken2_clean.kraken2_strain
 
     File?    fastani_report   =fastANI.fastani_report
     String?    fastani_genus   =fastANI.fastani_genus
