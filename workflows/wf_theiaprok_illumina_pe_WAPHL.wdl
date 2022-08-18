@@ -214,7 +214,7 @@ workflow theiaprok_illumina_pe {
   call versioning.version_capture{
     input:
   }
-  
+
   }
   output {
     #Version Captures
@@ -290,7 +290,7 @@ workflow theiaprok_illumina_pe {
 
     #AMR Screening
     File abricate_amr_results = abricate_amr.abricate_results
-    String abricate_amr_database = abricate_amr.abricate_database
+    String? abricate_amr_database = abricate_amr.abricate_database
     String abricate_amr_version = abricate_amr.abricate_version
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
