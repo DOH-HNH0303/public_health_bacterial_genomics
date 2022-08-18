@@ -253,7 +253,7 @@ call terra_tools.export_taxon_tables {
     quast_version = quast.version,
     genome_length = quast.genome_length,
     number_contigs = quast.number_contigs,
-    n50_value = quast.n50_value,
+    #n50_value = quast.n50_value,
     cg_pipeline_report = cg_pipeline.cg_pipeline_report,
     cg_pipeline_docker = cg_pipeline.cg_pipeline_docker,
     est_coverage = cg_pipeline.est_coverage,
