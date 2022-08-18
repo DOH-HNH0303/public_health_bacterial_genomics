@@ -91,6 +91,7 @@ workflow theiaprok_illumina_pe {
       read1_raw = ncbi_scrub_pe.read1_dehosted,
       read2_raw = ncbi_scrub_pe.read2_dehosted
     }
+
     call taxon_id.kraken2 as kraken2_clean {
       input:
       samplename = samplename,
@@ -208,11 +209,12 @@ workflow theiaprok_illumina_pe {
       samplename = samplename,
       database = "ncbi"
   }
+  }
 
   call versioning.version_capture{
     input:
   }
-  /* if(defined(taxon_tables)) {
+    if(defined(taxon_tables)) {
     call terra_tools.export_taxon_tables {
       input:
         terra_project = terra_project,
@@ -288,8 +290,9 @@ workflow theiaprok_illumina_pe {
         tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage,
         tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type,
         tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
+      }
     }
-  } */
+  }
   output {
     #Version Captures
     String theiaprok_illumina_pe_version = version_capture.phbg_version
