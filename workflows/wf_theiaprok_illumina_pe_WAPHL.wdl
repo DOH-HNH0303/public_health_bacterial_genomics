@@ -353,7 +353,7 @@ workflow theiaprok_illumina_pe {
     String gambit_predicted_taxon = gambit.gambit_predicted_taxon
     String gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
     String gambit_predicted_strain = gambit.gambit_predicted_strain
-    String gambit_version = gambit.gambit_version
+    String? gambit_version = gambit.gambit_version
     String gambit_db_version = gambit.gambit_db_version
     String gambit_docker = gambit.gambit_docker
     #String gambit_closest_taxon = gambit.gambit_closest_match
