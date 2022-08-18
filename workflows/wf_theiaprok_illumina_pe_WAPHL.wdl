@@ -263,19 +263,19 @@ workflow theiaprok_illumina_pe {
     File? assembly_fasta = shovill_pe.assembly_fasta
     File? contigs_gfa = shovill_pe.contigs_gfa
     String? shovill_pe_version = shovill_pe.shovill_version
-    File quast_report = quast.quast_report
-    String quast_version = quast.version
-    Int genome_length = quast.genome_length
-    Int number_contigs = quast.number_contigs
+    File? quast_report = quast.quast_report
+    String? quast_version = quast.version
+    Int? genome_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
     File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
     Float? est_coverage = cg_pipeline.est_coverage
     #Taxon ID
-    File gambit_report = gambit.gambit_report_file
+    File? gambit_report = gambit.gambit_report_file
     File? gabmit_closest_genomes = gambit.gambit_closest_genomes_file
     String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
     String? gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
-    String gambit_predicted_strain = gambit.gambit_predicted_strain
+    String? gambit_predicted_strain = gambit.gambit_predicted_strain
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
     String? gambit_docker = gambit.gambit_docker
