@@ -275,7 +275,7 @@ call terra_tools.export_taxon_tables {
     ani_mummer_version = ani.ani_mummer_version,
     amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report,
     amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report,
-    amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
+    #amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report,
     amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report,
     amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
     amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
