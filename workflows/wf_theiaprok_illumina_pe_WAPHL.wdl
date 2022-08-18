@@ -60,6 +60,10 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean skip_screen = false
   }
+  call versioning.version_capture{
+    input:
+  }
+
   call screen.check_reads as raw_check_reads {
     input:
       read1 = read1_raw,
@@ -211,9 +215,7 @@ workflow theiaprok_illumina_pe {
   }
   }
 
-  call versioning.version_capture{
-    input:
-  }
+
 
   }
   output {
