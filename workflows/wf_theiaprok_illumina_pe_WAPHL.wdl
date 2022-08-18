@@ -289,9 +289,9 @@ workflow theiaprok_illumina_pe {
     #String midas_docker = midas.midas_docker
 
     #AMR Screening
-    File abricate_amr_results = abricate_amr.abricate_results
+    File? abricate_amr_results = abricate_amr.abricate_results
     String? abricate_amr_database = abricate_amr.abricate_database
-    String abricate_amr_version = abricate_amr.abricate_version
+    String? abricate_amr_version = abricate_amr.abricate_version
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker
