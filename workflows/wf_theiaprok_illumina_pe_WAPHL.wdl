@@ -280,7 +280,7 @@ call terra_tools.export_taxon_tables {
     amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes,
     amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes,
     amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes,
-    amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
+    #amrfinderplus_version = amrfinderplus_task.amrfinderplus_version,
     amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version,
     resfinder_pheno_table = resfinder_task.resfinder_pheno_table,
     resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species,
