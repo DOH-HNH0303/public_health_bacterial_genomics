@@ -264,7 +264,7 @@ call terra_tools.export_taxon_tables {
     #gambit_version = gambit.gambit_version,
     gambit_db_version = gambit.gambit_db_version,
     gambit_docker = gambit.gambit_docker,
-    #busco_version = busco.busco_version,
+    busco_version = busco.busco_version,
     busco_database = busco.busco_database,
     busco_results = busco.busco_results,
     busco_report = busco.busco_report,

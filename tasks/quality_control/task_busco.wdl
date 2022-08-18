@@ -13,7 +13,7 @@ task busco {
   command <<<
     # get version
     busco --version | tee "VERSION"
- 
+
     # run busco
     # -i input assembly
     # -m geno for genome input
@@ -31,7 +31,7 @@ task busco {
 
       # grab the database version and format it according to BUSCO recommendations
       cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "dataset is:" | cut -d' ' -f 6,9 | sed 's/,//' | sed 's/ / (/' | sed 's/$/)/' | tee DATABASE
-      
+
       # extract the results string
       cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "C:" | tee BUSCO_RESULTS
 
@@ -42,7 +42,7 @@ task busco {
     fi
   >>>
   output {
-    String busco_version = read_string("VERSION")
+    String? busco_version = read_string("VERSION")
     String busco_database = read_string("DATABASE")
     String busco_results = read_string("BUSCO_RESULTS")
     File? busco_report = "~{samplename}_busco-summary.txt"
