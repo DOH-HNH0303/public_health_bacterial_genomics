@@ -261,7 +261,7 @@ call terra_tools.export_taxon_tables {
     gambit_predicted_taxon = gambit.gambit_predicted_taxon,
     gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank,
     gambit_closest_genomes = gambit.gambit_closest_genomes_file,
-    gambit_version = gambit.gambit_version,
+    #gambit_version = gambit.gambit_version,
     gambit_db_version = gambit.gambit_db_version,
     gambit_docker = gambit.gambit_docker,
     busco_version = busco.busco_version,
