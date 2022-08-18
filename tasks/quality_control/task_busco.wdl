@@ -42,7 +42,7 @@ task busco {
     fi
   >>>
   output {
-    String? busco_version = read_string("VERSION")
+    String busco_version = read_string("VERSION")
     String busco_database = read_string("DATABASE")
     String busco_results = read_string("BUSCO_RESULTS")
     File? busco_report = "~{samplename}_busco-summary.txt"
