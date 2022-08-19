@@ -241,6 +241,36 @@ workflow theiaprok_illumina_pe {
     Float? r1_mean_q = cg_pipeline.r1_mean_q
     Float? r2_mean_q = cg_pipeline.r2_mean_q
 
+
+
+    #Assembly and Assembly QC
+    File? assembly_fasta = shovill_pe.assembly_fasta
+    File? contigs_gfa = shovill_pe.contigs_gfa
+    File? contigs_fastg = shovill_pe.contigs_fastg
+    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
+    String? shovill_pe_version = shovill_pe.shovill_version
+    File? quast_report = quast.quast_report
+    String? quast_version = quast.version
+    Int? genome_length = quast.genome_length
+    Int? number_contigs = quast.number_contigs
+    Int? n50_value = quast.n50_value
+    File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
+    String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
+    Float? est_coverage = cg_pipeline.est_coverage
+    String? busco_version = busco.busco_version
+    String? busco_database = busco.busco_database
+    String? busco_results = busco.busco_results
+    File? busco_report = busco.busco_report
+    #Taxon ID
+    File? gambit_report = gambit.gambit_report_file
+    File? gabmit_closest_genomes = gambit.gambit_closest_genomes_file
+    String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
+    String? gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
+    String? gambit_predicted_strain = gambit.gambit_predicted_strain
+    String? gambit_version = gambit.gambit_version
+    String? gambit_db_version = gambit.gambit_db_version
+    String? gambit_docker = gambit.gambit_docker
+
     String  kraken2_raw_version              = kraken2_raw.version
     Float   kraken2_raw_human                = kraken2_raw.percent_human
     String  kraken2_raw_report               = kraken2_raw.kraken_report
@@ -260,27 +290,6 @@ workflow theiaprok_illumina_pe {
     String?    fastani_species   =fastANI.fastani_species
     String?    fastani_strain   =fastANI.fastani_strain
     Float?    fastani_ani_estimate   =fastANI.fastani_aniestimate
-
-    #Assembly and Assembly QC
-    File? assembly_fasta = shovill_pe.assembly_fasta
-    File? contigs_gfa = shovill_pe.contigs_gfa
-    String? shovill_pe_version = shovill_pe.shovill_version
-    File? quast_report = quast.quast_report
-    String? quast_version = quast.version
-    Int? genome_length = quast.genome_length
-    Int? number_contigs = quast.number_contigs
-    File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
-    String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
-    Float? est_coverage = cg_pipeline.est_coverage
-    #Taxon ID
-    File? gambit_report = gambit.gambit_report_file
-    File? gabmit_closest_genomes = gambit.gambit_closest_genomes_file
-    String? gambit_predicted_taxon = gambit.gambit_predicted_taxon
-    String? gambit_predicted_taxon_rank = gambit.gambit_predicted_taxon_rank
-    String? gambit_predicted_strain = gambit.gambit_predicted_strain
-    String? gambit_version = gambit.gambit_version
-    String? gambit_db_version = gambit.gambit_db_version
-    String? gambit_docker = gambit.gambit_docker
     #String gambit_closest_taxon = gambit.gambit_closest_match
 
     #Midas taxonomy
@@ -291,6 +300,7 @@ workflow theiaprok_illumina_pe {
     #String midas_docker = midas.midas_docker
 
     # ani-mummer
+    Float? ani_highest_percent = ani.ani_highest_percent
     Float? ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
     File? ani_output_tsv = ani.ani_output_tsv
     String? ani_top_species_match = ani.ani_top_species_match
@@ -312,6 +322,7 @@ workflow theiaprok_illumina_pe {
     String? abricate_amr_version = abricate_amr.abricate_version
 
     # Resfinder Outputs
+    File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
     File? resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq
     File? resfinder_results = resfinder_task.resfinder_results_tab
@@ -346,6 +357,7 @@ workflow theiaprok_illumina_pe {
     #Listeria Typing
     File? lissero_results = merlin_magic.lissero_results
     String? lissero_version = merlin_magic.lissero_version
+    String? lissero_serotype = merlin_magic.lissero_serotype
     #Salmonella Typing
     File? sistr_results = merlin_magic.sistr_results
     File? sistr_allele_json = merlin_magic.sistr_allele_json
@@ -358,12 +370,24 @@ workflow theiaprok_illumina_pe {
     String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
     String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
     String? seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination
+    # Salmonella serotype Typhi Typing
+    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv
+    File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json
+    String? genotyphi_version = merlin_magic.genotyphi_version
+    String? genotyphi_species = merlin_magic.genotyphi_species
+    Float? genotyphi_st_probes_percent_coverage = merlin_magic.genotyphi_st_probes_percent_coverage
+    String? genotyphi_final_genotype = merlin_magic.genotyphi_final_genotype
+    String? genotyphi_genotype_confidence = merlin_magic.genotyphi_genotype_confidence
     #Klebsiella Typing
     File? kleborate_output_file = merlin_magic.kleborate_output_file
     String? kleborate_version = merlin_magic.kleborate_version
     String? kleborate_key_resistance_genes = merlin_magic.kleborate_key_resistance_genes
     String? kleborate_genomic_resistance_mutations = merlin_magic.kleborate_genomic_resistance_mutations
     String? kleborate_mlst_sequence_type = merlin_magic.kleborate_mlst_sequence_type
+    # Legionella pneumophila typing
+    File? legsta_results = merlin_magic.legsta_results
+    String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
+    String? legsta_version = merlin_magic.legsta_version
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
