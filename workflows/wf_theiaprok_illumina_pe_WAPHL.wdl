@@ -290,10 +290,52 @@ workflow theiaprok_illumina_pe {
     #String midas_predicted_strain = midas.midas_strain
     #String midas_docker = midas.midas_docker
 
+    # ani-mummer
+    Float? ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+    File? ani_output_tsv = ani.ani_output_tsv
+    String? ani_top_species_match = ani.ani_top_species_match
+    String? ani_mummer_version = ani.ani_mummer_version
+    # NCBI-AMRFinderPlus Outputs
+    File? amrfinderplus_all_report = amrfinderplus_task.amrfinderplus_all_report
+    File? amrfinderplus_amr_report = amrfinderplus_task.amrfinderplus_amr_report
+    File? amrfinderplus_stress_report = amrfinderplus_task.amrfinderplus_stress_report
+    File? amrfinderplus_virulence_report = amrfinderplus_task.amrfinderplus_virulence_report
+    String? amrfinderplus_amr_genes = amrfinderplus_task.amrfinderplus_amr_genes
+    String? amrfinderplus_stress_genes = amrfinderplus_task.amrfinderplus_stress_genes
+    String? amrfinderplus_virulence_genes = amrfinderplus_task.amrfinderplus_virulence_genes
+    String? amrfinderplus_version = amrfinderplus_task.amrfinderplus_version
+    String? amrfinderplus_db_version = amrfinderplus_task.amrfinderplus_db_version
+
     #AMR Screening
     File? abricate_amr_results = abricate_amr.abricate_results
     String? abricate_amr_database = abricate_amr.abricate_database
     String? abricate_amr_version = abricate_amr.abricate_version
+
+    # Resfinder Outputs
+    File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
+    File? resfinder_seqs = resfinder_task.resfinder_hit_in_genome_seq
+    File? resfinder_results = resfinder_task.resfinder_results_tab
+    File? resfinder_pointfinder_pheno_table = resfinder_task.pointfinder_pheno_table
+    File? resfinder_pointfinder_results = resfinder_task.pointfinder_results
+    String? resfinder_db_version = resfinder_task.resfinder_db_version
+    String? resfinder_docker = resfinder_task.resfinder_docker
+
+    # MLST Typing
+    File? ts_mlst_results = ts_mlst.ts_mlst_results
+    String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
+    String? ts_mlst_version = ts_mlst.ts_mlst_version
+    String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
+    # Prokka Results
+    File? prokka_gff = prokka.prokka_gff
+    File? prokka_gbk = prokka.prokka_gbk
+    File? prokka_sqn = prokka.prokka_sqn
+
+    # Plasmidfinder Results
+    String? plasmidfinder_plasmids = plasmidfinder.plasmidfinder_plasmids
+    File? plasmidfinder_results = plasmidfinder.plasmidfinder_results
+    File? plasmidfinder_seqs = plasmidfinder.plasmidfinder_seqs
+    String? plasmidfinder_docker = plasmidfinder.plasmidfinder_docker
+    String? plasmidfinder_db_version = plasmidfinder.plasmidfinder_db_version
     # Ecoli Typing
     File? serotypefinder_report = merlin_magic.serotypefinder_report
     String? serotypefinder_docker = merlin_magic.serotypefinder_docker
