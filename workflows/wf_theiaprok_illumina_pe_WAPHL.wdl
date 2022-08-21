@@ -260,7 +260,7 @@ workflow theiaprok_illumina_pe {
     Int? genome_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
-    Int? gc_content = quast.gc_content
+    Float? gc_content = quast.gc_content
     File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
     Float? est_coverage = cg_pipeline.est_coverage

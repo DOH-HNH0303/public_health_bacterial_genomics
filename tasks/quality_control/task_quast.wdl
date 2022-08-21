@@ -45,7 +45,7 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
-    Int gc_content = read_int("GC_CONTENT")
+    Float gc_content = read_float("GC_CONTENT")
   }
   runtime {
     docker:  "~{docker}"
