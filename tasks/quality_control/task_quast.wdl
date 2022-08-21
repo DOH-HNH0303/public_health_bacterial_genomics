@@ -13,7 +13,7 @@ task quast {
 
     quast.py ~{assembly} -o .
     mv report.tsv ~{samplename}_report.tsv
-    
+
     python <<CODE
     import csv
     #grab output genome length and number contigs by column header
@@ -30,6 +30,11 @@ task quast {
             with open("N50_VALUE", 'wt') as n50_value:
               n50_value.write(line[1])
 
+          if "GC (%)" in line[0]:
+            with open("GC_CONTENT", 'wt') as gc_content:
+              gc.write(line[1])
+
+
     CODE
 
   >>>
@@ -40,6 +45,7 @@ task quast {
     Int genome_length = read_int("GENOME_LENGTH")
     Int number_contigs = read_int("NUMBER_CONTIGS")
     Int n50_value = read_int("N50_VALUE")
+    Int gc_content = read_int("GC_CONTENT")
   }
   runtime {
     docker:  "~{docker}"

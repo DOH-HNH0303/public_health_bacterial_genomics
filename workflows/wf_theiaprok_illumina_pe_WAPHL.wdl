@@ -10,6 +10,7 @@ import "../tasks/gene_typing/task_abricate.wdl" as abricate
 import "../tasks/species_typing/task_serotypefinder.wdl" as serotypefinder
 import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/utilities/task_broad_terra_tools.wdl" as terra_tools
+import "../tasks/quality_control/task_general_qc.wdl" as general_qc
 
 #Theiagen packages added
 import "../tasks/quality_control/task_screen.wdl" as screen
@@ -127,6 +128,15 @@ workflow theiaprok_illumina_pe {
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
+      call busco.busco {
+        input:
+          assembly = shovill_pe.assembly_fasta,
+          samplename = samplename
+      }
+      call general_qc.general_qc {
+        input:
+          assembly_fasta = shovill_pe.assembly_fasta
+      }
       call cg_pipeline.cg_pipeline {
         input:
           read1 = read1_raw,
@@ -139,11 +149,7 @@ workflow theiaprok_illumina_pe {
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
-      call busco.busco {
-        input:
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename
-      }
+
       if (call_ani) {
       call ani.animummer as ani {
         input:
@@ -254,6 +260,7 @@ workflow theiaprok_illumina_pe {
     Int? genome_length = quast.genome_length
     Int? number_contigs = quast.number_contigs
     Int? n50_value = quast.n50_value
+    Int? gc_content = quast.gc_content
     File? cg_pipeline_report = cg_pipeline.cg_pipeline_report
     String? cg_pipeline_docker = cg_pipeline.cg_pipeline_docker
     Float? est_coverage = cg_pipeline.est_coverage
@@ -261,6 +268,10 @@ workflow theiaprok_illumina_pe {
     String? busco_database = busco.busco_database
     String? busco_results = busco.busco_results
     File? busco_report = busco.busco_report
+    Int? number_N = general_qc.number_N
+    Int? number_ATCG = general_qc.number_ATCG
+    Int? number_Degenerate = general_qc.number_Degenerate
+    Int? number_Total = general_qc.number_Total
     #Taxon ID
     File? gambit_report = gambit.gambit_report_file
     File? gabmit_closest_genomes = gambit.gambit_closest_genomes_file
