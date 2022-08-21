@@ -32,7 +32,7 @@ task quast {
 
           if "GC (%)" in line[0]:
             with open("GC_CONTENT", 'wt') as gc_content:
-              gc.write(line[1])
+              gc_content.write(line[1])
 
 
     CODE
