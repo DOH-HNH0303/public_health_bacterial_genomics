@@ -16,7 +16,7 @@ task ksnp3 {
   assembly_array_len=$(echo "${#assembly_array[@]}")
   samplename_array=(~{sep=' ' samplename})
   samplename_array_len=$(echo "${#samplename_array[@]}")
-  
+
   # Ensure assembly, and samplename arrays are of equal length
   if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
     echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
@@ -32,14 +32,15 @@ task ksnp3 {
   done
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
-  
-  # rename ksnp3 outputs with cluster name 
+  ls >ls.txt
+  ls /data >ls.txt
+  # rename ksnp3 outputs with cluster name
   mv ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
   mv ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.tree
   mv ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
   mv ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
   mv ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsiomony.tree
-  
+
 
   >>>
   output {
