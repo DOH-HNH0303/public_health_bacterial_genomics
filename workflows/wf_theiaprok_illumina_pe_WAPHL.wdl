@@ -29,7 +29,6 @@ import "../tasks/task_denovo_assembly.wdl" as assembly
 import "../tasks/task_read_clean.wdl" as read_clean
 
 
-
 workflow theiaprok_illumina_pe {
   meta {
     description: "De-novo genome assembly, taxonomic ID, and QC of paired-end bacterial NGS data"
