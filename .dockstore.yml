@@ -5,6 +5,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_ksnp3.wdl
    testParameterFiles:
     - empty.json
+ - name: kSNP3_WAPHL
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_ksnp3_WAPHL.wdl
+   testParameterFiles:
+    - empty.json
  - name: Gambit_Query
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_gambit_query.wdl
