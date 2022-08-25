@@ -33,7 +33,8 @@ task ksnp3 {
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
   ls >ls.txt
-  ls /data >ls.txt
+  ls /data >data_ls.txt
+  ls ksnp3
   # rename ksnp3 outputs with cluster name
   mv ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
   mv ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.tree
@@ -44,6 +45,7 @@ task ksnp3 {
 
   >>>
   output {
+    File ksnp3_input = "ksnp3_input.tsv"
     File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
     File ksnp3_core_tree = "ksnp3/${cluster_name}_core.tree"
     File ksnp3_core_vcf = "ksnp3/${cluster_name}_core.vcf"
