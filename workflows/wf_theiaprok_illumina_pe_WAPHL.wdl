@@ -60,6 +60,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean skip_screen = false
   }
+  
   call versioning.version_capture{
     input:
   }
