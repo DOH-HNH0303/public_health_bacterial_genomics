@@ -2,7 +2,7 @@ version: 1.2
 workflows:
  - name: kSNP3
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_ksnp3.wdl
+   primaryDescriptorPath: /workflows/wf_ksnp3_WAPHL.wdl
    testParameterFiles:
     - empty.json
  - name: kSNP3_WAPHL
