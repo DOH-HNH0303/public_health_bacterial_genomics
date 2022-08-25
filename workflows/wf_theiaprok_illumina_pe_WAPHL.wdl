@@ -60,7 +60,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean skip_screen = false
   }
-  
+
   call versioning.version_capture{
     input:
   }
@@ -300,7 +300,6 @@ workflow theiaprok_illumina_pe {
     String?    fastani_strain   =fastANI.fastani_strain
     Float?    fastani_ani_estimate   =fastANI.fastani_aniestimate
     #String gambit_closest_taxon = gambit.gambit_closest_match
-
     #Midas taxonomy
     #File midas_report = midas.midas_report
     #String midas_predicted_genus = midas.midas_genus
