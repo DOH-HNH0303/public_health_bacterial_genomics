@@ -219,6 +219,12 @@ workflow theiaprok_illumina_pe {
       samplename = samplename,
       database = "ncbi"
   }
+  call abricate.abricate as abricate_virulence {
+    input:
+      assembly = shovill_pe.assembly_fasta,
+      samplename = samplename,
+      database = "vfdb"
+  }
   }
 
 
@@ -329,6 +335,7 @@ workflow theiaprok_illumina_pe {
     String? abricate_amr_database = abricate_amr.abricate_database
     String? abricate_amr_version = abricate_amr.abricate_version
 
+
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
@@ -339,6 +346,10 @@ workflow theiaprok_illumina_pe {
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker
 
+    # Virulence Genes
+    File? abricate_virulence_results = abricate_virulence.abricate_results
+    String? abricate_virulence_database = abricate_virulence.abricate_database
+    String? abricate_virulence_version = abricate_virulence.abricate_version
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
