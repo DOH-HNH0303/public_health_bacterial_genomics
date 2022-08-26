@@ -30,6 +30,7 @@ task ksnp3 {
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
+  cat ksnp3_input.tsv
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
   ls >ls.txt
