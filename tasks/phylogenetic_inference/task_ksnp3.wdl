@@ -33,6 +33,10 @@ task ksnp3 {
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
   ls >ls.txt
+  ls
+  echo ""
+  ls /data
+  echo ""
   ls /data >data_ls.txt
   ls ksnp3
   # rename ksnp3 outputs with cluster name
