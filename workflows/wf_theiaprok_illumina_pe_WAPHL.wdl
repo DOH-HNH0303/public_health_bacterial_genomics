@@ -239,13 +239,15 @@ workflow theiaprok_illumina_pe {
     #Sample Screening
     String raw_read_screen = raw_check_reads.read_screen
     String? clean_read_screen = clean_check_reads.read_screen
-    #Read QC
+    #Read QC read_QC_trim.read1_clean
     Int? num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     Int? num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? num_reads_clean2 = read_QC_trim.fastq_scan_clean2
+    File? reads_clean1 = read_QC_trim.read1_clean
+    File? reads_clean2 = read_QC_trim.read2_clean
     String? num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_software = read_QC_trim.trimmomatic_pe_software
