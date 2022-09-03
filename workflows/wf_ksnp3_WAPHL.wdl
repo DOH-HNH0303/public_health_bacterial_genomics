@@ -9,7 +9,7 @@ workflow ksnp3_workflow {
     Array[File] assembly_fasta
     Array[String] samplename
     String cluster_name
-    Array[File]? ref_genomes
+    Array[File] ref_genomes
 	}
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
