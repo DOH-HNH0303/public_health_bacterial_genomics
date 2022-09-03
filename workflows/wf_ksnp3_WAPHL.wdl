@@ -23,7 +23,7 @@ workflow ksnp3_workflow {
       samplename = samplename,
       cluster_name = cluster_name,
       ref_genomes = ref_genomes,
-      ref_names = append_ref_names
+      ref_names = ref_names
   }
   call snp_dists.snp_dists as core_snp_dists {
     input:
