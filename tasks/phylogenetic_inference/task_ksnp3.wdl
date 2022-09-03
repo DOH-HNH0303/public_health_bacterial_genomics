@@ -10,8 +10,13 @@ task ksnp3 {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
+    Array[File]? = ref_genomes
   }
   command <<<
+  ref_array=(~{sep=' ' ref_genomes})
+  ref_array_len=$(echo "${#ref_array[@]}")
+  echo "ref_array"
+  echo $ref_array
   assembly_array=(~{sep=' ' assembly_fasta})
   assembly_array_len=$(echo "${#assembly_array[@]}")
   echo "assembly array"
