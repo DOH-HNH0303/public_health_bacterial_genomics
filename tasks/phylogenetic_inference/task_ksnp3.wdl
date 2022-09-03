@@ -14,6 +14,8 @@ task ksnp3 {
   command <<<
   assembly_array=(~{sep=' ' assembly_fasta})
   assembly_array_len=$(echo "${#assembly_array[@]}")
+  echo "assembly array"
+  echo $assembly_array
   samplename_array=(~{sep=' ' samplename})
   samplename_array_len=$(echo "${#samplename_array[@]}")
 
