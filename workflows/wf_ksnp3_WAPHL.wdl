@@ -16,7 +16,7 @@ workflow ksnp3_workflow {
 			assembly_fasta = assembly_fasta,
       samplename = samplename,
       cluster_name = cluster_name,
-      reg_genomes = ref_genomes
+      ref_genomes = ref_genomes
   }
   call snp_dists.snp_dists as core_snp_dists {
     input:
