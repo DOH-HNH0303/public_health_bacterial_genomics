@@ -10,12 +10,13 @@ workflow ksnp3_workflow {
     Array[String] samplename
     String cluster_name
     Array[File] ref_genomes
-    scatter (i in ref_genomes) {
-      String append_ref_names = basename(i)
-    }
+
     Array[String] append_ref_names
 
 	}
+  scatter (i in ref_genomes) {
+    String ref_names = basename(i)
+  }
 
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
