@@ -10,16 +10,19 @@ workflow ksnp3_workflow {
     Array[String] samplename
     String cluster_name
     Array[File] ref_genomes
-    Array[String] ref_names=basename(ref_genomes)
+    scatter (i in ref_genomes) {
+      String append_ref_names = basename(ref_genomes)
+    Array[String] append_ref_names
 
 	}
+
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
 			assembly_fasta = assembly_fasta,
       samplename = samplename,
       cluster_name = cluster_name,
       ref_genomes = ref_genomes,
-      ref_names = ref_names,
+      ref_names = append_ref_names
   }
   call snp_dists.snp_dists as core_snp_dists {
     input:
