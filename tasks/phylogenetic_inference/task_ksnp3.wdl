@@ -10,7 +10,7 @@ task ksnp3 {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
-    Array[File] = ref_genomes
+    Array[File] ref_genomes
   }
   command <<<
   ref_array=(~{sep=' ' ref_genomes})
