@@ -11,12 +11,23 @@ task ksnp3 {
     Int cpu = 4
     Int disk_size = 100
     Array[File] ref_genomes
+    Array[String] ref_names = basename(ref_genomes)
   }
   command <<<
-  ref_array=(~{sep=' ' ref_genomes})
-  ref_array_len=$(echo "${#ref_array[@]}")
-  echo "ref_array"
-  echo $ref_array
+  ref_genome_array=(~{sep=' ' ref_genomes})
+  ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
+  echo "ref_genome_array"
+  echo $ref_genome_array
+  ref_name_array=(~{sep=' ' ref_names})
+  ref_name_array_len=$(echo "${#ref_name_array[@]}")
+  echo "ref_name_array"
+  echo $ref_name_array
+
+  if [ "$ref_genome_array_len" -ne "$ref_name_array_len" ]; then
+    echo "Reference array (length: $ref_genome_array_len) and ref_samplename array (length: $ref_name_array_len) are of unequal length." >&2
+    exit 1
+  fi
+
   assembly_array=(~{sep=' ' assembly_fasta})
   assembly_array_len=$(echo "${#assembly_array[@]}")
   echo "assembly array"
@@ -36,6 +47,12 @@ task ksnp3 {
     assembly=${assembly_array[$index]}
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
+  done
+
+  for index in ${!ref_genome_array[@]}; do
+    ref=${ref_genome_array[$index]}
+    name=${ref_name_array[$index]}
+    echo -e "${ref}\t${name}" >> ksnp3_input.tsv
   done
   cat ksnp3_input.tsv
   # run ksnp3 on input assemblies
