@@ -11,7 +11,7 @@ task ksnp3 {
     Int cpu = 4
     Int disk_size = 100
     Array[File] ref_genomes
-    Array[String] ref_names = basename(ref_genomes)
+    Array[String] ref_names
   }
   command <<<
   ref_genome_array=(~{sep=' ' ref_genomes})
