@@ -15,7 +15,7 @@ task ksnp3 {
   }
   command <<<
   ref_genome_array=~{sep=' ' ref_genomes}
-  ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
+  /* ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
   echo "ref_genome_array"
   echo $ref_genome_array
   ref_name_array=~{sep=' ' ref_names}
@@ -42,7 +42,7 @@ task ksnp3 {
   if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
     echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
     exit 1
-  fi
+  fi */
 
   # create file of filenames for kSNP3 input
   touch ksnp3_input.tsv
