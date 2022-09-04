@@ -14,9 +14,10 @@ task ksnp3 {
     Array[String] ref_names
   }
   command <<<
+  echo ~{sep=' ' ref_genome}
   cat ${write_lines(ref_genomes)}
   cat ${write_lines(ref_names)}
-  
+
   >>>
   output {
     File ksnp3_input = "ksnp3_input.tsv"
