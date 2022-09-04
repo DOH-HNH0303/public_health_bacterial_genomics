@@ -55,9 +55,9 @@ task ksnp3 {
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
 
-  for index in ${!ref_genome_array[@]}; do
-    ref=${ref_genome_array[$index]}
-    name=${ref_name_array[$index]}
+  for index in "${!ref_genome_array[@]}"; do
+    ref="${ref_genome_array[$index]}"
+    name="${ref_name_array[$index]}"
     echo -e "${ref}\t${name}" >> ksnp3_input.tsv
   done
   cat ksnp3_input.tsv
