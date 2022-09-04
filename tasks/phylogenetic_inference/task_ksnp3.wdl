@@ -46,11 +46,11 @@ task ksnp3 {
 
   # create file of filenames for kSNP3 input
   touch ksnp3_input.tsv
-  /* for index in ${!assembly_array[@]}; do
+  for index in ${!assembly_array[@]}; do
     assembly=${assembly_array[$index]}
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
-  done */
+  done
 
   for index in ${!ref_genome_array[@]}; do
     ref=${ref_genome_array[$index]}
@@ -59,7 +59,7 @@ task ksnp3 {
   done
   cat ksnp3_input.tsv
   # run ksnp3 on input assemblies
-  /* kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
+  kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
   ls >ls.txt
   ls
   echo ""
@@ -72,7 +72,7 @@ task ksnp3 {
   mv ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.tree
   mv ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
   mv ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
-  mv ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsiomony.tree */
+  mv ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsiomony.tree
 
 
   >>>
