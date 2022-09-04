@@ -61,6 +61,15 @@ task ksnp3 {
     echo -e "${ref}\t${name}" >> ksnp3_input.tsv
   done
   cat ksnp3_input.tsv
+  # run ksnp3 on input assemblies
+  kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
+
+  # rename ksnp3 outputs with cluster name
+  mv ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
+  mv ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.tree
+  mv ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
+  mv ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
+  mv ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsiomony.tree
 
 
   >>>
