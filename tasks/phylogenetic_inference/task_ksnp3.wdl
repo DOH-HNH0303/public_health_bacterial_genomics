@@ -28,6 +28,25 @@ task ksnp3 {
   echo "ref_genomes len, ref_names len"
   echo ~{ref_genomes_len} ~{ref_names_len}
 
+  if [ ~{ref_genomes_len} -ne ~{ref_names_len} ]; then
+    echo "Reference arrays are of unequal length." >&2
+    exit 1
+  fi
+
+  assembly_array=(~{sep=' ' assembly_fasta})
+  assembly_array_len=$(echo "${#assembly_array[@]}")
+  echo "assembly array"
+  echo $assembly_array
+  samplename_array=(~{sep=' ' samplename})
+  samplename_array_len=$(echo "${#samplename_array[@]}")
+  echo $assembly_array_len $samplename_array_len
+
+  # Ensure assembly, and samplename arrays are of equal length
+  if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
+    echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
+    exit 1
+  fi
+
 
   >>>
   output {
