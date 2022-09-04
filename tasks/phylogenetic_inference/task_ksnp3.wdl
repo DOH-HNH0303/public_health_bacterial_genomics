@@ -14,7 +14,7 @@ task ksnp3 {
     Array[String] ref_names
   }
   command <<<
-  echo ~{sep=' ' ref_genomes}
+  echo "~{sep=' ' ref_genomes}"
 
 
   >>>
