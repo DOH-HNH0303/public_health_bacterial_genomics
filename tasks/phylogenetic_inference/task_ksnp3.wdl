@@ -16,6 +16,9 @@ task ksnp3 {
   command <<<
   echo "~{sep=' ' ref_genomes}"
 
+  ref_genome_array=("~{sep=' ' ref_genomes}")
+  echo $ref_genome_array
+
 
   >>>
   output {
