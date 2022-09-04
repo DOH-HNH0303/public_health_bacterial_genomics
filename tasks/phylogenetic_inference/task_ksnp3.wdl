@@ -14,6 +14,8 @@ task ksnp3 {
     Array[String] ref_names
   }
   command <<<
+  cat ${write_lines(ref_genomes)}
+  cat ${write_lines(ref_names)}
   ref_genome_array=(~{sep=' ' ref_genomes})
   ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
   echo "ref_genome_array"
