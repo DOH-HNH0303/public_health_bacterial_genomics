@@ -18,7 +18,7 @@ task ksnp3 {
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
   echo $ref_genome_array
-  echo"array check"
+  echo "array check" #line 27
   declare -p $ref_genome_array 2> /dev/null | grep -q '^declare \-a'
   ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
 
