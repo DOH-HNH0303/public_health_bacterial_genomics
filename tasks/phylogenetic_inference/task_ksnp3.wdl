@@ -15,8 +15,7 @@ task ksnp3 {
   }
   command <<<
   echo ~{sep=' ' ref_genomes}
-  cat ${write_lines(ref_genomes)}
-  cat ${write_lines(ref_names)}
+
 
   >>>
   output {
