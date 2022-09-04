@@ -20,6 +20,13 @@ task ksnp3 {
   echo $ref_genome_array
   ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
 
+  ref_name_array="~{sep=' ' ref_names})"
+  ref_name_array_len=$(echo "${#ref_name_array[@]}")
+  echo "ref_name_array"
+  echo $ref_name_array
+  echo "ref_genome len, ref_name len"
+  echo $ref_genome_array_len $ref_name_array_len
+
 
   >>>
   output {
