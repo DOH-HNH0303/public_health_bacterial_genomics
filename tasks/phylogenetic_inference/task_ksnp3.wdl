@@ -14,11 +14,11 @@ task ksnp3 {
     Array[String] ref_names
   }
   command <<<
-  ref_genome_array=(${sep=' ' ref_genomes})
+  ref_genome_array=(~{sep=' ' ref_genomes})
   ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
   echo "ref_genome_array"
   echo $ref_genome_array
-  ref_name_array=(${sep=' ' ref_names})
+  ref_name_array=(~{sep=' ' ref_names})
   ref_name_array_len=$(echo "${#ref_name_array[@]}")
   echo "ref_name_array"
   echo $ref_name_array
