@@ -12,6 +12,8 @@ task ksnp3 {
     Int disk_size = 100
     Array[File] ref_genomes
     Array[String] ref_names
+    Int ref_genomes_len = length(ref_genomes)
+    Int ref_names_len = length(ref_names)
   }
   command <<<
   echo "~{sep=' ' ref_genomes}"
@@ -19,15 +21,12 @@ task ksnp3 {
   ref_genome_array=("~{sep=' ' ref_genomes}")
   echo $ref_genome_array
   echo "array check" #line 27
-  echo ${#ref_genome_array[@]}
-  ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
-
   ref_name_array="~{sep=' ' ref_names})"
-  ref_name_array_len=$(echo "${#ref_name_array[@]}")
+
   echo "ref_name_array"
-  echo $ref_name_array
+  echo ~{ref_name_array}
   echo "ref_genome len, ref_name len"
-  echo $ref_genome_array_len $ref_name_array_len
+  echo ~{ref_genome_array_len} ~{ref_name_array_len}
 
 
   >>>
