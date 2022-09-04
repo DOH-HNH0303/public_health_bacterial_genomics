@@ -60,6 +60,13 @@ task ksnp3 {
     name="${ref_name_array[$index]}"
     echo -e "${ref}\t${name}" >> ksnp3_input.tsv
   done
+
+  for (( c = 0; c < ~{ref_genomes_len}; c++ )) # bash array are 0-indexed ;)
+       do
+           ref="${ref_genome_array[$c]}"
+           name="${ref_name_array[$c]}"
+           echo -e "${ref}\t${name}" >> ksnp3_input.tsv
+       done
   cat ksnp3_input.tsv
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
