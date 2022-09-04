@@ -14,7 +14,7 @@ task ksnp3 {
     Array[String] ref_names
   }
   command <<<
-  echo ~{sep=' ' ref_genome}
+  echo ~{sep=' ' ref_genomes}
   cat ${write_lines(ref_genomes)}
   cat ${write_lines(ref_names)}
 
