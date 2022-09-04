@@ -18,6 +18,7 @@ task ksnp3 {
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
   echo $ref_genome_array
+  ref_genome_array_len=$(echo "${#ref_genome_array[@]}")
 
 
   >>>
