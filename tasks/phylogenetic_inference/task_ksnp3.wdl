@@ -25,6 +25,8 @@ task ksnp3 {
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
   mv ~{write_tsv(array_refs)} "ref.tsv"
+  echo "import fileinput \m = [] \for line in fileinput.input(): \  m.append(line.strip().split("\t"))\for row in zip(*m): \  print("\t".join(row))"
+  cat ref.tsv | python3 transpose.py>transposed_ref.tsv
   echo $ref_genome_array
  #line 27
   ref_name_array="~{sep=' ' ref_names})"
@@ -69,6 +71,7 @@ task ksnp3 {
   >>>
   output {
     File ksnp3_input = "ksnp3_input.tsv"
+    File ref_transposed_tsv = "transposed_ref.tsv"
     File ref_tsv = "ref.tsv"
     File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
     File ksnp3_core_tree = "ksnp3/${cluster_name}_core.tree"
