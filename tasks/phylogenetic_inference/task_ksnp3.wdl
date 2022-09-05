@@ -14,7 +14,8 @@ task ksnp3 {
     Array[String] ref_names
     Int ref_genomes_len = length(ref_genomes)
     Int ref_names_len = length(ref_names)
-    Map[Array[File], Array[String]] references_zip = as_map(zip(ref_genomes, ref_names))
+    Map[File, String] references_zip
+
 
   }
   command <<<
