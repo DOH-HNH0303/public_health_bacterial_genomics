@@ -14,7 +14,7 @@ workflow ksnp3_workflow {
   scatter (i in ref_genomes) {
     String ref_names = basename(i)
   }
-    Map[File, String] references_zip = as_map(zip(ref_genomes, ref_names))
+    Array[Pair[String,String]] references_zip = zip(ref_genomes, ref_names)
 
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
