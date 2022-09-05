@@ -24,7 +24,7 @@ task ksnp3 {
 
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
-  cat ~{write_tsv(array_refs)}>ref.tsv
+  mv ~{write_tsv(array_refs)} "ref.tsv"
   echo $ref_genome_array
  #line 27
   ref_name_array="~{sep=' ' ref_names})"
