@@ -14,12 +14,12 @@ task ksnp3 {
     Array[String] ref_names
     Int ref_genomes_len = length(ref_genomes)
     Int ref_names_len = length(ref_names)
-    #Array[Pair[File,String]] references_zip = zip(ref_genomes, ref_names)
+    #Array[Pair[File,String]] references_zip = as_map(zip(ref_genomes, ref_names))
   }
   command <<<
   echo "~{sep=' ' ref_genomes}"
-  echo "references_zip"
-  echo "~{sep=' ' references_zip}"
+  #echo "references_zip"
+  #echo "~{sep=' ' references_zip}"
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
   echo $ref_genome_array
