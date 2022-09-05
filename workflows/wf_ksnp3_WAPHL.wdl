@@ -10,11 +10,13 @@ workflow ksnp3_workflow {
     Array[String] samplename
     String cluster_name
     Array[File] ref_genomes
+    Array[String] ref_genomes_string
 	}
   scatter (i in ref_genomes) {
     String ref_names = basename(i)
   }
-    Array[Pair[String,String]] references_zip = zip(ref_genomes, ref_names)
+  Array[Array[String]] array = [ref_genomes_string, ref_names]
+
 
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
@@ -22,6 +24,7 @@ workflow ksnp3_workflow {
       samplename = samplename,
       cluster_name = cluster_name,
       ref_genomes = ref_genomes,
+      ref_genomes_string = ref_genomes_string,
       ref_names = ref_names
   }
   call snp_dists.snp_dists as core_snp_dists {
