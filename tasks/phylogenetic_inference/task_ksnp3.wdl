@@ -14,7 +14,7 @@ task ksnp3 {
     Array[String] ref_names
     Int ref_genomes_len = length(ref_genomes)
     Int ref_names_len = length(ref_names)
-    Array[String] ref_genomes_string
+    Array[Array[String]] array_refs
 
 
 
@@ -24,7 +24,7 @@ task ksnp3 {
 
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
-  cat ~{write_tsv(ref_genomes_string)}>ref.tsv
+  cat ~{write_tsv(array_refs)}>ref.tsv
   echo $ref_genome_array
  #line 27
   ref_name_array="~{sep=' ' ref_names})"

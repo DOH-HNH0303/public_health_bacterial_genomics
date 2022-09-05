@@ -15,7 +15,7 @@ workflow ksnp3_workflow {
   scatter (i in ref_genomes) {
     String ref_names = basename(i)
   }
-  Array[Array[String]] array = [ref_genomes_string, ref_names]
+  Array[Array[String]] array_refs = [ref_genomes_string, ref_names]
 
 
 	call ksnp3.ksnp3 as ksnp3_task {
@@ -24,7 +24,7 @@ workflow ksnp3_workflow {
       samplename = samplename,
       cluster_name = cluster_name,
       ref_genomes = ref_genomes,
-      ref_genomes_string = ref_genomes_string,
+      array_refs = array_refs,
       ref_names = ref_names
   }
   call snp_dists.snp_dists as core_snp_dists {
