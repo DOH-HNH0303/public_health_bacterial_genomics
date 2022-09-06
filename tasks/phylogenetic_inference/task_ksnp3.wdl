@@ -28,7 +28,7 @@ task ksnp3 {
   cat ~{transpose_py}
 
   #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
-  cat~{write_tsv(array_refs)} | python ~{transpose_py}>transposed_ref.tsv
+  cat ~{write_tsv(array_refs)} | python ~{transpose_py}>transposed_ref.tsv
   mv ~{write_tsv(array_refs)} "ref.tsv"
   echo $ref_genome_array
  #line 27
