@@ -21,16 +21,18 @@ task ksnp3 {
 
   }
   command <<<
-  echo "~{sep=' ' ref_genomes}"
+  touch "test.tsv"
+  echo "~{sep='\t' ref_genomes}" >test.tsv
+  echo "~{sep='\t' ref_names}" >>test.tsv
 
 
-  ref_genome_array=("~{sep=' ' ref_genomes}")
+  ref_genome_array=("~{sep='\t' ref_genomes}")
   cat ~{transpose_py}
-    mv ~{write_tsv(array_refs)} "ref.tsv"
+  mv ~{write_tsv(array_refs)} "ref.tsv"
 
   #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
   cat ref.tsv | python ~{transpose_py}>transposed_ref.tsv
-  
+
   echo "cat transposed_ref.tsv"
   cat transposed_ref.tsv
 
@@ -80,6 +82,7 @@ task ksnp3 {
   >>>
   output {
     File ksnp3_input = "ksnp3_input.tsv"
+    File ksnp3_test = "test.tsv"
     File ref_transposed_tsv = "transposed_ref.tsv"
     File ref_tsv = "ref.tsv"
     File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
