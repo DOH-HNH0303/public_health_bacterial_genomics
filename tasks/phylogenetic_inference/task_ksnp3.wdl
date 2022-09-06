@@ -25,56 +25,6 @@ task ksnp3 {
   echo "~{sep='\t' ref_genomes}" >test.tsv
   echo "~{sep='\t' ref_names}" >>test.tsv
 
-
-  ref_genome_array=("~{sep='\t' ref_genomes}")
-  cat ~{transpose_py}
-  mv ~{write_tsv(array_refs)} "ref.tsv"
-
-  #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
-  cat ref.tsv | python ~{transpose_py}>transposed_ref.tsv
-
-  echo "cat transposed_ref.tsv"
-  cat transposed_ref.tsv
-
-  #echo $ref_genome_array
- #line 27
-  ref_name_array="~{sep=' ' ref_names})"
-
-  echo "ref_name_array"
-  echo $ref_name_array
-  echo "ref_genomes len, ref_names len"
-  echo ~{ref_genomes_len} ~{ref_names_len}
-
-  if [ ~{ref_genomes_len} -ne ~{ref_names_len} ]; then
-    echo "Reference arrays are of unequal length." >&2
-    exit 1
-  fi
-
-  assembly_array=(~{sep=' ' assembly_fasta})
-  assembly_array_len=$(echo "${#assembly_array[@]}")
-  echo "assembly array"
-  echo $assembly_array
-  samplename_array=(~{sep=' ' samplename})
-  samplename_array_len=$(echo "${#samplename_array[@]}")
-  echo $assembly_array_len $samplename_array_len
-
-  # Ensure assembly, and samplename arrays are of equal length
-  if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
-    echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
-    exit 1
-  fi
-
-  # create file of filenames for kSNP3 input
-  touch ksnp3_input.tsv
-  for index in ${!assembly_array[@]}; do
-    assembly=${assembly_array[$index]}
-    samplename=${samplename_array[$index]}
-    echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
-  done
-
-  cat transposed_ref.tsv>>ksnp3_input
-
-  cat ksnp3_input.tsv
   # run ksnp3 on input assemblies
 
 
