@@ -30,6 +30,7 @@ task ksnp3 {
 
   #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
   cat ref.tsv | python ~{transpose_py}>transposed_ref.tsv
+  
   echo "cat transposed_ref.tsv"
   cat transposed_ref.tsv
 
@@ -68,6 +69,8 @@ task ksnp3 {
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
+
+  cat transposed_ref.tsv>>ksnp3_input
 
   cat ksnp3_input.tsv
   # run ksnp3 on input assemblies
