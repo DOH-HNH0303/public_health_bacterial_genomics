@@ -22,6 +22,7 @@ task ksnp3 {
   }
   command <<<
   touch "test.tsv"
+  echo '~{sep=\t ref_genomes} >test.tsv'
   echo "~{sep='\t' ref_genomes}" >test.tsv
   echo "~{sep='\t' ref_names}" >>test.tsv
 
@@ -31,10 +32,10 @@ task ksnp3 {
 
   >>>
   output {
-    File ksnp3_input = "ksnp3_input.tsv"
+    #File ksnp3_input = "ksnp3_input.tsv"
     File ksnp3_test = "test.tsv"
-    File ref_transposed_tsv = "transposed_ref.tsv"
-    File ref_tsv = "ref.tsv"
+    #File ref_transposed_tsv = "transposed_ref.tsv"
+    #File ref_tsv = "ref.tsv"
     File ksnp3_core_matrix = "ksnp3/${cluster_name}_core_SNPs_matrix.fasta"
     File ksnp3_core_tree = "ksnp3/${cluster_name}_core.tree"
     File ksnp3_core_vcf = "ksnp3/${cluster_name}_core.vcf"
