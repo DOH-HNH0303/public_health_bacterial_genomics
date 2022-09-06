@@ -27,7 +27,7 @@ task ksnp3 {
   mv ~{write_tsv(array_refs)} "ref.tsv"
   echo "import fileinput \m = [] \for line in fileinput.input(): \  m.append(line.strip().split("\t"))\for row in zip(*m): \  print("\t".join(row))">transpose.py
   #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
-  cat~{write_tsv(array_refs)} | python3 transpose.py>transposed_ref.tsv
+  cat~{write_tsv(array_refs)} | python transpose.py>transposed_ref.tsv
   echo $ref_genome_array
  #line 27
   ref_name_array="~{sep=' ' ref_names})"
