@@ -26,12 +26,14 @@ task ksnp3 {
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
   cat ~{transpose_py}
+    mv ~{write_tsv(array_refs)} "ref.tsv"
 
   #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
-  cat ~{write_tsv(array_refs)} | python ~{transpose_py}>transposed_ref.tsv
+  cat ref.tsv | python ~{transpose_py}>transposed_ref.tsv
+  echo "cat transposed_ref.tsv"
   cat transposed_ref.tsv
-  mv ~{write_tsv(array_refs)} "ref.tsv"
-  echo $ref_genome_array
+
+  #echo $ref_genome_array
  #line 27
   ref_name_array="~{sep=' ' ref_names})"
 
