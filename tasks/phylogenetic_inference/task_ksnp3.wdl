@@ -5,6 +5,7 @@ task ksnp3 {
     Array[File] assembly_fasta
     Array[String] samplename
     String cluster_name
+    File transpose_py
     Int kmer_size = 19
     String docker_image = "quay.io/staphb/ksnp3:3.1"
     Int memory = 8
@@ -24,10 +25,10 @@ task ksnp3 {
 
 
   ref_genome_array=("~{sep=' ' ref_genomes}")
+  cat ~{transpose_py}
 
-  echo 'import pandas as pd \import fileinput \m = [] \for line in fileinput.input(): \  m.append(line.strip().split("\t"))\for row in zip(*m): \  print("\t".join(row))'>transpose.py
   #cat ref.tsv | python3 transpose.py>transposed_ref.tsv
-  cat~{write_tsv(array_refs)} | python transpose.py>transposed_ref.tsv
+  cat~{write_tsv(array_refs)} | python ~"transpose_py">transposed_ref.tsv
   mv ~{write_tsv(array_refs)} "ref.tsv"
   echo $ref_genome_array
  #line 27

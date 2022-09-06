@@ -9,6 +9,7 @@ workflow ksnp3_workflow {
     Array[File] assembly_fasta
     Array[String] samplename
     String cluster_name
+    File transpose_py
     Array[File] ref_genomes
     Array[String] ref_genomes_string
 	}
@@ -25,6 +26,7 @@ workflow ksnp3_workflow {
       cluster_name = cluster_name,
       ref_genomes = ref_genomes,
       array_refs = array_refs,
+      transpose_py = transpose_py,
       ref_names = ref_names
   }
   call snp_dists.snp_dists as core_snp_dists {
