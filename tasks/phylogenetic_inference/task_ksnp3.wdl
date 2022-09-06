@@ -22,7 +22,7 @@ task ksnp3 {
   }
   command <<<
   touch "test.tsv"
-  echo "~{sep=\t ref_genomes} >test.tsv"
+  echo " to test.tsv"
   echo "~{sep='\t' ref_genomes}" >test.tsv
   echo "~{sep='\t' ref_names}" >>test.tsv
 
