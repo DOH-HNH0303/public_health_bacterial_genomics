@@ -25,6 +25,7 @@ task ksnp3 {
   echo " to test.tsv"
   echo "~{sep='\t' ref_genomes}" >test.tsv
   echo "~{sep='\t' ref_names}" >>test.tsv
+  cat test.tsv
 
   # run ksnp3 on input assemblies
 
