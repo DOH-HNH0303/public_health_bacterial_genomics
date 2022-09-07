@@ -26,6 +26,11 @@ task ksnp3 {
   echo "~{sep='\t' ref_genomes}" >test.tsv
   echo "~{sep='\t' ref_names}" >>test.tsv
   cat test.tsv
+  touch ksnp3/${cluster_name}_core_SNPs_matrix.fasta
+  touch ksnp3/${cluster_name}_core.tree
+  touch ksnp3/${cluster_name}_core.vcf
+  touch ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
+  touch ksnp3/~{cluster_name}_pan_parsiomony.tree
 
   # run ksnp3 on input assemblies
 
