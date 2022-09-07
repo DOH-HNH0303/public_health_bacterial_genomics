@@ -56,6 +56,7 @@ task ksnp3 {
   cat ksnp3_input.tsv
 
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
+  cat NameErrors.txt
   ls >ls.txt
   ls
   echo ""
