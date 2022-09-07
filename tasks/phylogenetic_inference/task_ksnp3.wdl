@@ -53,6 +53,8 @@ task ksnp3 {
   done
   cat transposed_ref.tsv>>ksnp3_input.tsv
 
+  cat ksnp3_input.tsv
+
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
   ls >ls.txt
   ls
