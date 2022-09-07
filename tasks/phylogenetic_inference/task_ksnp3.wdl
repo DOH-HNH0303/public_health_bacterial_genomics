@@ -22,19 +22,51 @@ task ksnp3 {
   }
   command <<<
   touch "test.tsv"
-  echo " to test.tsv"
-  echo "~{sep='\t' ref_genomes}" >test.tsv
-  echo "~{sep='\t' ref_names}" >>test.tsv
+  echo -e " to test.tsv"
+  echo -e "~{sep='\t' ref_genomes}" >test.tsv
+  echo -e "~{sep='\t' ref_names}" >>test.tsv
   cat test.tsv
-  mkdir ksnp3
-  cd ksnp3
-  touch ${cluster_name}_core_SNPs_matrix.fasta
-  touch ${cluster_name}_core.tree
-  touch ${cluster_name}_core.vcf
-  touch ~{cluster_name}_pan_SNPs_matrix.fasta
-  touch ~{cluster_name}_pan_parsiomony.tree
-  cd ..
-  ls>lst.txt
+
+  cat test.tsv | python ~{transpose_py}>transposed_ref.tsv
+
+  echo "cat transposed"
+  cat transposed_ref.tsv
+
+  assembly_array=(~{sep=' ' assembly_fasta})
+  assembly_array_len=$(echo "${#assembly_array[@]}")
+  echo "assembly array"
+  echo $assembly_array
+  samplename_array=(~{sep=' ' samplename})
+  samplename_array_len=$(echo "${#samplename_array[@]}")
+  echo $assembly_array_len $samplename_array_len
+
+  # Ensure assembly, and samplename arrays are of equal length
+  if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
+    echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
+    exit 1
+  fi
+  touch ksnp3_input.tsv
+  for index in ${!assembly_array[@]}; do
+    assembly=${assembly_array[$index]}
+    samplename=${samplename_array[$index]}
+    echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
+  done
+  cat transposed_ref.tsv>>ksnp3_input.tsv
+
+  kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
+  ls >ls.txt
+  ls
+  echo ""
+  ls /data
+  echo ""
+  ls /data >data_ls.txt
+  ls ksnp3
+  # rename ksnp3 outputs with cluster name
+  mv ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
+  mv ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.tree
+  mv ksnp3/VCF.*.vcf ksnp3/~{cluster_name}_core.vcf
+  mv ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
+  mv ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsiomony.tree
 
   # run ksnp3 on input assemblies
 
