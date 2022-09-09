@@ -96,8 +96,11 @@ task srst2 {
 
     ls
 
-    echo "~{samplename}"
+    echo " ~{samplename} in srst2 is finished"
 
+    tree
+    echo ""
+    tree /data
   >>>
   output {
     File srst2_result = glob("*~{samplename}_srst2*")[0]
