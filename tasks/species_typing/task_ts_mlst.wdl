@@ -76,6 +76,7 @@ task srst2 {
   input {
     File read1_cleaned
     File read1_cleaned
+    String samplename
     String docker = "biocontainers/srst2:v0.2.0-6-deb_cv1"
     Int? cpu = 4
     # Parameters
@@ -92,6 +93,8 @@ task srst2 {
     getmlst.py --species ~{scheme}
 
     srst2 --output test --input_pe *.fastq.gz --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
+
+    echo "~{samplename}"
 
   >>>
   output {
