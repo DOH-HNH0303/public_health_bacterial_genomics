@@ -123,6 +123,12 @@ workflow theiaprok_illumina_pe {
           read2_cleaned = read_QC_trim.read2_clean,
           genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
       }
+      call ts_mlst.srst2 {
+        input:
+          samplename = samplename,
+          read1_cleaned = read_QC_trim.read1_clean,
+          read2_cleaned = read_QC_trim.read2_clean
+      }
       call quast.quast {
         input:
           assembly = shovill_pe.assembly_fasta,
