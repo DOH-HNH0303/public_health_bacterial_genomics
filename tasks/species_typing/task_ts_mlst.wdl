@@ -92,7 +92,7 @@ task srst2 {
 
     getmlst.py --species ~{scheme}
 
-    srst2 --output test --input_pe *.fastq.gz --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
+    srst2 --output test --input_pe ~{read1_cleaned} ~{read2_clean} --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
 
     echo "~{samplename}"
 
