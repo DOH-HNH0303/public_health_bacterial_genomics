@@ -77,7 +77,7 @@ task srst2 {
     File read1_cleaned
     File read2_cleaned
     String samplename
-    String docker = "biocontainers/srst2:v0.2.0-6-deb_cv1"
+    String docker = "hnh0303/srst2:0.2.0"
     Int? cpu = 4
     # Parameters
     # --nopath          Strip filename paths from FILE column (default OFF)
