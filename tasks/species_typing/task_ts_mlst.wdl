@@ -75,7 +75,7 @@ task ts_mlst {
 task srst2 {
   input {
     File read1_cleaned
-    File read1_cleaned
+    File read2_cleaned
     String samplename
     String docker = "biocontainers/srst2:v0.2.0-6-deb_cv1"
     Int? cpu = 4
