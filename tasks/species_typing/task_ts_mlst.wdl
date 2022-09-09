@@ -94,6 +94,8 @@ task srst2 {
 
     srst2 --output test --input_pe ~{read1_cleaned} ~{read2_cleaned} --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
 
+    ls
+
     echo "~{samplename}"
 
   >>>
