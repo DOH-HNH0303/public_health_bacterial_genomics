@@ -23,10 +23,10 @@ task ts_mlst {
   }
   command <<<
     echo $(mlst --version 2>&1) | sed 's/mlst //' | tee VERSION
-    
+
     #create output header
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
-    
+
     mlst \
       --threads ~{cpu} \
       ~{true="--nopath" false="" nopath} \
@@ -36,7 +36,7 @@ task ts_mlst {
       ~{'--minscore ' + minscore} \
       ~{assembly} \
       >> ~{samplename}_ts_mlst.tsv
-      
+
     # parse ts mlst tsv for relevant outputs
     if [ $(wc -l ~{samplename}_ts_mlst.tsv | awk '{ print $1 }') -eq 1 ]; then
       predicted_mlst="No ST predicted"
@@ -51,9 +51,9 @@ task ts_mlst {
           if [ "$predicted_mlst" == "ST-" ]; then
           predicted_mlst="No ST predicted"
           fi
-        fi  
+        fi
     fi
-    
+
     echo $predicted_mlst | tee PREDICTED_MLST
     echo $pubmlst_scheme | tee PUBMLST_SCHEME
   >>>
@@ -62,6 +62,40 @@ task ts_mlst {
     String ts_mlst_predicted_st = read_string("PREDICTED_MLST")
     String ts_mlst_pubmlst_scheme = read_string("PUBMLST_SCHEME")
     String ts_mlst_version = read_string("VERSION")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "8 GB"
+    cpu: 4
+    disks: "local-disk 50 SSD"
+    preemptible: 0
+  }
+}
+
+task srst2 {
+  input {
+    File read1_cleaned
+    File read1_cleaned
+    String docker = "biocontainers/srst2:v0.2.0-6-deb_cv1"
+    Int? cpu = 4
+    # Parameters
+    # --nopath          Strip filename paths from FILE column (default OFF)
+    # --scheme [X]      Don't autodetect, force this scheme on all inputs (default '')
+    # --minid [n.n]     DNA %identity of full allelle to consider 'similar' [~] (default '95')
+    # --mincov [n.n]    DNA %cov to report partial allele at all [?] (default '10')
+    # --minscore [n.n]  Minumum score out of 100 to match a scheme (when auto --scheme) (default '50')
+    Boolean nopath = true
+    String? scheme = 'Corynebacterium diphtheriae'
+  }
+  command <<<
+
+    getmlst.py --species ~{scheme}
+
+    srst2 --output test --input_pe *.fastq.gz --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
+
+  >>>
+  output {
+    File srst2_result = glob("__result.txt")[0]
   }
   runtime {
     docker: "~{docker}"
