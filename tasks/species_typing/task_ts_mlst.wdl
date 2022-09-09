@@ -98,7 +98,7 @@ task srst2 {
 
   >>>
   output {
-    File srst2_result = glob("__result.txt")[0]
+    File srst2_result = glob("*result.txt")[0]
   }
   runtime {
     docker: "~{docker}"
