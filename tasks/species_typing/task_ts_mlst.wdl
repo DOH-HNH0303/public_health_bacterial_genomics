@@ -90,7 +90,7 @@ task srst2 {
   }
   command <<<
 
-    getmlst.py --species ~{scheme}
+    getmlst.py --species "~{scheme}"
 
     srst2 --output test --input_pe ~{read1_cleaned} ~{read2_cleaned} --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
 
