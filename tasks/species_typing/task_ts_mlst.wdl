@@ -92,7 +92,7 @@ task srst2 {
 
     getmlst.py --species "~{scheme}"
 
-    srst2 --output test --input_pe ~{read1_cleaned} ~{read2_cleaned} --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
+    srst2 --output "~{samplename}_srst2" --input_pe ~{read1_cleaned} ~{read2_cleaned} --mlst_db Corynebacterium_diphtheriae.fasta --mlst_definitions profiles_csv --mlst_delimiter '_'
 
     ls
 
@@ -100,7 +100,7 @@ task srst2 {
 
   >>>
   output {
-    File srst2_result = glob("*result.txt")[0]
+    File srst2_result = glob("*~{samplename}_srst2*")[0]
   }
   runtime {
     docker: "~{docker}"
