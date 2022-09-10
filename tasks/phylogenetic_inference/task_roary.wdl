@@ -4,6 +4,7 @@ task roary {
   input {
     Array[File] assembly_fasta
     Array[String] samplename
+    Array[File] prokka_gff
     String cluster_name
     File transpose_py
     Int kmer_size = 19
@@ -23,6 +24,7 @@ task roary {
   command <<<
   touch "test.tsv"
   echo -e " to test.tsv"
+    echo -e "~{sep='\t' prokka_gff}"
   echo -e "~{sep='\t' ref_genomes}" >test.tsv
   echo -e "~{sep='\t' ref_names}" >>test.tsv
   cat test.tsv
