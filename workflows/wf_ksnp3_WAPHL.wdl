@@ -7,6 +7,7 @@ import "../tasks/task_versioning.wdl" as versioning
 workflow ksnp3_workflow {
   input {
     Array[File] assembly_fasta
+    Array[File] prokka_gff
     Array[String] samplename
     String cluster_name
     File transpose_py
@@ -18,7 +19,12 @@ workflow ksnp3_workflow {
   }
   Array[Array[String]] array_refs = [ref_genomes_string, ref_names]
 
-
+  call roary.roary as roary {
+		input:
+			prokka_gff = prokka_gff,
+      samplename = samplename,
+      cluster_name = cluster_name
+  }
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
 			assembly_fasta = assembly_fasta,
