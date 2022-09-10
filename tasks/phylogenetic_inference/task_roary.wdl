@@ -26,7 +26,7 @@ task roary {
   echo -e " to test.tsv"
   echo -e "~{sep='\t' prokka_gff}"
   prokka_array=(~{sep=' ' prokka_gff})
-  roary -e --mafft -p 8 *.gff
+  roary -e --mafft -p 8 prokka_array
 
   ls
 
