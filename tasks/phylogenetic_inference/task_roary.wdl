@@ -25,7 +25,7 @@ task roary {
   touch "test.tsv"
   echo -e " to test.tsv"
   echo -e "~{sep='\t' prokka_gff}"
-  ssembly_array=(~{sep=' ' prokka_gff})
+  prokka_array=(~{sep=' ' prokka_gff})
   roary -e --mafft -p 8 *.gff
 
   ls
