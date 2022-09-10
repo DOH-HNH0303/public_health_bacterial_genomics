@@ -7,7 +7,7 @@ task roary {
     String cluster_name
     File transpose_py
     Int kmer_size = 19
-    String docker_image = "quay.io/staphb/ksnp3:3.1"
+    String docker_image = "staphb/roary"
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
