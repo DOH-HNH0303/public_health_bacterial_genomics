@@ -28,7 +28,8 @@ workflow ksnp3_workflow {
       ref_genomes = ref_genomes,
       array_refs = array_refs,
       transpose_py = transpose_py,
-      ref_names = ref_names
+      ref_names = ref_names,
+      prokka_gff = prokka_gff
       }
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:

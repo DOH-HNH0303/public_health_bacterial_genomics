@@ -3,6 +3,7 @@ version 1.0
 task ksnp3 {
   input {
     Array[File] assembly_fasta
+    Array[File] prokka_gff
     Array[String] samplename
     String cluster_name
     File transpose_py
@@ -23,6 +24,7 @@ task ksnp3 {
   command <<<
   touch "test.tsv"
   echo -e " to test.tsv"
+  echo -e "~{sep='\t' prokka_gff}"
   echo -e "~{sep='\t' ref_genomes}" >test.tsv
   echo -e "~{sep='\t' ref_names}" >>test.tsv
   cat test.tsv
