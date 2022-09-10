@@ -21,11 +21,15 @@ workflow ksnp3_workflow {
   Array[Array[String]] array_refs = [ref_genomes_string, ref_names]
 
   call roary.roary as roary {
-		input:
-			prokka_gff = prokka_gff,
+    input:
+			assembly_fasta = assembly_fasta,
       samplename = samplename,
-      cluster_name = cluster_name
-  }
+      cluster_name = cluster_name,
+      ref_genomes = ref_genomes,
+      array_refs = array_refs,
+      transpose_py = transpose_py,
+      ref_names = ref_names
+      }
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
 			assembly_fasta = assembly_fasta,
