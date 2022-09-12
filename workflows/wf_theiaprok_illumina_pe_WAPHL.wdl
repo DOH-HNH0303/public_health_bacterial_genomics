@@ -123,12 +123,6 @@ workflow theiaprok_illumina_pe {
           read2_cleaned = read_QC_trim.read2_clean,
           genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
       }
-      call ts_mlst.srst2 {
-        input:
-          samplename = samplename,
-          read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean
-      }
       call quast.quast {
         input:
           assembly = shovill_pe.assembly_fasta,
@@ -210,6 +204,14 @@ workflow theiaprok_illumina_pe {
   #    read1_cleaned = read_QC_trim.read1_clean,
   #    read2_cleaned = read_QC_trim.read2_clean
   #}
+  if (kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_species=="diphtheriae"){
+    call taxon_id.ncbi_blast {
+      input:
+        samplename=samplename,
+        assembly=shovill_pe.assembly_fasta,
+  }}
+
+
   if (kraken2_clean.kraken2_genus=="Legionella" || kraken2_clean.kraken2_genus=="Tatlockia" ||kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_genus=="Fluoribacter"){
     call taxon_id.fastANI {
       input:
@@ -313,6 +315,13 @@ workflow theiaprok_illumina_pe {
     String?    fastani_species   =fastANI.fastani_species
     String?    fastani_strain   =fastANI.fastani_strain
     Float?    fastani_ani_estimate   =fastANI.fastani_aniestimate
+
+    File?    dt_omega_report=ncbi_blast.tblastn_dt_omega_report
+    File?    dt_beta_report=ncbi_blast.tblastn_dt_beta_report
+    File?    dt_beta_homologue_tsv=ncbi_blast.tblastn_dt_beta_homologue_report
+    String?    dt_omega=ncbi_blast.dt_omega
+    String?    dt_beta=ncbi_blast.dt_beta
+    String?    dt_beta_homologue=ncbi_blast.dt_beta_homologue
     #String gambit_closest_taxon = gambit.gambit_closest_match
     #Midas taxonomy
     #File midas_report = midas.midas_report

@@ -536,41 +536,94 @@ task kraken2 {
   }
 }
 
-task fastANI {
+task ncbi_blast {
 
   input {
     String    samplename
     File    assembly
-    String    genus
 
   }
 
   command <<<
 
-    #ls ../
+    #Retrieve DT reference seqs
+    wget https://rest.uniprot.org/uniprotkb/P00587.fasta
+    wget https://rest.uniprot.org/uniprotkb/P00588.fasta
+    wget https://rest.uniprot.org/uniprotkb/P00589.fasta
 
-    if [[ ~{genus} == "Tatlockia" || ~{genus} == "Fluoribacter" ]]; then
-        echo "Number is Even"
-        fastANI -q ~{assembly} --rl /data/Legionella_list.txt -o fastani_~{samplename}.txt
+    makeblastdb -in ~{assembly} -dbtype 'nucl'
+
+    tblastn -query P00587.fasta -db ~{assembly} -outfmt 6 -out ~(samplename}_P00587.tsv -evalue 0.01
+    tblastn -query P00588.fasta -db ~{assembly} -outfmt 6 -out ~(samplename}_P00588.tsv -evalue 0.01
+    tblastn -query P00589.fasta -db ~{assembly} -outfmt 6 -out ~(samplename}_P00589.tsv -evalue 0.01
+
+
+    if [ -s ~(samplename}_P00587.tsv ]
+      then
+        echo "~(samplename}_P00587.tsv not empty"
+        head -n +1 ~(samplename}_P00587.tsv | awk '{print $11}' | tee P00587_EVALUE
+        head -n +1 ~(samplename}_P00587.tsv | awk '{print $12}' | tee P00587_BITSCORE
     else
-        fastANI -q ~{assembly} --rl /data/~{genus}_list.txt -o fastani_~{samplename}.txt
+        echo "~(samplename}_P00587.tsv empty"
+        echo "negative" | tee P00587_RESULT
     fi
 
-    python3 /data/pull_organism.py fastani_~{samplename}.txt
+    if [ -s ~(samplename}_P00588.tsv ]
+      then
+        echo "~(samplename}_P00588.tsv not empty"
+        head -n +1 ~(samplename}_P00588.tsv | awk '{print $11}' | tee P00588_EVALUE
+        head -n +1 ~(samplename}_P00588.tsv | awk '{print $12}' | tee P00588_BITSCORE
+    else
+        echo "~(samplename}_P00588.tsv empty"
+        echo "negative" | tee P00588_RESULT
+    fi
 
+    if [ -s ~(samplename}_P00589.tsv ]
+      then
+        echo "~(samplename}_P00589.tsv not empty"
+        head -n +1 ~(samplename}_P00589.tsv | awk '{print $11}' | tee P00589_EVALUE
+        head -n +1 ~(samplename}_P00589.tsv | awk '{print $12}' | tee P00589_BITSCORE
+    else
+        echo "~(samplename}_P00589.tsv empty"
+        echo "negative" | tee P00589_RESULT
+    fi
+
+    #P00587 is DT-Omega
+    #P00588 is DT-Beta
+    #P00589 is DT-Beta-
+    python <<CODE
+    dt_array=["P00587_EVALUE", "P00588_EVALUE", "P00589_EVALUE"]
+
+    for i in dt_array:
+      with open(i, 'r') as file:
+          data = float(file.read().replace('\n', ''))
+          if data <=0.01:
+            text="possible homolog"
+
+            if data <=1e-50:
+              text="positive"
+
+            new_file=i[0:6]+"_RESULT"
+            f = open(new_file, "w")
+
+    CODE
+    #P00587 is DT-Omega
+    #P00588 is DT-Beta
+    #P00589 is DT-Beta-homologue
   >>>
 
   output {
-    File?    fastani_report="fastani_~{samplename}.txt"
-    String?    fastani_genus=read_string("TOPGENUS")
-    String?    fastani_species=read_string("TOPSPECIES")
-    String?    fastani_strain=read_string("TOPSTRAIN")
-    Float?    fastani_aniestimate=read_float("ANIESTIMATE")
+    File?    tblastn_dt_omega_report="~(samplename}_P00587.tsv"
+    File?    tblastn_dt_beta_report="~(samplename}_P00588.tsv"
+    File?    tblastn_dt_beta_homologue_report="~(samplename}_P00589.tsv"
+    String?    dt_omega=read_string("P00587_RESULT")
+    String?    dt_beta=read_string("P00588_RESULT")
+    String?    dt_beta_homologue=read_string("P00589_RESULT")
 
   }
 
   runtime {
-    docker:       "hnh0303/fastani:1.33-legionella_corynebacterium"
+    docker:       "ncbi/blast:2.13.0"
     memory:       "16 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"
