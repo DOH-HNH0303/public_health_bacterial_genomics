@@ -628,5 +628,6 @@ task ncbi_blast {
     cpu:          4
     disks:        "local-disk 100 SSD"
     preemptible:  1
+    continueOnReturnCode: "True"
   }
 }
