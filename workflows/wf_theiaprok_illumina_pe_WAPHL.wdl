@@ -124,7 +124,7 @@ workflow theiaprok_illumina_pe {
           read2_cleaned = read_QC_trim.read2_clean,
           genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
       }
-      call fastani.fastaANI {
+      call fastani.fastANI {
         input:
           samplename = samplename,
           assembly = shovill_pe.assembly_fasta
