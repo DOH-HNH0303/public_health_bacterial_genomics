@@ -553,38 +553,38 @@ task ncbi_blast {
 
     makeblastdb -in ~{assembly} -dbtype 'nucl'
 
-    tblastn -query P00587.fasta -db ~{assembly} -outfmt 6 -out ~(samplename}_P00587.tsv -evalue 0.01
-    tblastn -query P00588.fasta -db ~{assembly} -outfmt 6 -out ~(samplename}_P00588.tsv -evalue 0.01
-    tblastn -query P00589.fasta -db ~{assembly} -outfmt 6 -out ~(samplename}_P00589.tsv -evalue 0.01
+    tblastn -query P00587.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00587.tsv -evalue 0.01
+    tblastn -query P00588.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00588.tsv -evalue 0.01
+    tblastn -query P00589.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00589.tsv -evalue 0.01
 
 
-    if [ -s ~(samplename}_P00587.tsv ]
+    if [ -s ~{samplename}_P00587.tsv ]
       then
-        echo "~(samplename}_P00587.tsv not empty"
-        head -n +1 ~(samplename}_P00587.tsv | awk '{print $11}' | tee P00587_EVALUE
-        head -n +1 ~(samplename}_P00587.tsv | awk '{print $12}' | tee P00587_BITSCORE
+        echo "~{samplename}_P00587.tsv not empty"
+        head -n +1 ~{samplename}_P00587.tsv | awk '{print $11}' | tee P00587_EVALUE
+        head -n +1 ~{samplename}_P00587.tsv | awk '{print $12}' | tee P00587_BITSCORE
     else
-        echo "~(samplename}_P00587.tsv empty"
+        echo "~{samplename}_P00587.tsv empty"
         echo "negative" | tee P00587_RESULT
     fi
 
-    if [ -s ~(samplename}_P00588.tsv ]
+    if [ -s ~{samplename}_P00588.tsv ]
       then
-        echo "~(samplename}_P00588.tsv not empty"
-        head -n +1 ~(samplename}_P00588.tsv | awk '{print $11}' | tee P00588_EVALUE
-        head -n +1 ~(samplename}_P00588.tsv | awk '{print $12}' | tee P00588_BITSCORE
+        echo "~{samplename}_P00588.tsv not empty"
+        head -n +1 ~{samplename}_P00588.tsv | awk '{print $11}' | tee P00588_EVALUE
+        head -n +1 ~{samplename}_P00588.tsv | awk '{print $12}' | tee P00588_BITSCORE
     else
-        echo "~(samplename}_P00588.tsv empty"
+        echo "~{samplename}_P00588.tsv empty"
         echo "negative" | tee P00588_RESULT
     fi
 
-    if [ -s ~(samplename}_P00589.tsv ]
+    if [ -s ~{samplename}_P00589.tsv ]
       then
-        echo "~(samplename}_P00589.tsv not empty"
-        head -n +1 ~(samplename}_P00589.tsv | awk '{print $11}' | tee P00589_EVALUE
-        head -n +1 ~(samplename}_P00589.tsv | awk '{print $12}' | tee P00589_BITSCORE
+        echo "~{samplename}_P00589.tsv not empty"
+        head -n +1 ~{samplename}_P00589.tsv | awk '{print $11}' | tee P00589_EVALUE
+        head -n +1 ~{samplename}_P00589.tsv | awk '{print $12}' | tee P00589_BITSCORE
     else
-        echo "~(samplename}_P00589.tsv empty"
+        echo "~{samplename}_P00589.tsv empty"
         echo "negative" | tee P00589_RESULT
     fi
 
@@ -613,9 +613,9 @@ task ncbi_blast {
   >>>
 
   output {
-    File?    tblastn_dt_omega_report="~(samplename}_P00587.tsv"
-    File?    tblastn_dt_beta_report="~(samplename}_P00588.tsv"
-    File?    tblastn_dt_beta_homologue_report="~(samplename}_P00589.tsv"
+    File?    tblastn_dt_omega_report="~{samplename}_P00587.tsv"
+    File?    tblastn_dt_beta_report="~{samplename}_P00588.tsv"
+    File?    tblastn_dt_beta_homologue_report="~{samplename}_P00589.tsv"
     String?    dt_omega=read_string("P00587_RESULT")
     String?    dt_beta=read_string("P00588_RESULT")
     String?    dt_beta_homologue=read_string("P00589_RESULT")
