@@ -25,6 +25,7 @@ import "../tasks/gene_typing/task_plasmidfinder.wdl" as plasmidfinder
 import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/task_qc_utils.wdl" as qc
 import "../tasks/task_taxon_id.wdl" as taxon_id
+import "../tasks/taxon_id/task_fastani.wdl" as fastani
 import "../tasks/task_denovo_assembly.wdl" as assembly
 import "../tasks/task_read_clean.wdl" as read_clean
 
@@ -122,6 +123,11 @@ workflow theiaprok_illumina_pe {
           read1_cleaned = read_QC_trim.read1_clean,
           read2_cleaned = read_QC_trim.read2_clean,
           genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
+      }
+      call fastani.fastaANI {
+        input:
+          samplename = samplename,
+          assembly = shovill_pe.assembly_fasta
       }
       call quast.quast {
         input:
