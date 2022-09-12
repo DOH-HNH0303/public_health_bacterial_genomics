@@ -124,11 +124,6 @@ workflow theiaprok_illumina_pe {
           read2_cleaned = read_QC_trim.read2_clean,
           genome_size = select_first([genome_size, clean_check_reads.est_genome_length])
       }
-      call fastani.fastANI {
-        input:
-          samplename = samplename,
-          assembly = shovill_pe.assembly_fasta
-      }
       call quast.quast {
         input:
           assembly = shovill_pe.assembly_fasta,
@@ -217,15 +212,14 @@ workflow theiaprok_illumina_pe {
         assembly=shovill_pe.assembly_fasta,
   }}
 
-
   if (kraken2_clean.kraken2_genus=="Legionella" || kraken2_clean.kraken2_genus=="Tatlockia" ||kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_genus=="Fluoribacter"){
-    call taxon_id.fastANI {
+    call fastani.fastANI {
       input:
-        samplename=samplename,
-        assembly=shovill_pe.assembly_fasta,
+        samplename = samplename,
+        assembly = shovill_pe.assembly_fasta,
         genus=kraken2_clean.kraken2_genus
-  }}
-
+    }
+}
 
   call abricate.abricate as abricate_amr {
     input:
