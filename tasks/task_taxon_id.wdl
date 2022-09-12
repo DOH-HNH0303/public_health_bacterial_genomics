@@ -541,21 +541,24 @@ task ncbi_blast {
   input {
     String    samplename
     File    assembly
+    File dt_omega
+    File dt_beta
+    File dt_beta_homologue
 
   }
 
   command <<<
 
     #Retrieve DT reference seqs
-    wget https://rest.uniprot.org/uniprotkb/P00587.fasta
-    wget https://rest.uniprot.org/uniprotkb/P00588.fasta
-    wget https://rest.uniprot.org/uniprotkb/P00589.fasta
+    #wget https://rest.uniprot.org/uniprotkb/P00587.fasta
+    #wget https://rest.uniprot.org/uniprotkb/P00588.fasta
+    #wget https://rest.uniprot.org/uniprotkb/P00589.fasta
 
     makeblastdb -in ~{assembly} -dbtype 'nucl'
 
-    tblastn -query P00587.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00587.tsv -evalue 0.01
-    tblastn -query P00588.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00588.tsv -evalue 0.01
-    tblastn -query P00589.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00589.tsv -evalue 0.01
+    tblastn -query ~{dt_omega} -db ~{assembly} -outfmt 6 -out ~{samplename}_P00587.tsv -evalue 0.01
+    tblastn -query ~{dt_beta} -db ~{assembly} -outfmt 6 -out ~{samplename}_P00588.tsv -evalue 0.01
+    tblastn -query ~{dt_beta_homologue} -db ~{assembly} -outfmt 6 -out ~{samplename}_P00589.tsv -evalue 0.01
 
     ls
     echo ""

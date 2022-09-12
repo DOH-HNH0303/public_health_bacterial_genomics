@@ -60,6 +60,7 @@ workflow theiaprok_illumina_pe {
     Int min_proportion = 50
     Boolean call_resfinder = false
     Boolean skip_screen = false
+    String wget_dt_docker_image = "inutano/wget:1.20.3-r1"
   }
 
   call versioning.version_capture{
@@ -206,10 +207,17 @@ workflow theiaprok_illumina_pe {
   #    read2_cleaned = read_QC_trim.read2_clean
   #}
   if (kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_species=="diphtheriae"){
+    call task_utilities.wget_dt {
+      input:
+        docker_image=wget_dt_docker_image
+  }
     call taxon_id.ncbi_blast {
       input:
+        dt_omega=ncbi_blast.dt_omega,
+        dt_beta=ncbi_blast.dt_beta,
+        dt_beta_homologue=ncbi_blast.dt_beta_homologue,
         samplename=samplename,
-        assembly=shovill_pe.assembly_fasta,
+        assembly=shovill_pe.assembly_fasta
   }}
 
   if (kraken2_clean.kraken2_genus=="Legionella" || kraken2_clean.kraken2_genus=="Tatlockia" ||kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_genus=="Fluoribacter"){
