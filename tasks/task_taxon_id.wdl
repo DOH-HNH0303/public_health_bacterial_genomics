@@ -630,7 +630,7 @@ task ncbi_blast {
   }
 
   runtime {
-    docker:       "pegi3s/blast:2.13.0"
+    docker:       "staphb/blast:2.13.0"
     memory:       "16 GB"
     cpu:          4
     disks:        "local-disk 100 SSD"

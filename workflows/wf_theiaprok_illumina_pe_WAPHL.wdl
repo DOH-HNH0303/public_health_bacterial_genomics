@@ -207,10 +207,6 @@ workflow theiaprok_illumina_pe {
   #    read2_cleaned = read_QC_trim.read2_clean
   #}
   if (kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_species=="diphtheriae"){
-    call utilities.wget_dt {
-      input:
-        docker_image=wget_dt_docker_image
-  }
     call taxon_id.ncbi_blast {
       input:
         dt_omega=ncbi_blast.dt_omega,
