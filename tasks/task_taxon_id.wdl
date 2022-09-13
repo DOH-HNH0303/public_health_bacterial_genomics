@@ -541,18 +541,14 @@ task ncbi_blast {
   input {
     String    samplename
     File    assembly
-    File dt_omega
-    File dt_beta
-    File dt_beta_homologue
-
   }
 
   command <<<
 
     #Retrieve DT reference seqs
-    #wget https://rest.uniprot.org/uniprotkb/P00587.fasta
-    #wget https://rest.uniprot.org/uniprotkb/P00588.fasta
-    #wget https://rest.uniprot.org/uniprotkb/P00589.fasta
+    wget https://rest.uniprot.org/uniprotkb/P00587.fasta
+    wget https://rest.uniprot.org/uniprotkb/P00588.fasta
+    wget https://rest.uniprot.org/uniprotkb/P00589.fasta
 
     makeblastdb -in ~{assembly} -dbtype 'nucl'
 

@@ -209,9 +209,6 @@ workflow theiaprok_illumina_pe {
   if (kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_species=="diphtheriae"){
     call taxon_id.ncbi_blast {
       input:
-        dt_omega=ncbi_blast.dt_omega,
-        dt_beta=ncbi_blast.dt_beta,
-        dt_beta_homologue=ncbi_blast.dt_beta_homologue,
         samplename=samplename,
         assembly=shovill_pe.assembly_fasta
   }}
