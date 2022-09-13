@@ -552,9 +552,9 @@ task ncbi_blast {
 
     makeblastdb -in ~{assembly} -dbtype 'nucl'
 
-    tblastn -query ~{dt_omega} -db ~{assembly} -outfmt 6 -out ~{samplename}_P00587.tsv -evalue 0.01
-    tblastn -query ~{dt_beta} -db ~{assembly} -outfmt 6 -out ~{samplename}_P00588.tsv -evalue 0.01
-    tblastn -query ~{dt_beta_homologue} -db ~{assembly} -outfmt 6 -out ~{samplename}_P00589.tsv -evalue 0.01
+    tblastn -query P00587.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00587.tsv -evalue 0.01
+    tblastn -query P00588.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00588.tsv -evalue 0.01
+    tblastn -query P00589.fasta -db ~{assembly} -outfmt 6 -out ~{samplename}_P00589.tsv -evalue 0.01
 
     ls
     echo ""
