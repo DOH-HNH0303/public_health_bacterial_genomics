@@ -211,7 +211,16 @@ workflow theiaprok_illumina_pe {
       input:
         samplename=samplename,
         assembly=shovill_pe.assembly_fasta
-  }}
+  }
+  call utilities.get_dt_results {
+    input:
+      samplename=samplename,
+      assembly=shovill_pe.assembly_fasta,
+      dt_omega_EVAL=ncbi_blast.dt_omega_EVAL
+      dt_beta_EVAL=ncbi_blast.dt_beta_EVAL
+      dt_beta_homologue_EVAL=ncbi_blast.dt_beta_homologue_EVAL
+}
+}
 
   if (kraken2_clean.kraken2_genus=="Legionella" || kraken2_clean.kraken2_genus=="Tatlockia" ||kraken2_clean.kraken2_genus=="Corynebacterium" || kraken2_clean.kraken2_genus=="Fluoribacter"){
     call fastani.fastANI {

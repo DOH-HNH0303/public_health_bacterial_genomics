@@ -26,24 +26,42 @@ task python {
   }
 }
 
-task wget_dt {
+task get_dt_results {
   input {
     String docker_image
+    String samplename
     Int mem_size_gb = 8
     Int CPUs = 4
+    Float? dt_omega_EVAL
+    Float? dt_beta_EVAL
+    Float? dt_beta_homologue_EVAL
   }
   command <<<
   ls>list.txt
-  hwget https://rest.uniprot.org/uniprotkb/P00587.fasta
-  wget https://rest.uniprot.org/uniprotkb/P00588.fasta
-  wget https://rest.uniprot.org/uniprotkb/P00589.fasta
+  python <<CODE
+  dt_array=["~{dt_omega_EVAL}", "~{dt_beta_EVAL}", "~{dt_beta_homologue_EVAL}"]
+  name_array=["dt_omega", "dt_beta_EVAL", "dt_beta_homologue_EVAL"]
+
+  for i in range(len(dt_array)):
+
+    if dt_array[i] <=0.01:
+      text="possible homolog"
+
+      if dt_array[i] <=1e-50:
+        text="positive"
+
+      new_file=~{samplename}+"_"+name_array[i]+"_RESULT"
+      f = open(new_file, "w")
+
+  CODE
 
 
   >>>
   output {
-    File dt_omega = "P00587.fasta"
-    File dt_beta = "P00588.fasta"
-    File dt_beta_homologue = "P00587.fasta"
+    String dt_omega =read_string("~{samplename}_dt_omega_RESULT")
+    String dt_beta =read_string("~{samplename}_dt_beta_RESULT")
+    String dt_beta_homologue =read_string("~{samplename}_dt_beta__homologue_RESULT")
+
     String wget_dt_docker_image = docker_image
   }
   runtime {
