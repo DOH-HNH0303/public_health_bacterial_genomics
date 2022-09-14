@@ -624,7 +624,7 @@ task ncbi_blast {
     String?    dt_beta_homologue=read_string("P00589_RESULT")
     Float?     dt_omega_EVAL=read_float("P00587_EVALUE")
     Float?     dt_beta_EVAL=read_float("P00588_EVALUE")
-    Float?     dt_beta__homologue_EVAL=read_float("P00589_EVALUE")
+    Float?     dt_beta_homologue_EVAL=read_float("P00589_EVALUE")
 
   }
 
