@@ -83,7 +83,7 @@ task get_dt_results {
           if data <=1e-50:
             text="positive"
 
-          new_file=~{samplename}+"_"+name_array[i]+"_RESULT"
+          new_file="~{samplename}"+"_"+name_array[i]+"_RESULT"
           f = open(new_file, "w")
 
   CODE
