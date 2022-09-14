@@ -215,7 +215,6 @@ workflow theiaprok_illumina_pe {
   call utilities.get_dt_results {
     input:
       samplename=samplename,
-      assembly=shovill_pe.assembly_fasta,
       dt_omega_EVAL=ncbi_blast.dt_omega_EVAL,
       dt_beta_EVAL=ncbi_blast.dt_beta_EVAL,
       dt_beta_homologue_EVAL=ncbi_blast.dt_beta_homologue_EVAL
