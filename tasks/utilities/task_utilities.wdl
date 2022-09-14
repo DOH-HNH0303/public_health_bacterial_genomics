@@ -37,6 +37,7 @@ task get_dt_results {
     File?    tblastn_dt_beta_homologue_report
   }
   command <<<
+  
   ls>list.txt
 
   if [ -s ~{tblastn_dt_omega_report} ]
