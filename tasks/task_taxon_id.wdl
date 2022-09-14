@@ -594,22 +594,6 @@ task ncbi_blast {
     #P00587 is DT-Omega
     #P00588 is DT-Beta
     #P00589 is DT-Beta-
-    /* python <<CODE
-    dt_array=["P00587_EVALUE", "P00588_EVALUE", "P00589_EVALUE"]
-
-    for i in dt_array:
-      with open(i, 'r') as file:
-          data = float(file.read().replace('\n', ''))
-          if data <=0.01:
-            text="possible homolog"
-
-            if data <=1e-50:
-              text="positive"
-
-            new_file=i[0:6]+"_RESULT"
-            f = open(new_file, "w")
-
-    CODE */
     #P00587 is DT-Omega
     #P00588 is DT-Beta
     #P00589 is DT-Beta-homologue
