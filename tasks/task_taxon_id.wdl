@@ -575,7 +575,7 @@ task ncbi_blast {
       then
         echo "~{samplename}_P00588.tsv not empty"
         head -n +1 ~{samplename}_P00588.tsv | awk '{print $11}' >P00588_EVALUE
-        head -n +1 ~{samplename}_P00588.tsv | awk '{print $12}' >tee P00588_BITSCORE
+        head -n +1 ~{samplename}_P00588.tsv | awk '{print $12}' >P00588_BITSCORE
     else
         echo "~{samplename}_P00588.tsv empty"
         echo "negative" >P00588_RESULT
@@ -585,7 +585,7 @@ task ncbi_blast {
       then
         echo "~{samplename}_P00589.tsv not empty"
         head -n +1 ~{samplename}_P00589.tsv | awk '{print $11}' >P00589_EVALUE
-        head -n +1 ~{samplename}_P00589.tsv | awk '{print $12}' >tee P00589_BITSCORE
+        head -n +1 ~{samplename}_P00589.tsv | awk '{print $12}' >P00589_BITSCORE
     else
         echo "~{samplename}_P00589.tsv empty"
         echo "negative" >tee P00589_RESULT
