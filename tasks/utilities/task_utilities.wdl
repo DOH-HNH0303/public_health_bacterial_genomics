@@ -47,6 +47,8 @@ task get_dt_results {
   else
       echo "~{tblastn_dt_omega_report} empty"
       echo "negative" >P00587_RESULT
+      echo "NULL" >P00587_EVALUE
+      echo "NULL" >P00587_BITSCORE
   fi
 
   if [ -s ~{tblastn_dt_beta_report} ]
@@ -57,6 +59,8 @@ task get_dt_results {
   else
       echo "~{tblastn_dt_beta_report} empty"
       echo "negative" >P00588_RESULT
+      echo "NULL" >P00588_EVALUE
+      echo "NULL" >P00589_BITSCORE
   fi
 
   if [ -s ~{tblastn_dt_beta_homologue_report} ]
@@ -67,6 +71,8 @@ task get_dt_results {
   else
       echo "~{tblastn_dt_beta_homologue_report} empty"
       echo "negative" >P00589_RESULT
+      echo "NULL" >P00589_EVALUE
+      echo "NULL" >P00589_BITSCORE
   fi
 
   python <<CODE
@@ -75,6 +81,7 @@ task get_dt_results {
 
   for i in range(len(dt_array)):
     with open(dt_array[i], 'r') as file:
+      if str(file.read().replace('\n', '')) is not "NULL":
         data = float(file.read().replace('\n', ''))
 
         if data <=0.01:
