@@ -70,7 +70,7 @@ task get_dt_results {
   fi
 
   python <<CODE
-  dt_array=[P00587_EVALUE, P00588_EVALUE, P00589_EVALUE]
+  dt_array=["P00587_EVALUE", "P00588_EVALUE", "P00589_EVALUE"]
   name_array=["dt_omega", "dt_beta_EVAL", "dt_beta_homologue_EVAL"]
 
   for i in range(len(dt_array)):
