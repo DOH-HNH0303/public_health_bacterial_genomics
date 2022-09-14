@@ -564,8 +564,8 @@ task ncbi_blast {
     if [ -s ~{samplename}_P00587.tsv ]
       then
         echo "~{samplename}_P00587.tsv not empty"
-        head -n +1 ~{samplename}_P00587.tsv | awk '{print $11}' | tee P00587_EVALUE
-        head -n +1 ~{samplename}_P00587.tsv | awk '{print $12}' | tee P00587_BITSCORE
+        head -n +1 ~{samplename}_P00587.tsv | awk '{print $11}' >P00587_EVALUE
+        head -n +1 ~{samplename}_P00587.tsv | awk '{print $12}' >P00587_BITSCORE
     else
         echo "~{samplename}_P00587.tsv empty"
         echo "negative" | tee P00587_RESULT
