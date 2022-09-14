@@ -215,9 +215,9 @@ workflow theiaprok_illumina_pe {
   call utilities.get_dt_results {
     input:
       samplename=samplename,
-      dt_omega_EVAL=ncbi_blast.dt_omega_EVAL,
-      dt_beta_EVAL=ncbi_blast.dt_beta_EVAL,
-      dt_beta_homologue_EVAL=ncbi_blast.dt_beta_homologue_EVAL
+      tblastn_dt_omega_report=ncbi_blast.tblastn_dt_omega_report,
+      tblastn_dt_beta_report=ncbi_blast.tblastn_dt_beta_report,
+      tblastn_dt_beta_homologue_report=ncbi_blast.tblastn_dt_beta_homologue_report
 }
 }
 
@@ -325,12 +325,18 @@ workflow theiaprok_illumina_pe {
     String?    fastani_strain   =fastANI.fastani_strain
     Float?    fastani_ani_estimate   =fastANI.fastani_aniestimate
 
-    File?    dt_omega_report=ncbi_blast.tblastn_dt_omega_report
-    File?    dt_beta_report=ncbi_blast.tblastn_dt_beta_report
+    File?    dt_omega_tsv=ncbi_blast.tblastn_dt_omega_report
+    File?    dt_beta_tsv=ncbi_blast.tblastn_dt_beta_report
     File?    dt_beta_homologue_tsv=ncbi_blast.tblastn_dt_beta_homologue_report
-    String?    dt_omega=ncbi_blast.dt_omega
-    String?    dt_beta=ncbi_blast.dt_beta
-    String?    dt_beta_homologue=ncbi_blast.dt_beta_homologue
+    String?   dt_omega=get_dt_results.dt_omega
+    String? dt_beta =get_dt_results.dt_beta
+    String? dt_beta_homologue =get_dt_results.dt_beta_homologue
+    Float? dt_omega_evalue =get_dt_results.dt_omega_evalue
+    Float? dt_beta_evalue =get_dt_results.dt_beta_evalue
+    Float? dt_beta_homologue_evalue =get_dt_results.dt_beta_homologue_evalue
+
+
+
     #String gambit_closest_taxon = gambit.gambit_closest_match
     #Midas taxonomy
     #File midas_report = midas.midas_report
