@@ -32,26 +32,59 @@ task get_dt_results {
     String samplename
     Int mem_size_gb = 8
     Int CPUs = 4
-    Float? dt_omega_EVAL
-    Float? dt_beta_EVAL
-    Float? dt_beta_homologue_EVAL
+    File?    tblastn_dt_omega_report
+    File?    tblastn_dt_beta_report
+    File?    tblastn_dt_beta_homologue_report
   }
   command <<<
   ls>list.txt
+
+  if [ -s ~{tblastn_dt_omega_report} ]
+    then
+      echo "~{tblastn_dt_omega_report} not empty"
+      head -n +1 ~{tblastn_dt_omega_report} | awk '{print $11}' >P00587_EVALUE
+      head -n +1 ~{tblastn_dt_omega_report} | awk '{print $12}' >P00587_BITSCORE
+  else
+      echo "~{tblastn_dt_omega_report} empty"
+      echo "negative" >P00587_RESULT
+  fi
+
+  if [ -s ~{tblastn_dt_beta_report} ]
+    then
+      echo "~{tblastn_dt_beta_report} not empty"
+      head -n +1 ~{tblastn_dt_beta_report} | awk '{print $11}' >P00588_EVALUE
+      head -n +1 ~{tblastn_dt_beta_report} | awk '{print $12}' >P00588_BITSCORE
+  else
+      echo "~{tblastn_dt_beta_report} empty"
+      echo "negative" >P00588_RESULT
+  fi
+
+  if [ -s ~{tblastn_dt_beta_homologue_report} ]
+    then
+      echo "~{tblastn_dt_beta_homologue_report} not empty"
+      head -n +1 ~{tblastn_dt_beta_homologue_report} | awk '{print $11}' >P00589_EVALUE
+      head -n +1 ~{tblastn_dt_beta_homologue_report} | awk '{print $12}' >P00589_BITSCORE
+  else
+      echo "~{tblastn_dt_beta_homologue_report} empty"
+      echo "negative" >P00589_RESULT
+  fi
+
   python <<CODE
-  dt_array=["~{dt_omega_EVAL}", "~{dt_beta_EVAL}", "~{dt_beta_homologue_EVAL}"]
+  dt_array=[P00587_EVALUE, P00588_EVALUE, P00589_EVALUE]
   name_array=["dt_omega", "dt_beta_EVAL", "dt_beta_homologue_EVAL"]
 
   for i in range(len(dt_array)):
+    with open(dt_array[i], 'r') as file:
+        data = float(file.read().replace('\n', ''))
 
-    if dt_array[i] <=0.01:
-      text="possible homolog"
+        if data <=0.01:
+          text="possible homolog"
 
-      if dt_array[i] <=1e-50:
-        text="positive"
+          if data <=1e-50:
+            text="positive"
 
-      new_file=~{samplename}+"_"+name_array[i]+"_RESULT"
-      f = open(new_file, "w")
+          new_file=~{samplename}+"_"+name_array[i]+"_RESULT"
+          f = open(new_file, "w")
 
   CODE
 

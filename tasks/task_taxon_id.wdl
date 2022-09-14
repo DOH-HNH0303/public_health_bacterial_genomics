@@ -564,31 +564,22 @@ task ncbi_blast {
     if [ -s ~{samplename}_P00587.tsv ]
       then
         echo "~{samplename}_P00587.tsv not empty"
-        head -n +1 ~{samplename}_P00587.tsv | awk '{print $11}' >P00587_EVALUE
-        head -n +1 ~{samplename}_P00587.tsv | awk '{print $12}' >P00587_BITSCORE
     else
         echo "~{samplename}_P00587.tsv empty"
-        echo "negative" >P00587_RESULT
     fi
 
     if [ -s ~{samplename}_P00588.tsv ]
       then
         echo "~{samplename}_P00588.tsv not empty"
-        head -n +1 ~{samplename}_P00588.tsv | awk '{print $11}' >P00588_EVALUE
-        head -n +1 ~{samplename}_P00588.tsv | awk '{print $12}' >P00588_BITSCORE
     else
         echo "~{samplename}_P00588.tsv empty"
-        echo "negative" >P00588_RESULT
     fi
 
     if [ -s ~{samplename}_P00589.tsv ]
       then
         echo "~{samplename}_P00589.tsv not empty"
-        head -n +1 ~{samplename}_P00589.tsv | awk '{print $11}' >P00589_EVALUE
-        head -n +1 ~{samplename}_P00589.tsv | awk '{print $12}' >P00589_BITSCORE
     else
         echo "~{samplename}_P00589.tsv empty"
-        echo "negative" >P00589_RESULT
     fi
 
     #P00587 is DT-Omega
@@ -603,13 +594,6 @@ task ncbi_blast {
     File?    tblastn_dt_omega_report="~{samplename}_P00587.tsv"
     File?    tblastn_dt_beta_report="~{samplename}_P00588.tsv"
     File?    tblastn_dt_beta_homologue_report="~{samplename}_P00589.tsv"
-    String?    dt_omega=read_string("P00587_RESULT")
-    String?    dt_beta=read_string("P00588_RESULT")
-    String?    dt_beta_homologue=read_string("P00589_RESULT")
-    Float?     dt_omega_EVAL=read_float("P00587_EVALUE")
-    Float?     dt_beta_EVAL=read_float("P00588_EVALUE")
-    Float?     dt_beta_homologue_EVAL=read_float("P00589_EVALUE")
-
   }
 
   runtime {
