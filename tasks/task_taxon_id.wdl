@@ -568,7 +568,7 @@ task ncbi_blast {
         head -n +1 ~{samplename}_P00587.tsv | awk '{print $12}' >P00587_BITSCORE
     else
         echo "~{samplename}_P00587.tsv empty"
-        echo "negative" | tee P00587_RESULT
+        echo "negative" >P00587_RESULT
     fi
 
     if [ -s ~{samplename}_P00588.tsv ]
@@ -578,7 +578,7 @@ task ncbi_blast {
         head -n +1 ~{samplename}_P00588.tsv | awk '{print $12}' >tee P00588_BITSCORE
     else
         echo "~{samplename}_P00588.tsv empty"
-        echo "negative" | tee P00588_RESULT
+        echo "negative" >P00588_RESULT
     fi
 
     if [ -s ~{samplename}_P00589.tsv ]
@@ -588,7 +588,7 @@ task ncbi_blast {
         head -n +1 ~{samplename}_P00589.tsv | awk '{print $12}' >tee P00589_BITSCORE
     else
         echo "~{samplename}_P00589.tsv empty"
-        echo "negative" | tee P00589_RESULT
+        echo "negative" >tee P00589_RESULT
     fi
 
     #P00587 is DT-Omega
