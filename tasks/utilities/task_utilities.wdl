@@ -28,7 +28,7 @@ task python {
 
 task get_dt_results {
   input {
-    String docker_image
+    String docker_image = "amancevice/pandas:1.4.2-alpine"
     String samplename
     Int mem_size_gb = 8
     Int CPUs = 4
