@@ -28,7 +28,7 @@ task python {
 
 task get_dt_results {
   input {
-    String docker_image = "ubuntu:bionic-20220902"
+    String docker_image = "broadinstitute/terra-tools:tqdm"
     String samplename
     Int mem_size_gb = 8
     Int CPUs = 4
