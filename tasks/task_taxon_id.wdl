@@ -588,7 +588,7 @@ task ncbi_blast {
         head -n +1 ~{samplename}_P00589.tsv | awk '{print $12}' >P00589_BITSCORE
     else
         echo "~{samplename}_P00589.tsv empty"
-        echo "negative" >tee P00589_RESULT
+        echo "negative" >P00589_RESULT
     fi
 
     #P00587 is DT-Omega
