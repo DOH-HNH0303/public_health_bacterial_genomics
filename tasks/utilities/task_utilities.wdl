@@ -76,25 +76,6 @@ task get_dt_results {
       echo "" >P00589_BITSCORE
   fi
 
-  python <<CODE
-  dt_array=["P00587_EVALUE", "P00588_EVALUE", "P00589_EVALUE"]
-  name_array=["dt_omega", "dt_beta_EVAL", "dt_beta_homologue_EVAL"]
-
-  for i in range(len(dt_array)):
-    with open(dt_array[i], 'r') as file:
-      if float(file.read().replace('\n', '')):
-        data = float(file.read().replace('\n', ''))
-
-        if data <=0.01:
-          text="possible homolog"
-
-          if data <=1e-50:
-            text="positive"
-
-          new_file="~{samplename}"+"_"+name_array[i]+"_RESULT"
-          f = open(new_file, "w")
-
-  CODE
 
   python <<CODE
   dt_array=["P00587", "P00588", "P00589"]
