@@ -82,7 +82,7 @@ task get_dt_results {
 
   for i in range(len(dt_array)):
     with open(dt_array[i], 'r') as file:
-      if loat(file.read().replace('\n', '')):
+      if float(file.read().replace('\n', '')):
         data = float(file.read().replace('\n', ''))
 
         if data <=0.01:
@@ -96,6 +96,43 @@ task get_dt_results {
 
   CODE
 
+  python <<CODE
+  dt_array=["P00587", "P00588", "P00589"]
+  file_array=["~{tblastn_dt_omega_report}", "~{tblastn_dt_beta_report}", "~{tblastn_dt_beta_homologue_report}"]
+  for i in range(len(file_array)):
+
+    with open(file_array[i], 'r') as file:
+      count = 1
+      for line in file:
+        count += 1
+        if count==2:
+          data_array = line.split()
+          eval=data_array[-2]
+          eval_name=dt_array[i]+"_EVALUE"
+          f = open(eval_name, "w")
+          f.write(eval)
+          f.close()
+
+          bitscore=data_array[-1]
+          bitscore_name=dt_array[i]+"_BITSCORE"
+          f = open(bitscore_name, "w")
+          f.write(bitscore)
+          f.close()
+
+          if float(eval)<=1e-50:
+             text="positive"
+          elif float(data) <=0.01:
+             text="possible homolog"
+          else:
+             text="negative"
+
+          result_name=dt_array[i]+"_RESULT"
+          f = open(result_name, "w")
+          f.write(text)
+          f.close()
+
+  CODE
+
 
   >>>
   output {
@@ -105,6 +142,9 @@ task get_dt_results {
     Float dt_omega_evalue =read_float("P00587_EVALUE")
     Float dt_beta_evalue =read_float("P00588_EVALUE")
     Float dt_beta_homologue_evalue =read_float("P00589_EVALUE")
+    Float dt_omega_bitscore =read_float("P00587_BITSCORE")
+    Float dt_beta_bitscore =read_float("P00588_BITSCORE")
+    Float dt_beta_homologue_bitscore =read_float("P00589_BITSCORE")
 
     String wget_dt_docker_image = docker_image
   }
