@@ -82,7 +82,7 @@ task get_dt_results {
 
   for i in range(len(dt_array)):
     with open(dt_array[i], 'r') as file:
-      if str(file.read().replace('\n', '')):
+      if loat(file.read().replace('\n', '')):
         data = float(file.read().replace('\n', ''))
 
         if data <=0.01:
