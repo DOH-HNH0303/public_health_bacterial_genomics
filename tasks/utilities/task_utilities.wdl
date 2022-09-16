@@ -118,9 +118,9 @@ task get_dt_results {
 
   >>>
   output {
-    String dt_omega =read_string("~{samplename}_dt_omega_RESULT")
-    String dt_beta =read_string("~{samplename}_dt_beta_RESULT")
-    String dt_beta_homologue =read_string("~{samplename}_dt_beta_homologue_RESULT")
+    String dt_omega =read_string("~{samplename}_P00587_RESULT")
+    String dt_beta =read_string("~{samplename}_P00588_RESULT")
+    String dt_beta_homologue =read_string("~{samplename}_P00589_RESULT")
     Float dt_omega_evalue =read_float("P00587_EVALUE")
     Float dt_beta_evalue =read_float("P00588_EVALUE")
     Float dt_beta_homologue_evalue =read_float("P00589_EVALUE")
