@@ -331,9 +331,9 @@ workflow theiaprok_illumina_pe {
     String?   dt_omega=get_dt_results.dt_omega
     String? dt_beta =get_dt_results.dt_beta
     String? dt_beta_homologue =get_dt_results.dt_beta_homologue
-    Float? dt_omega_evalue =get_dt_results.dt_omega_evalue
-    Float? dt_beta_evalue =get_dt_results.dt_beta_evalue
-    Float? dt_beta_homologue_evalue =get_dt_results.dt_beta_homologue_evalue
+    String? dt_omega_evalue =get_dt_results.dt_omega_evalue
+    String? dt_beta_evalue =get_dt_results.dt_beta_evalue
+    String? dt_beta_homologue_evalue =get_dt_results.dt_beta_homologue_evalue
 
 
 
