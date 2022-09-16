@@ -40,42 +40,6 @@ task get_dt_results {
 
   ls>list.txt
 
-  if [ -s ~{tblastn_dt_omega_report} ]
-    then
-      echo "~{tblastn_dt_omega_report} not empty"
-      head -n +1 ~{tblastn_dt_omega_report} | awk '{print $11}' >P00587_EVALUE
-      head -n +1 ~{tblastn_dt_omega_report} | awk '{print $12}' >P00587_BITSCORE
-  else
-      echo "~{tblastn_dt_omega_report} empty"
-      echo "negative" >P00587_RESULT
-      echo "" >P00587_EVALUE
-      echo "" >P00587_BITSCORE
-  fi
-
-  if [ -s ~{tblastn_dt_beta_report} ]
-    then
-      echo "~{tblastn_dt_beta_report} not empty"
-      head -n +1 ~{tblastn_dt_beta_report} | awk '{print $11}' >P00588_EVALUE
-      head -n +1 ~{tblastn_dt_beta_report} | awk '{print $12}' >P00588_BITSCORE
-  else
-      echo "~{tblastn_dt_beta_report} empty"
-      echo "negative" >P00588_RESULT
-      echo "" >P00588_EVALUE
-      echo "" >P00589_BITSCORE
-  fi
-
-  if [ -s ~{tblastn_dt_beta_homologue_report} ]
-    then
-      echo "~{tblastn_dt_beta_homologue_report} not empty"
-      head -n +1 ~{tblastn_dt_beta_homologue_report} | awk '{print $11}' >P00589_EVALUE
-      head -n +1 ~{tblastn_dt_beta_homologue_report} | awk '{print $12}' >P00589_BITSCORE
-  else
-      echo "~{tblastn_dt_beta_homologue_report} empty"
-      echo "negative" >P00589_RESULT
-      echo "" >P00589_EVALUE
-      echo "" >P00589_BITSCORE
-  fi
-
 
   python <<CODE
   dt_array=["P00587", "P00588", "P00589"]
@@ -89,16 +53,8 @@ task get_dt_results {
         if count==2:
           data_array = line.split()
           eval=data_array[-2]
-          eval_name=dt_array[i]+"_EVALUE"
-          f = open(eval_name, "w")
-          f.write(eval)
-          f.close()
 
           bitscore=data_array[-1]
-          bitscore_name=+dt_array[i]+"_BITSCORE"
-          f = open(bitscore_name, "w")
-          f.write(bitscore)
-          f.close()
 
           if float(eval)<=1e-50:
              text="positive"
@@ -111,6 +67,22 @@ task get_dt_results {
           f = open(result_name, "w")
           f.write(text)
           f.close()
+
+        if not eval:
+          eval=""
+        if not bitscore:
+          bitscore=""
+
+
+        eval_name=dt_array[i]+"_EVALUE"
+        f = open(eval_name, "w")
+        f.write(eval)
+        f.close()
+
+        bitscore_name=+dt_array[i]+"_BITSCORE"
+        f = open(bitscore_name, "w")
+        f.write(bitscore)
+        f.close()
 
   CODE
   ls
