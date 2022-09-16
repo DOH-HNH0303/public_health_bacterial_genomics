@@ -91,12 +91,12 @@ task get_dt_results {
     String dt_omega =read_string("P00587_RESULT")
     String dt_beta =read_string("P00588_RESULT")
     String dt_beta_homologue =read_string("P00589_RESULT")
-    Float dt_omega_evalue =read_float("P00587_EVALUE")
-    Float dt_beta_evalue =read_float("P00588_EVALUE")
-    Float dt_beta_homologue_evalue =read_float("P00589_EVALUE")
-    Float dt_omega_bitscore =read_float("P00587_BITSCORE")
-    Float dt_beta_bitscore =read_float("P00588_BITSCORE")
-    Float dt_beta_homologue_bitscore =read_float("P00589_BITSCORE")
+    Float? dt_omega_evalue =read_float("P00587_EVALUE")
+    Float? dt_beta_evalue =read_float("P00588_EVALUE")
+    Float? dt_beta_homologue_evalue =read_float("P00589_EVALUE")
+    Float? dt_omega_bitscore =read_float("P00587_BITSCORE")
+    Float? dt_beta_bitscore =read_float("P00588_BITSCORE")
+    Float? dt_beta_homologue_bitscore =read_float("P00589_BITSCORE")
 
     String wget_dt_docker_image = docker_image
   }
