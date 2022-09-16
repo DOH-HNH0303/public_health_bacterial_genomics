@@ -63,8 +63,8 @@ task get_dt_results {
              text="negative"
       if count==0:
         text="negative"
-        eval=""
-        bitscore=""
+        eval="NULL"
+        bitscore="NULL"
 
 
     eval_name=dt_array[i]+"_EVALUE"
