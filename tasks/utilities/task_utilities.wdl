@@ -72,7 +72,7 @@ task get_dt_results {
     f.write(eval)
     f.close()
 
-    bitscore_name=+dt_array[i]+"_BITSCORE"
+    bitscore_name=dt_array[i]+"_BITSCORE"
     f = open(bitscore_name, "w")
     f.write(bitscore)
     f.close()
