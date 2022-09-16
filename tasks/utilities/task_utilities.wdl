@@ -113,6 +113,7 @@ task get_dt_results {
           f.close()
 
   CODE
+  ls
 
 
   >>>
