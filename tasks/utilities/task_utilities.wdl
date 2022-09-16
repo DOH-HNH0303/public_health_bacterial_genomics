@@ -64,8 +64,6 @@ task get_dt_results {
              text="negative"
 
 
-
-
     if not text:
       text="negative"
 
