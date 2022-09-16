@@ -47,13 +47,12 @@ task get_dt_results {
   for i in range(len(file_array)):
 
     with open(file_array[i], 'r') as file:
-      count = 1
+      count = 0
       for line in file:
         count += 1
         if count==2:
           data_array = line.split()
           eval=data_array[-2]
-
           bitscore=data_array[-1]
 
           if float(eval)<=1e-50:
@@ -62,37 +61,25 @@ task get_dt_results {
              text="possible homolog"
           else:
              text="negative"
-
-
-    if not text:
-      text="negative"
+      if count==0:
+        text="negative"
+        eval=""
+        bitscore=""
 
 
     eval_name=dt_array[i]+"_EVALUE"
     f = open(eval_name, "w")
-    try:
-      f.write(eval)
-    else:
-      eval=""
-      f.write(eval)
+    f.write(eval)
     f.close()
 
     bitscore_name=+dt_array[i]+"_BITSCORE"
     f = open(bitscore_name, "w")
-    try:
-      f.write(bitscore)
-    else:
-      bitscore=""
-      f.write(bitscore)
+    f.write(bitscore)
     f.close()
 
     result_name=dt_array[i]+"_RESULT"
     f = open(result_name, "w")
-    try:
-      f.write(text)
-    else:
-      text=""
-      f.write(text)
+    f.write(text)
     f.close()
 
   CODE
