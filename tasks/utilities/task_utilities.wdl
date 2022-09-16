@@ -74,7 +74,7 @@ task get_dt_results {
     f = open(eval_name, "w")
     try:
       f.write(eval)
-    else
+    else:
       eval=""
       f.write(eval)
     f.close()
@@ -83,7 +83,7 @@ task get_dt_results {
     f = open(bitscore_name, "w")
     try:
       f.write(bitscore)
-    else
+    else:
       bitscore=""
       f.write(bitscore)
     f.close()
@@ -92,7 +92,7 @@ task get_dt_results {
     f = open(result_name, "w")
     try:
       f.write(text)
-    else
+    else:
       text=""
       f.write(text)
     f.close()
