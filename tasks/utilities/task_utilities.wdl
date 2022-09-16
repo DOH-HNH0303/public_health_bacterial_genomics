@@ -68,21 +68,23 @@ task get_dt_results {
           f.write(text)
           f.close()
 
-        if not eval:
-          eval=""
-        if not bitscore:
-          bitscore=""
+    if not eval:
+      eval=""
+    if not bitscore:
+      bitscore=""
+    if not text:
+      text="negative"
 
 
-        eval_name=dt_array[i]+"_EVALUE"
-        f = open(eval_name, "w")
-        f.write(eval)
-        f.close()
+    eval_name=dt_array[i]+"_EVALUE"
+    f = open(eval_name, "w")
+    f.write(eval)
+    f.close()
 
-        bitscore_name=+dt_array[i]+"_BITSCORE"
-        f = open(bitscore_name, "w")
-        f.write(bitscore)
-        f.close()
+    bitscore_name=+dt_array[i]+"_BITSCORE"
+    f = open(bitscore_name, "w")
+    f.write(bitscore)
+    f.close()
 
   CODE
   ls
