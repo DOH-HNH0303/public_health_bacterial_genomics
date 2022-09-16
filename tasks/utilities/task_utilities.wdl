@@ -89,13 +89,13 @@ task get_dt_results {
         if count==2:
           data_array = line.split()
           eval=data_array[-2]
-          eval_name="{samplename}_"+dt_array[i]+"_EVALUE"
+          eval_name=dt_array[i]+"_EVALUE"
           f = open(eval_name, "w")
           f.write(eval)
           f.close()
 
           bitscore=data_array[-1]
-          bitscore_name="{samplename}_"+dt_array[i]+"_BITSCORE"
+          bitscore_name=+dt_array[i]+"_BITSCORE"
           f = open(bitscore_name, "w")
           f.write(bitscore)
           f.close()
@@ -107,7 +107,7 @@ task get_dt_results {
           else:
              text="negative"
 
-          result_name="{samplename}_"+dt_array[i]+"_RESULT"
+          result_name=dt_array[i]+"_RESULT"
           f = open(result_name, "w")
           f.write(text)
           f.close()
@@ -118,15 +118,15 @@ task get_dt_results {
 
   >>>
   output {
-    String dt_omega =read_string("~{samplename}_P00587_RESULT")
-    String dt_beta =read_string("~{samplename}_P00588_RESULT")
-    String dt_beta_homologue =read_string("~{samplename}_P00589_RESULT")
-    Float dt_omega_evalue =read_float("~{samplename}_P00587_EVALUE")
-    Float dt_beta_evalue =read_float("~{samplename}_P00588_EVALUE")
-    Float dt_beta_homologue_evalue =read_float("~{samplename}_P00589_EVALUE")
-    Float dt_omega_bitscore =read_float("~{samplename}_P00587_BITSCORE")
-    Float dt_beta_bitscore =read_float("~{samplename}_P00588_BITSCORE")
-    Float dt_beta_homologue_bitscore =read_float("~{samplename}_P00589_BITSCORE")
+    String dt_omega =read_string("P00587_RESULT")
+    String dt_beta =read_string("P00588_RESULT")
+    String dt_beta_homologue =read_string("P00589_RESULT")
+    Float dt_omega_evalue =read_float("P00587_EVALUE")
+    Float dt_beta_evalue =read_float("P00588_EVALUE")
+    Float dt_beta_homologue_evalue =read_float("P00589_EVALUE")
+    Float dt_omega_bitscore =read_float("P00587_BITSCORE")
+    Float dt_beta_bitscore =read_float("P00588_BITSCORE")
+    Float dt_beta_homologue_bitscore =read_float("P00589_BITSCORE")
 
     String wget_dt_docker_image = docker_image
   }
