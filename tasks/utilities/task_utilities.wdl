@@ -92,7 +92,7 @@ task get_dt_results {
     String dt_beta =read_string("P00588_RESULT")
     String dt_beta_homologue =read_string("P00589_RESULT")
     String? dt_omega_evalue =read_string("P00587_EVALUE")
-    String? dt_beta_evalue =read_tring("P00588_EVALUE")
+    String? dt_beta_evalue =read_string("P00588_EVALUE")
     String? dt_beta_homologue_evalue =read_string("P00589_EVALUE")
     String? dt_omega_bitscore =read_string("P00587_BITSCORE")
     String? dt_beta_bitscore =read_string("P00588_BITSCORE")
