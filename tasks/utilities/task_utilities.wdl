@@ -74,8 +74,11 @@ task get_dt_results {
 
     print("test 11")
     eval_name=dt_array[i]+"_EVALUE"
+    print("test 11.2")
     f = open(eval_name, "w")
+    print("test 11.3")
     f.write(eval)
+    print("test 11.4")
     f.close()
 
     print("test 12")
