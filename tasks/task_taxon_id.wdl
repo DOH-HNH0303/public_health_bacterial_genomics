@@ -546,7 +546,7 @@ task ncbi_blast {
   command <<<
 
     #Retrieve DT reference seqs
-    wget https://rest.uniprot.org/uniprotkb/P00587.fasta
+    wget rest.uniprot.org/uniprotkb/P00587.fasta
     wget rest.uniprot.org/uniprotkb/P00588.fasta
     wget rest.uniprot.org/uniprotkb/P00589.fasta
 
