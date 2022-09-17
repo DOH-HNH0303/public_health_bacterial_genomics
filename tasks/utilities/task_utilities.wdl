@@ -49,7 +49,7 @@ task get_dt_results {
       for line in file:
         count += 1
         print("test 3")
-        if count==2:
+        if count==1:
           print("test 4")
           data_array = line.split()
           eval=data_array[-2]
