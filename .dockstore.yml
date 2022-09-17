@@ -20,6 +20,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_kleborate.wdl
    testParameterFiles:
     - empty.json
+ - name: Prepare_References
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_prepare_references.wdl
+   testParameterFiles:
+    - empty.json
  - name: SerotypeFinder
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_serotypefinder.wdl
