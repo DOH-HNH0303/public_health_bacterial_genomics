@@ -142,7 +142,7 @@ workflow theiaprok_illumina_pe {
           samplename = samplename
       }
 
-
+    }
   }
   output {
     #Version Captures
