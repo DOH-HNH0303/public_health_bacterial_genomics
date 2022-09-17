@@ -547,8 +547,8 @@ task ncbi_blast {
 
     #Retrieve DT reference seqs
     wget https://rest.uniprot.org/uniprotkb/P00587.fasta
-    wget https://rest.uniprot.org/uniprotkb/P00588.fasta
-    wget https://rest.uniprot.org/uniprotkb/P00589.fasta
+    wget rest.uniprot.org/uniprotkb/P00588.fasta
+    wget //rest.uniprot.org/uniprotkb/P00589.fasta
 
     makeblastdb -in ~{assembly} -dbtype 'nucl'
 
