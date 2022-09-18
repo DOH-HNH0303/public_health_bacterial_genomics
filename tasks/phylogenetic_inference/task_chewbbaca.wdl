@@ -2,9 +2,7 @@ version 1.0
 
 task chewbbaca {
   input {
-    Array[File] assembly_fasta
-    Array[String] samplename
-    String cluster_name
+    Array[File] assembly_fastas
     String cluster_name
     File prodigal_file
     Int kmer_size = 19
@@ -16,13 +14,12 @@ task chewbbaca {
   }
   command <<<
 
-  assembly_array=(~{sep=' ' assembly_fasta})
-  assembly_array_len=$(echo "${#assembly_array[@]}")
+  echo ~{cluster_name}
+
+  assembly_array=(~{sep=' ' assembly_fastas})
+  assembly_array_len=$(echo "${#assembly_arrays[@]}")
   echo "assembly array"
   echo $assembly_array
-  samplename_array=(~{sep=' ' samplename})
-  samplename_array_len=$(echo "${#samplename_array[@]}")
-  echo $assembly_array_len $samplename_array_len
 
   # Ensure assembly, and samplename arrays are of equal length
   if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then

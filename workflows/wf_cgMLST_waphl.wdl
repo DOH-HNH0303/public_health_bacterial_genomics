@@ -4,7 +4,7 @@ import "../tasks/phylogenetic_inference/task_chewbbaca.wdl" as chewbbaca
 import "../tasks/task_versioning.wdl" as versioning
 
 
-workflow theiaprok_illumina_pe {
+workflow cgMLST_WAPHL {
   meta {
     description: "cgMLST"
   }
