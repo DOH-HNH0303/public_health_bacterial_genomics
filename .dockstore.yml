@@ -1,5 +1,10 @@
 version: 1.2
 workflows:
+ - name: cgMLST
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_cgMLST_waphl.wdl
+   testParameterFiles:
+    - empty.json
  - name: kSNP3
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_ksnp3_WAPHL.wdl
