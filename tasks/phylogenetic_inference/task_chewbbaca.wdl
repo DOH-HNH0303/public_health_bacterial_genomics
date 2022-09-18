@@ -7,8 +7,8 @@ task chewbbaca {
     File prodigal_file
     Int kmer_size = 19
     String docker_image = "ummidock/chewbbaca:2.8.5"
-    Int memory = 8
-    Int cpu = 4
+    Int memory = 32
+    Int cpu = 8
     Int disk_size = 100
 
   }
