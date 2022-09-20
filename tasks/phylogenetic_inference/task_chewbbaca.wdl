@@ -22,17 +22,14 @@ task chewbbaca {
     echo $item>>input.tsv
   done
 
+  echo "cat input.tsv"
+  cat input.tsv
+
   assembly_array_len=$(echo "${#assembly_arrays[@]}")
   echo "assembly array"
   echo $assembly_array
   echo $assembly_array_len
 
-  mkdir input_files
-
-  for file in $assembly_array
-  do
-   mv $file input_files.
-  done
 
   #i. Whole Genome Multilocus Sequence Typing (wgMLST) schema creation
   chewBBACA.py CreateSchema -i input.tsv -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
