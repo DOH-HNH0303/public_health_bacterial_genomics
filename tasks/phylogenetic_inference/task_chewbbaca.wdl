@@ -5,7 +5,6 @@ task chewbbaca {
     Array[File] assembly_fastas
     String cluster_name
     File prodigal_file
-    Int kmer_size = 19
     String docker_image = "ummidock/chewbbaca:2.8.5"
     Int memory = 32
     Int cpu = 8
@@ -16,7 +15,7 @@ task chewbbaca {
 
   echo ~{cluster_name}
 
-  assembly_array=(~{sep=' ' assembly_fastas})
+  assembly_array="(~{sep=' ' assembly_fastas})""
   assembly_array_len=$(echo "${#assembly_arrays[@]}")
   echo "assembly array"
   echo $assembly_array
@@ -31,16 +30,16 @@ task chewbbaca {
   chewBBACA.py CreateSchema -i $assembly_array -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
 
   #ii. Allele call using a cg/wgMLST schema
-  chewBBACA.py AlleleCall -i $assembly_array -g Cdip -o . --cpu 4
+  #chewBBACA.py AlleleCall -i $assembly_array -g Cdip -o . --cpu 4
 
   #iii. Determine annotations for loci in the schema
-  chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 4
+  #chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 4
 
   #iv. Evaluate wgMLST call quality per genome
-  chewBBACA.py TestGenomeQuality -i Cdip/results_alleles.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
+  #chewBBACA.py TestGenomeQuality -i Cdip/results_alleles.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
 
   #v. Defining the cgMLST schema
-  chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
+  #chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
 
   ls cgmlst>ls.txt
 
