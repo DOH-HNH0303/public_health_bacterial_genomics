@@ -15,7 +15,7 @@ task chewbbaca {
 
   echo ~{cluster_name}
 
-  assembly_array="(~{sep=' ' assembly_fastas})""
+  assembly_array="(~{sep=' ' assembly_fastas})"
   assembly_array_len=$(echo "${#assembly_arrays[@]}")
   echo "assembly array"
   echo $assembly_array
