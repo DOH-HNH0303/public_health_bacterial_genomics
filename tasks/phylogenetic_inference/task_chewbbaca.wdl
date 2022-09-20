@@ -17,7 +17,7 @@ task chewbbaca {
   echo -e "~{sep='\t' assembly_fastas}" >temp.tsv
 
   touch input.tsv
-  assembly_array="(~{sep=' ' assembly_fastas})"
+  assembly_array="~{sep=' ' assembly_fastas}"
   for item in "${assembly_array[@]}"; do
     echo $item>>input.tsv
   done
