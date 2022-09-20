@@ -51,6 +51,7 @@ task chewbbaca {
   >>>
   output {
     File chewbbaca_test = "ls.txt"
+    File chewbbaca_test2 = "input.tsv"
     String chewbbaca_docker_image = docker_image
 
   }
