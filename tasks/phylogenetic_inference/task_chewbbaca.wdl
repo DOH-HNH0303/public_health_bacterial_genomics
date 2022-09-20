@@ -20,12 +20,6 @@ task chewbbaca {
   echo "assembly array"
   echo $assembly_array
 
-  # Ensure assembly, and samplename arrays are of equal length
-  if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
-    echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
-    exit 1
-  fi
-
   #i. Whole Genome Multilocus Sequence Typing (wgMLST) schema creation
   chewBBACA.py CreateSchema -i $assembly_array -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
 
