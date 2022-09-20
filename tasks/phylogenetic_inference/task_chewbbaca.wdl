@@ -20,8 +20,12 @@ task chewbbaca {
   echo "assembly array"
   echo $assembly_array
 
+  mkdir input_files
+
+  mv $assembly_ array input_files/
+
   #i. Whole Genome Multilocus Sequence Typing (wgMLST) schema creation
-  chewBBACA.py CreateSchema -i $assembly_array -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
+  chewBBACA.py CreateSchema -i input/files -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
 
   #ii. Allele call using a cg/wgMLST schema
   #chewBBACA.py AlleleCall -i $assembly_array -g Cdip -o . --cpu 4
