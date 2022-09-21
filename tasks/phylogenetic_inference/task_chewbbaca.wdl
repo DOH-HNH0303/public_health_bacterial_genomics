@@ -14,7 +14,6 @@ task chewbbaca {
   command <<<
 
   echo ~{cluster_name}
-  echo -e "~{sep='\t' assembly_fastas}" >temp.tsv
 
   touch input.tsv
   assembly_array="~{sep='\t' assembly_fastas}"
@@ -22,8 +21,6 @@ task chewbbaca {
     echo $item>>input.tsv
   done
 
-  echo "cat input.tsv"
-  cat input.tsv
   awk 'BEGIN{OFS="\n"}{for(i=1;i<=NF;i++) print $i}' input.tsv>input_transposed.tsv
 
   assembly_array_len=$(echo "${#assembly_arrays[@]}")
@@ -47,7 +44,7 @@ task chewbbaca {
   #v. Defining the cgMLST schema
   #chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
 
-  ls cgmlst>ls.txt
+  ls>ls.txt
 
   >>>
   output {
