@@ -17,13 +17,14 @@ task chewbbaca {
   echo -e "~{sep='\t' assembly_fastas}" >temp.tsv
 
   touch input.tsv
-  assembly_array="~{sep=' ' assembly_fastas}"
-  for item in "(${assembly_array[@]})"; do
+  assembly_array="~{sep='\t' assembly_fastas}"
+  for item in "${assembly_array[@]}"; do
     echo $item>>input.tsv
   done
 
   echo "cat input.tsv"
   cat input.tsv
+  awk 'BEGIN{OFS="\n"}{for(i=1;i<=NF;i++) print $i}' input.tsv>input_transposed.tsv
 
   assembly_array_len=$(echo "${#assembly_arrays[@]}")
   echo "assembly array"
@@ -32,7 +33,7 @@ task chewbbaca {
 
 
   #i. Whole Genome Multilocus Sequence Typing (wgMLST) schema creation
-  chewBBACA.py CreateSchema -i input.tsv -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
+  chewBBACA.py CreateSchema -i input_transposed.tsv -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
 
   #ii. Allele call using a cg/wgMLST schema
   #chewBBACA.py AlleleCall -i $assembly_array -g Cdip -o . --cpu 4
