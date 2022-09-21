@@ -18,7 +18,7 @@ task chewbbaca {
 
   touch input.tsv
   assembly_array="~{sep=' ' assembly_fastas}"
-  for item in "${assembly_array[@]}"; do
+  for item in "(${assembly_array[@]})"; do
     echo $item>>input.tsv
   done
 
