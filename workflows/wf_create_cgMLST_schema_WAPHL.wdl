@@ -20,7 +20,7 @@ workflow cgMLST_WAPHL {
     input:
   }
 
-  call chewbbaca.reate_cgmlst_schema {
+  call chewbbaca.create_cgmlst_schema {
     input:
       assembly_fastas = assembly_fastas,
       prodigal_file = prodigal_file,
