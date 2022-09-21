@@ -32,6 +32,8 @@ workflow cgMLST_WAPHL {
     String cgMLST_waphl_version = version_capture.phbg_version
     String cgMLST_waphl_date = version_capture.date
     File chewbbaca_test = create_cgmlst_schema.chewbbaca_test
+    File cgmlst_schema_zip = create_cgmlst_schema.schema_zip
+    File cgmlst_schema_txt = create_cgmlst_schema.schema_txt
 
     #Read Metadata
 }
