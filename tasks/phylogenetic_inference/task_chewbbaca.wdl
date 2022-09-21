@@ -36,13 +36,13 @@ task chewbbaca {
   chewBBACA.py AlleleCall -i $assembly_array -g Cdip -o . --cpu 4
 
   #iii. Determine annotations for loci in the schema
-  #chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 4
+  chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 4
 
   #iv. Evaluate wgMLST call quality per genome
-  #chewBBACA.py TestGenomeQuality -i Cdip/results_alleles.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
+  chewBBACA.py TestGenomeQuality -i Cdip/results_alleles.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
 
   #v. Defining the cgMLST schema
-  #chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
+  chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
 
   ls>ls.txt
 
