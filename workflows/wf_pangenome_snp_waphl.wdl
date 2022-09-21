@@ -61,6 +61,7 @@ workflow pangenome_snp_workflow {
     #File? pirate_core_alignment_fasta = pirate.pirate_core_alignment_fasta
     #File? pirate_core_alignment_gff = pirate.pirate_core_alignment_gff
     String pirate_docker_image = pirate.pirate_docker_image
+    String pirate_for_scoary_csv = pirate.pirate_for_scoary_csv
     # snp_dists outputs
     String? pirate_snps_dists_version = pan_snp_dists.version
     File? pirate_core_snp_matrix = core_snp_dists.snp_matrix

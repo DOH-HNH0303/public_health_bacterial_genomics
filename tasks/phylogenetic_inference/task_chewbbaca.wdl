@@ -115,6 +115,8 @@ task create_cgmlst_schema {
 
   zip schema.zip schema/schema_seed
 
+  zip -r cgmlst.zip *
+
   ls>ls.txt
 
   >>>
@@ -122,6 +124,7 @@ task create_cgmlst_schema {
     File chewbbaca_test = "ls.txt"
     File chewbbaca_test2 = "input.tsv"
     File schema_zip = "schema.zip"
+    File cgmlst_zip = "cgmlst.zip"
     File schema_txt = "cgmlst_95_schema/cgMLSTschema.txt"
     String chewbbaca_docker_image = docker_image
 
