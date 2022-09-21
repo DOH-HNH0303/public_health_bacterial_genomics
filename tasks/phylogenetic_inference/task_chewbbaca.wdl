@@ -33,7 +33,7 @@ task chewbbaca {
   chewBBACA.py CreateSchema -i input_transposed.tsv -o . --n Cdip --ptf ~{prodigal_file} --cpu 4
 
   #ii. Allele call using a cg/wgMLST schema
-  chewBBACA.py AlleleCall -i $assembly_array -g Cdip -o . --cpu 4
+  chewBBACA.py AlleleCall -i input_transposed.tsv -g Cdip -o . --cpu 4
 
   #iii. Determine annotations for loci in the schema
   chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 4
