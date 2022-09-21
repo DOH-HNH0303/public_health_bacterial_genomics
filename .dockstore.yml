@@ -7,7 +7,7 @@ workflows:
     - empty.json
  - name: create_cgMLST_schema
    subclass: WDL
-   primaryDescriptorPath: /workflows/wf_generate_cgMLST_schema_waphl.wdl
+   primaryDescriptorPath: /workflows/wf_generate_cgMLST_schema_WAPHL.wdl
    testParameterFiles:
     - empty.json
  - name: kSNP3
