@@ -37,7 +37,7 @@ workflow create_cgMLST_schema_WAPHL {
     File cgmlst_schema_zip = create_cgmlst_schema.schema_zip
     File cgmlst_schema_txt = create_cgmlst_schema.schema_txt
     File cgmlst_zip = create_cgmlst_schema.cgmlst_zip
-    Float cgmlst_threshold = ~{threshold}
+    Float cgmlst_threshold = "~{threshold}"
 
     #Read Metadata
 }
