@@ -34,7 +34,7 @@ task pirate {
   ~{'--pan-opt ' + panopt} \
   ~{'--threads ' + cpu}
 
-  PIRATE_to_roary.pl -i PIRATE/PIRATE.*.tsv -o ~{cluster_name}_for_scoary_file.csv
+  #PIRATE_to_roary.pl -i PIRATE/PIRATE.*.tsv -o ~{cluster_name}_for_scoary_file.csv
 
   # rename outputs with cluster name
   mv PIRATE/PIRATE.pangenome_summary.txt PIRATE/~{cluster_name}_pangenome_summary.txt
@@ -64,7 +64,7 @@ task pirate {
     File pirate_pangenome_alignment_gff = "PIRATE/~{cluster_name}_pangenome_alignment.gff"
     File pirate_core_alignment_fasta = "PIRATE/~{cluster_name}_core_alignment.fasta"
     File pirate_core_alignment_gff = "PIRATE/~{cluster_name}_core_alignment.gff"
-    File pirate_for_scoary_csv = "~{cluster_name}_for_scoary_file.csv" 
+    File pirate_for_scoary_csv = "~{cluster_name}_for_scoary_file.csv"
     String pirate_docker_image = docker_image
   }
   runtime {
