@@ -49,7 +49,8 @@ task pirate {
   mv PIRATE/core_alignment.fasta PIRATE/~{cluster_name}_core_alignment.fasta
   mv PIRATE/core_alignment.gff PIRATE/~{cluster_name}_core_alignment.gff
 
-  PIRATE_to_roary.pl -i *.tsv -o ~{cluster_name}_for_scoary_file.csv
+
+  perl PIRATE_to_roary.pl -i *.tsv -o ~{cluster_name}_for_scoary_file.csv
 
   >>>
   output {

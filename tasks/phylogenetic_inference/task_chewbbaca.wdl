@@ -9,6 +9,7 @@ task chewbbaca {
     Int memory = 32
     Int cpu = 8
     Int disk_size = 100
+    File cgMLSTschema_zip
 
   }
   command <<<
@@ -28,24 +29,33 @@ task chewbbaca {
   echo $assembly_array
   echo $assembly_array_len
 
+  unzip ~{cgMLSTschema_zip}
 
+  mv cgMLST*_schema cgMLST*_schema_old
+
+
+  chewBBACA.py AlleleCall -i input_transposed.tsv -g schema/schema_seed --gl cgmlst*_schema_old/cgMLSTschema.txt -o results~{cluster_name}_cgMLST --cpu 6
+
+  chewBBACA.py JoinProfiles -p1 cgMLST*_schema_old/cgMLST.tsv -p2 results~{cluster_name}_cgMLST/*/results_alleles.tsv -o cgMLST_all.tsv
+
+  chewBBACA.py TestGenomeQuality -i cgMLST_all.tsv -n 13 -t 300 -s 5
   #i. Whole Genome Multilocus Sequence Typing (wgMLST) schema creation
-  chewBBACA.py CreateSchema -i input_transposed.tsv -o schema --n Cdip --ptf ~{prodigal_file} --cpu 6
+  #chewBBACA.py CreateSchema -i input_transposed.tsv -o schema --n Cdip --ptf ~{prodigal_file} --cpu 6
 
   #ii. Allele call using a cg/wgMLST schema
-  chewBBACA.py AlleleCall -i input_transposed.tsv -g Cdip -o . --cpu 6
+  #chewBBACA.py AlleleCall -i input_transposed.tsv -g Cdip -o . --cpu 6
 
   # ii.2 remove paralogs
-  chewBBACA.py RemoveGenes -i Cdip/*/results_alleles.tsv -g Cdip/*/RepeatedLoci.txt -o Cdip/*/results_alleles_NoParalogs.tsv
+  #chewBBACA.py RemoveGenes -i Cdip/*/results_alleles.tsv -g Cdip/*/RepeatedLoci.txt -o Cdip/*/results_alleles_NoParalogs.tsv
 
   #iii. Determine annotations for loci in the schema
-  chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 6
+  #chewBBACA.py UniprotFinder -i Cdip -o . --taxa "Corynebacterium diphtheriae" --cpu 6
 
   #iv. Evaluate wgMLST call quality per genome
-  chewBBACA.py TestGenomeQuality -i Cdip/results_alleles_NoParalogs.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
+  #chewBBACA.py TestGenomeQuality -i Cdip/results_alleles_NoParalogs.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
 
   #v. Defining the cgMLST schema
-  chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
+  #chewBBACA.py ExtractCgMLST -i /path/to/AlleleCall/results/results_alleles.tsv -o cgmlst_schema
 
   ls>ls.txt
 
@@ -75,6 +85,7 @@ task create_cgmlst_schema {
     Int memory = 32
     Int cpu = 8
     Int disk_size = 100
+    Float threshold
 
   }
   command <<<
@@ -111,7 +122,7 @@ task create_cgmlst_schema {
   chewBBACA.py TestGenomeQuality -i results_wgMLST/results_alleles_NoParalogs.tsv -n 12 -t 200 -s 5 -o wgmlst_call_quality
 
   #v. Defining the cgMLST schema
-  chewBBACA.py ExtractCgMLST -i results_wgMLST/results_alleles_NoParalogs.tsv -o cgmlst_95_schema --t 0.95
+  chewBBACA.py ExtractCgMLST -i results_wgMLST/results_alleles_NoParalogs.tsv -o cgmlst_schema --t ~{threshold}
 
   zip schema.zip schema/schema_seed
 

@@ -12,6 +12,7 @@ workflow cgMLST_WAPHL {
     String cluster_name
     Array[File] assembly_fastas
     File prodigal_file
+    Float threshold = 0.95
     # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
 
   }
@@ -24,7 +25,8 @@ workflow cgMLST_WAPHL {
     input:
       assembly_fastas = assembly_fastas,
       prodigal_file = prodigal_file,
-      cluster_name = cluster_name
+      cluster_name = cluster_name,
+      threshold = threshold
   }
 
   output {
@@ -35,6 +37,7 @@ workflow cgMLST_WAPHL {
     File cgmlst_schema_zip = create_cgmlst_schema.schema_zip
     File cgmlst_schema_txt = create_cgmlst_schema.schema_txt
     File cgmlst_zip = create_cgmlst_schema.cgmlst_zip
+    Float cgmlst_threshold = ~{threshold}
 
     #Read Metadata
 }
