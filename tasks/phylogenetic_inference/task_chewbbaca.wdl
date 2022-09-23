@@ -59,13 +59,13 @@ task chewbbaca {
 
   ls>ls.txt
 
-  zip -r ~{cluster}_cgmlst.zip *
+  zip -r ~{cluster_name}_cgmlst.zip *
 
   >>>
   output {
     File chewbbaca_test = "ls.txt"
     File chewbbaca_test2 = "input.tsv"
-    File  cluster_cgmlst_zip = "~{cluster}_cgmlst.zip"
+    File  cluster_cgmlst_zip = "~{cluster_name}_cgmlst.zip"
     String chewbbaca_docker_image = docker_image
 
   }
