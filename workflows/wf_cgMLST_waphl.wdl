@@ -31,7 +31,7 @@ workflow cgMLST_WAPHL {
     #Version Captures
     String cgMLST_waphl_version = version_capture.phbg_version
     String cgMLST_waphl_date = version_capture.date
-    File chewbbaca_test = chewbbaca.chewbbaca_test
+    File cluster_cgmlst_zip = chewbbaca.cluster_cgmlst_zip
 
     #Read Metadata
 }
