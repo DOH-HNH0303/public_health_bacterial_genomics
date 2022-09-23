@@ -11,7 +11,7 @@ workflow cgMLST_WAPHL {
   input {
     String cluster_name
     Array[File] assembly_fastas
-    File prodigal_file
+    File cgMLSTschema_zip
     # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
 
   }
@@ -23,7 +23,7 @@ workflow cgMLST_WAPHL {
   call chewbbaca.chewbbaca {
     input:
       assembly_fastas = assembly_fastas,
-      prodigal_file = prodigal_file,
+      cgMLSTschema_zip = cgMLSTschema_zip,
       cluster_name = cluster_name
   }
 

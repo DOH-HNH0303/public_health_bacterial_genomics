@@ -4,7 +4,6 @@ task chewbbaca {
   input {
     Array[File] assembly_fastas
     String cluster_name
-    File prodigal_file
     String docker_image = "ummidock/chewbbaca:2.8.5"
     Int memory = 32
     Int cpu = 8
