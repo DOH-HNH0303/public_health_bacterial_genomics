@@ -34,7 +34,7 @@ task pirate {
   ~{'--pan-opt ' + panopt} \
   ~{'--threads ' + cpu}
 
-  #PIRATE_to_roary.pl -i PIRATE/PIRATE.*.tsv -o ~{cluster_name}_for_scoary_file.csv
+  PIRATE_to_roary.pl -i PIRATE/PIRATE.*.tsv -o ~{cluster_name}_for_scoary_file.csv
 
   # rename outputs with cluster name
   mv PIRATE/PIRATE.pangenome_summary.txt PIRATE/~{cluster_name}_pangenome_summary.txt
@@ -50,7 +50,7 @@ task pirate {
   mv PIRATE/core_alignment.gff PIRATE/~{cluster_name}_core_alignment.gff
 
 
-  perl PIRATE_to_roary.pl -i *.tsv -o ~{cluster_name}_for_scoary_file.csv
+  #perl PIRATE_to_roary.pl -i *.tsv -o ~{cluster_name}_for_scoary_file.csv
 
   >>>
   output {
