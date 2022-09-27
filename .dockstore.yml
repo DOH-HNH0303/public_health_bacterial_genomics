@@ -85,11 +85,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_kraken2_se.wdl
    testParameterFiles:
     - empty.json
-- name: prep_bigdb_cgmlst
-  subclass: WDL
-  primaryDescriptorPath: /workflows/wf_prep_cgmlst_WAPHL.wdl
-  testParameterFiles:
-   - empty.json
+ - name: prep_bigdb_cgmlst
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_prep_cgmlst_WAPHL.wdl
+   testParameterFiles:
+    - empty.json
  - name: RASUSA
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_rasusa.wdl
