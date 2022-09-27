@@ -142,7 +142,7 @@ task prepare_cgmlst_schema {
   }
   command <<<
 
-  awk '{ print $2 }' cgmlst.txt  >  file_column2.txt
+  awk '{ print $2 }' ${locus_list}  >  file_column2.txt
   readarray -t column2 < file_column2.txt
   mkdir -p bigsdb_schema
 
