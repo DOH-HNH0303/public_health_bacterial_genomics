@@ -129,3 +129,49 @@ task create_cgmlst_schema {
     maxRetries: 3
   }
 }
+
+task prepare_cgmlst_schema {
+  input {
+    File locus_list
+    String docker_image = "ummidock/chewbbaca:2.8.5"
+    Int memory = 32
+    Int cpu = 8
+    Int disk_size = 100
+
+
+  }
+  command <<<
+
+  awk '{ print $2 }' cgmlst.txt  >  file_column2.txt
+  readarray -t column2 < file_column2.txt
+  mkdir -p bigsdb_schema
+
+  for loci in ${column2}
+  do
+  wget "bigsdb.pasteur.fr/cgi-bin/bigsdb/bigsdb.pl?db=pubmlst_diphtheria_seqdef&page=downloadAlleles&locus=$loci" --referer="bigsdb.pasteur.fr/cgi-bin/bigsdb/" -O $loci.fasta
+  mv $loci.fasta bigsdb_schema
+  done
+
+  chewBBACA.py PrepExternalSchema -i bigsdb_schema -o schema/schema_seed --cpu 6
+
+
+  zip -r cgmlst.zip *
+
+  ls>ls.txt
+
+  >>>
+  output {
+    File chewbbaca_test = "ls.txt"
+    File cgmlst_zip = "cgmlst.zip"
+    String chewbbaca_docker_image = docker_image
+
+  }
+  runtime {
+    docker: docker_image
+    memory: "~{memory} GB"
+    cpu: cpu
+    disks: "local-disk ~{disk_size} SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
