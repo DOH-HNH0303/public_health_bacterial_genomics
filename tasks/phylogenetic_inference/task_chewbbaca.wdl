@@ -143,14 +143,18 @@ task prepare_cgmlst_schema {
   command <<<
 
   awk '{ print $2 }' ${locus_list}  >  file_column2.txt
+  cat file_column2.txt
   readarray -t column2 < file_column2.txt
   mkdir -p bigsdb_schema
 
-  for loci in ${column2}
+  for loci in ${column2[@]}
   do
   wget "bigsdb.pasteur.fr/cgi-bin/bigsdb/bigsdb.pl?db=pubmlst_diphtheria_seqdef&page=downloadAlleles&locus=$loci" --referer="bigsdb.pasteur.fr/cgi-bin/bigsdb/" -O $loci.fasta
   mv $loci.fasta bigsdb_schema
   done
+
+  ls bigsdb_schema
+
 
   chewBBACA.py PrepExternalSchema -i bigsdb_schema -o schema/schema_seed --cpu 6
 
