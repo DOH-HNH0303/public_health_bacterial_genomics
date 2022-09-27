@@ -25,7 +25,7 @@ workflow prep_bigdb_cgmlst {
     #Version Captures
     String cgMLST_waphl_version = version_capture.phbg_version
     String cgMLST_waphl_date = version_capture.date
-    File cgmlst_zip = prep_cgMLST_schema_WAPHL.cgmlst_zip
+    File cgmlst_zip = prepare_cgmlst_schemaL.cgmlst_zip
     #Read Metadata
 }
 }
