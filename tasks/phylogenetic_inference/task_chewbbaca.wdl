@@ -144,10 +144,10 @@ task prepare_cgmlst_schema {
   echo "cat ~{locus_list}"
   cat ~{locus_list}
 
-  awk '{ print $2 }' ~{locus_list}  >  file_column2.txt
-  echo "cat file_column2.txt"
-  cat file_column2.txt
-  readarray -t column2 < file_column2.txt
+  #awk '{ print $2 }' ~{locus_list}  >  file_column2.txt
+  #echo "cat file_column2.txt"
+  #cat file_column2.txt
+  readarray -t column2 < ~{locus_list}#file_column2.txt
   mkdir -p bigsdb_schema
 
   for loci in ${column2[@]}
