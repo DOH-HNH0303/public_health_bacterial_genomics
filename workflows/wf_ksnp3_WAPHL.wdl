@@ -1,45 +1,20 @@
 version 1.0
 
 import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
-import "../tasks/phylogenetic_inference/task_roary.wdl" as roary
 import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
 
 workflow ksnp3_workflow {
   input {
     Array[File] assembly_fasta
-    Array[File] prokka_gff
     Array[String] samplename
     String cluster_name
-    File transpose_py
-    Array[File] ref_genomes
-    Array[String] ref_genomes_string
 	}
-  scatter (i in ref_genomes) {
-    String ref_names = basename(i)
-  }
-  Array[Array[String]] array_refs = [ref_genomes_string, ref_names]
-
-  call roary.roary as roary {
-    input:
-			assembly_fasta = assembly_fasta,
-      samplename = samplename,
-      cluster_name = cluster_name,
-      ref_genomes = ref_genomes,
-      array_refs = array_refs,
-      transpose_py = transpose_py,
-      ref_names = ref_names,
-      prokka_gff = prokka_gff
-      }
 	call ksnp3.ksnp3 as ksnp3_task {
 		input:
 			assembly_fasta = assembly_fasta,
       samplename = samplename,
-      cluster_name = cluster_name,
-      ref_genomes = ref_genomes,
-      array_refs = array_refs,
-      transpose_py = transpose_py,
-      ref_names = ref_names
+      cluster_name = cluster_name
   }
   call snp_dists.snp_dists as core_snp_dists {
     input:
