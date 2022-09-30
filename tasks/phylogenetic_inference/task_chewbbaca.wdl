@@ -29,9 +29,9 @@ task chewbbaca {
   echo $assembly_array_len
 
   unzip ~{cgMLSTschema_zip}
-  mv cgMLST*_schema cgMLST*_schema_old
+  mv cgMLST_schema cgMLST_schema_old
 
-  chewBBACA.py AlleleCall -i input_transposed.tsv -g schema/schema_seed --gl cgmlst*_schema_old/cgMLSTschema.txt -o results~{cluster_name}_cgMLST --cpu 6
+  chewBBACA.py AlleleCall -i input_transposed.tsv -g schema/schema_seed --gl cgmlst_schema_old/cgMLSTschema.txt -o results~{cluster_name}_cgMLST --cpu 6
   chewBBACA.py JoinProfiles -p1 cgMLST*_schema_old/cgMLST.tsv -p2 results~{cluster_name}_cgMLST/*/results_alleles.tsv -o cgMLST_all.tsv
   chewBBACA.py TestGenomeQuality -i cgMLST_all.tsv -n 13 -t 300 -s 5
 
@@ -162,14 +162,14 @@ task prepare_cgmlst_schema {
   chewBBACA.py PrepExternalSchema -i bigsdb_schema -o schema/schema_seed --cpu 6
 
 
-  zip -r cgmlst.zip *
+  zip -r cgMLST_schema.zip *
 
   ls>ls.txt
 
   >>>
   output {
     File chewbbaca_test = "ls.txt"
-    File cgmlst_zip = "cgmlst.zip"
+    File cgmlst_zip = "cgMLST_schema.zip"
     String chewbbaca_docker_image = docker_image
 
   }
