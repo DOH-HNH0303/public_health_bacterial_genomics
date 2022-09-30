@@ -32,8 +32,6 @@ task chewbbaca {
   mv cgMLST_schema cgMLST_schema_old
 
   chewBBACA.py AlleleCall -i input_transposed.tsv -g schema/schema_seed --gl cgmlst_schema_old/cgMLSTschema.txt -o results~{cluster_name}_cgMLST --cpu 6
-  chewBBACA.py JoinProfiles -p1 cgMLST*_schema_old/cgMLST.tsv -p2 results~{cluster_name}_cgMLST/*/results_alleles.tsv -o cgMLST_all.tsv
-  chewBBACA.py TestGenomeQuality -i cgMLST_all.tsv -n 13 -t 300 -s 5
 
   ls>ls.txt
   zip -r ~{cluster_name}_cgmlst.zip *
