@@ -13,6 +13,7 @@ task ksnp3 {
   }
   command <<<
   assembly_array=(~{sep=' ' assembly_fasta})
+  echo "${#assembly_array[@]}">assembly.txt
   assembly_array_len=$(echo "${#assembly_array[@]}")
   samplename_array=(~{sep=' ' samplename})
   samplename_array_len=$(echo "${#samplename_array[@]}")
@@ -49,6 +50,7 @@ task ksnp3 {
     File ksnp3_pan_matrix = "ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta"
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsiomony.tree"
     Array[File] ksnp_outs = glob("ksnp3/*")
+    File ksnp_array = "assembly.txt"
 
     String ksnp3_docker_image = docker_image
   }
