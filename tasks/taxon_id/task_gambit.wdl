@@ -16,8 +16,6 @@ task gambit {
     date | tee DATE
     gambit --version | tee GAMBIT_VERSION
 
-    echo "None">PREDICTED_STRAIN
-
     # set gambit reference dir; will assume that gambit genomes and signatures will be provided by user in tandem or not at all
     if [[ ! -z "~{gambit_db_genomes}" ]]; then
       echo "User gabmit db identified; ~{gambit_db_genomes} will be utilized for alignment"
@@ -48,8 +46,6 @@ task gambit {
     predicted = item['predicted_taxon']
     next_taxon = item['next_taxon']
     closest = item['closest_genomes'][0]
-    print(type(closest['genome']['description']))
-    print(closest['genome']['description'])
 
     with open('CLOSEST_DISTANCE', 'w') as f:
       f.write(fmt_dist(closest['distance']))
@@ -162,12 +158,10 @@ task gambit {
   output {
     File gambit_report_file = report_path
     File gambit_closest_genomes_file = closest_genomes_path
-    #String gambit_closest_match = read_string("CLOSEST_TAXON")
     String gambit_predicted_taxon = read_string("PREDICTED_TAXON")
     String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK")
     String gambit_next_taxon = read_string("NEXT_TAXON")
     String gambit_next_taxon_rank = read_string("NEXT_TAXON_RANK")
-    String gambit_predicted_strain = read_string("PREDICTED_STRAIN")
     String gambit_version = read_string("GAMBIT_VERSION")
     String gambit_db_version = read_string("GAMBIT_DB_VERSION")
     String merlin_tag = read_string("MERLIN_TAG")
