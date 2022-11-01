@@ -119,3 +119,21 @@ task get_dt_results {
     preemptible: 0
   }
 }
+
+task join_genus_species {
+  input {
+    String genus
+    String species
+  }
+  command <<< >>>
+  output {
+    String genus_species = "~{genus} ~{species}"
+  }
+  runtime {
+    docker: "amancevice/pandas:1.4.2-alpine"
+    memory: "~{mem_size_gb} GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+  }
+}
