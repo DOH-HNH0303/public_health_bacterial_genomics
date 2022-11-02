@@ -13,7 +13,7 @@ workflow recomb_aware_phylo_analysis {
     File reference_genome
     String cluster_name
 	}
-	call ksnp3.ksnp3 as ksnp3_task {
+	call ska.ska as ska {
 		input:
 			assembly_fasta = assembly_fasta,
       samplename = samplename,
