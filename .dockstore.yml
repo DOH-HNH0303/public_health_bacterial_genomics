@@ -95,6 +95,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_rasusa.wdl
    testParameterFiles:
     - empty.json
+ - name: Recomb_aware_phylo_analysis_waphl
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_recombinant_aware_phylogenetic_analysis_waphl.wdl
+   testParameterFiles:
+    - empty.json
  - name: build_bacterial_consensus
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_build_bacterial_consensus.wdl
