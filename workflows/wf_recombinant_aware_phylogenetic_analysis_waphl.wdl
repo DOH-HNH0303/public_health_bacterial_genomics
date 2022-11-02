@@ -18,6 +18,7 @@ workflow recomb_aware_phylo_analysis {
 			assembly_fasta = assembly_fasta,
       samplename = samplename,
       cluster_name = cluster_name
+}
 
   output {
     File ska_aln = ska.ska_aln
