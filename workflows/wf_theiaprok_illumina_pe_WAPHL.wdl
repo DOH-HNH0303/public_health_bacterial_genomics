@@ -242,7 +242,7 @@ workflow theiaprok_illumina_pe {
         read2 = read_QC_trim.read2_clean
     }
 }
-  else {
+  if  (kraken2_clean.kraken2_genus!="Legionella" || kraken2_clean.kraken2_genus!="Tatlockia" ||kraken2_clean.kraken2_genus!="Corynebacterium" || kraken2_clean.kraken2_genus!="Fluoribacter"){
     call merlin_magic.merlin_magic {
       input:
         merlin_tag = gambit.merlin_tag,
