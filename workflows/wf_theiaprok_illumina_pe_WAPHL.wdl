@@ -188,18 +188,6 @@ workflow theiaprok_illumina_pe {
           assembly = shovill_pe.assembly_fasta,
           samplename = samplename
       }
-      call merlin_magic.merlin_magic {
-        input:
-          merlin_tag = gambit.merlin_tag,
-          assembly = shovill_pe.assembly_fasta,
-          samplename = samplename,
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean
-      }
-
-
-
-
   #call shovill.shovill_pe {
   #  input:
   #    samplename = samplename,
