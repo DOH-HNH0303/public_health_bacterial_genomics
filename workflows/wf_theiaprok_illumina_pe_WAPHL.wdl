@@ -221,7 +221,7 @@ workflow theiaprok_illumina_pe {
         genus = fastANI.fastani_genus,
         species = fastANI.fastani_species
     }
-    call merlin_magic.merlin_magic_cdip_legionella {
+    call merlin_magic.merlin_magic as merlin_magic_cdip_legionella {
       input:
         merlin_tag = join_genus_species.genus_species,
         assembly = shovill_pe.assembly_fasta,
