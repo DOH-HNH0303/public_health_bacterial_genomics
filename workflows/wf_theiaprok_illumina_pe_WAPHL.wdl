@@ -231,7 +231,7 @@ workflow theiaprok_illumina_pe {
     call utilities.join_genus_species {
       input:
         genus = fastani.fastani_genus,
-        species = genus.fastani_species
+        species = fastani.fastani_species
     }
     call merlin_magic.merlin_magic {
       input:
