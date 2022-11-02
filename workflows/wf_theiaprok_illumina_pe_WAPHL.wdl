@@ -221,7 +221,7 @@ workflow theiaprok_illumina_pe {
         genus = fastANI.fastani_genus,
         species = fastANI.fastani_species
     }
-    call merlin_magic.merlin_magic {
+    call merlin_magic.merlin_magic_cdip_legionella {
       input:
         merlin_tag = join_genus_species.genus_species,
         assembly = shovill_pe.assembly_fasta,
@@ -446,9 +446,9 @@ workflow theiaprok_illumina_pe {
     String? kleborate_genomic_resistance_mutations = merlin_magic.kleborate_genomic_resistance_mutations
     String? kleborate_mlst_sequence_type = merlin_magic.kleborate_mlst_sequence_type
     # Legionella pneumophila typing
-    File? legsta_results = merlin_magic.legsta_results
-    String? legsta_predicted_sbt = merlin_magic.legsta_predicted_sbt
-    String? legsta_version = merlin_magic.legsta_version
+    File? legsta_results = merlin_magic_cdip_legionella.legsta_results
+    String? legsta_predicted_sbt = merlin_magic_cdip_legionella.legsta_predicted_sbt
+    String? legsta_version = merlin_magic_cdip_legionella.legsta_version
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
