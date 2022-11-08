@@ -26,6 +26,7 @@ task ska {
   fi
 
   ls /data
+  echo "ls /data"
 
   # create file of filenames for kSNP3 input
   # for f in *fasta; do echo '${f%.fasta}    ${f}'; done > kingc_isolates.list
