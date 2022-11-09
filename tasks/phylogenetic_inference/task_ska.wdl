@@ -31,15 +31,14 @@ task ska {
   # create file of filenames for kSNP3 input
   # for f in *fasta; do echo '${f%.fasta}    ${f}'; done > kingc_isolates.list
 
-  #touch ~{cluster_name}_isolates.txt
-  #for f in ${!assembly_array[@]}; do
-  #  assembly=${assembly_array[$f]}
-  #  samplename=${samplename_array[$f]}
-  #  echo -e "${assembly}    ${samplename}" >> ~{cluster_name}_isolates.txt
-  #done
-  # run ksnp3 on input assemblies
+  touch ~{cluster_name}_isolates.txt
+  for f in ${!assembly_array[@]}; do
+    assembly=${assembly_array[$f]}
+    samplename=${samplename_array[$f]}
+    echo -e "${samplename}    /data/${assembly}" >> ~{cluster_name}_isolates.txt
+  done
 
-  for f in ${!assembly_array[@]};do echo "${f%.fna}    ${f}"; done >  ~{cluster_name}_isolates.txt && \
+  #for f in ${!assembly_array[@]};do echo "${f%.fna}    ${f}"; done >  ~{cluster_name}_isolates.txt && \
   ls
   python3 /data/generate_ska_alignment.py --reference ~{reference} --fasta ~{cluster_name}_isolates.txt --out ~{cluster_name}.aln
 
