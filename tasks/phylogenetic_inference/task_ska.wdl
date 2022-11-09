@@ -35,7 +35,7 @@ task ska {
   for f in ${!assembly_array[@]}; do
     assembly=${assembly_array[$f]}
     samplename=${samplename_array[$f]}
-    echo -e "${samplename}    /data/${assembly}" >> ~{cluster_name}_isolates.txt
+    echo -e "${samplename}    ${assembly}" >> ~{cluster_name}_isolates.txt
   done
 
   #for f in ${!assembly_array[@]};do echo "${f%.fna}    ${f}"; done >  ~{cluster_name}_isolates.txt && \
