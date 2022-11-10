@@ -5,7 +5,7 @@ task fastANI {
   input {
     String    samplename
     File    assembly
-    String?    genus
+    String    genus
 
   }
 

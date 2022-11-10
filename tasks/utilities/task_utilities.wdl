@@ -122,8 +122,8 @@ task get_dt_results {
 
 task join_genus_species {
   input {
-    String genus
-    String species
+    String? genus
+    String? species
     Int mem_size_gb = 8
   }
   command <<< >>>
