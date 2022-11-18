@@ -30,6 +30,7 @@ task abricate {
 
 
     # create final output strings
+    echo "${genes}"
     echo "${genes}" > ~{gene_type}_GENES
 
   >>>
