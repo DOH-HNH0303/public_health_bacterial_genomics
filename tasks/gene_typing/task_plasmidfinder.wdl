@@ -11,7 +11,7 @@ task plasmidfinder {
     String? database_path
     String? method_path
     # minimum coverage threshold
-    Float? min_cov 
+    Float? min_cov
     # minimum blast identity threshold
     Float? threshold
 
@@ -19,7 +19,7 @@ task plasmidfinder {
   command <<<
   date | tee DATE
 
-  if [[ ! -z "~{database}" ]]; then 
+  if [[ ! -z "~{database}" ]]; then
     echo "User database identified; ~{database} will be utilized for analysis"
     plasmidfinder_db_version="~{database}"
   else
@@ -35,16 +35,17 @@ task plasmidfinder {
   ~{'-p ' + database_path} \
   ~{'-mp ' + method_path} \
   ~{'-l ' + min_cov} \
-  ~{'-t ' + threshold} 
+  ~{'-t ' + threshold}
 
   # parse outputs
   if [ ! -f results_tab.tsv ]; then
-    PF="No plasmids detected in database"
-  else
-    PF="$(tail -n +2 results_tab.tsv | cut -f 2 | sort | uniq -u | paste -s -d, - )"
-      if [ "$PF" == "" ]; then
-        PF="No plasmids detected in database"
-      fi  
+    #PF="No plasmids detected in database"
+    PF=""
+  #else
+  #  PF="$(tail -n +2 results_tab.tsv | cut -f 2 | sort | uniq -u | paste -s -d, - )"
+  #    if [ "$PF" == "" ]; then
+  #      PF="No plasmids detected in database"
+  #    fi  
   fi
   echo $PF | tee PLASMIDS
 

@@ -4,7 +4,7 @@ task amrfinderplus_nuc {
   input {
     File assembly
     String samplename
-    # Parameters 
+    # Parameters
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism # make optional?
@@ -17,7 +17,7 @@ task amrfinderplus_nuc {
     # logging info
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
-    
+
     ### set $amrfinder_organism BASH variable based on gambit_predicted_taxon or user-defined input string
     ### final variable has strict syntax/spelling based on list from amrfinder --list_organisms
     # there may be other Acinetobacter species to add later, like those in the A. baumannii-calcoaceticus species complex
@@ -27,47 +27,47 @@ task amrfinderplus_nuc {
       amrfinder_organism="Campylobacter"
     elif [[ "~{organism}" == *"Clostridioides"*"difficile"* ]]; then
       amrfinder_organism="Clostridioides_difficile"
-    elif [[ "~{organism}" == *"Enterococcus"*"faecalis"* ]]; then 
+    elif [[ "~{organism}" == *"Enterococcus"*"faecalis"* ]]; then
       amrfinder_organism="Enterococcus_faecalis"
-    elif [[ "~{organism}" == *"Enterococcus"*"faecium"* ]] || [[ "~{organism}" == *"Enterococcus"*"hirae"* ]]; then 
+    elif [[ "~{organism}" == *"Enterococcus"*"faecium"* ]] || [[ "~{organism}" == *"Enterococcus"*"hirae"* ]]; then
       amrfinder_organism="Enterococcus_faecium"
     # should capture all Shigella and Escherichia species
-    elif [[ "~{organism}" == *"Escherichia"* ]] || [[ "~{organism}" == *"Shigella"* ]]; then 
+    elif [[ "~{organism}" == *"Escherichia"* ]] || [[ "~{organism}" == *"Shigella"* ]]; then
       amrfinder_organism="Escherichia"
     # add other Klebsiella species later? Cannot use K. oxytoca as per amrfinderplus wiki
-    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pnemoniae"* ]]; then 
+    elif [[ "~{organism}" == *"Klebsiella"*"aerogenes"* ]] || [[ "~{organism}" == *"Klebsiella"*"pnemoniae"* ]]; then
       amrfinder_organism="Klebsiella"
     # because some people spell the species 'gonorrhea' differently
-    elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]] || [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then 
+    elif [[ "~{organism}" == *"Neisseria"*"gonorrhea"* ]] || [[ "~{organism}" == *"Neisseria"*"gonorrhoeae"* ]] || [[ "~{organism}" == *"Neisseria"*"meningitidis"* ]]; then
       amrfinder_organism="Neisseria"
-    elif [[ "~{organism}" == *"Pseudomonas"*"aeruginosa"* ]]; then 
+    elif [[ "~{organism}" == *"Pseudomonas"*"aeruginosa"* ]]; then
       amrfinder_organism="Pseudomonas_aeruginosa"
     # pretty broad, could work on Salmonella bongori and other species
-    elif [[ "~{organism}" == *"Salmonella"* ]]; then 
+    elif [[ "~{organism}" == *"Salmonella"* ]]; then
       amrfinder_organism="Salmonella"
-    elif [[ "~{organism}" == *"Staphylococcus"*"aureus"* ]]; then 
+    elif [[ "~{organism}" == *"Staphylococcus"*"aureus"* ]]; then
       amrfinder_organism="Staphylococcus_aureus"
-    elif [[ "~{organism}" == *"Staphylococcus"*"pseudintermedius"* ]]; then 
+    elif [[ "~{organism}" == *"Staphylococcus"*"pseudintermedius"* ]]; then
       amrfinder_organism="Staphylococcus_pseudintermedius"
-    elif [[ "~{organism}" == *"Streptococcus"*"agalactiae"* ]]; then 
+    elif [[ "~{organism}" == *"Streptococcus"*"agalactiae"* ]]; then
       amrfinder_organism="Streptococcus_agalactiae"
-    elif [[ "~{organism}" == *"Streptococcus"*"pneumoniae"* ]] || [[ "~{organism}" == *"Streptococcus"*"mitis"* ]]; then 
+    elif [[ "~{organism}" == *"Streptococcus"*"pneumoniae"* ]] || [[ "~{organism}" == *"Streptococcus"*"mitis"* ]]; then
       amrfinder_organism="Streptococcus_pneumoniae"
-    elif [[ "~{organism}" == *"Streptococcus"*"pyogenes"* ]]; then 
+    elif [[ "~{organism}" == *"Streptococcus"*"pyogenes"* ]]; then
       amrfinder_organism="Streptococcus_pyogenes"
-    elif [[ "~{organism}" == *"Vibrio"*"cholerae"* ]]; then 
+    elif [[ "~{organism}" == *"Vibrio"*"cholerae"* ]]; then
       amrfinder_organism="Vibrio_cholerae"
-    else 
+    else
       echo "Either Gambit predicted taxon is not supported by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
     fi
 
     # checking bash variable
     echo "amrfinder_organism is set to:" ${amrfinder_organism}
-    
+
     # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
     if [[ -v amrfinder_organism ]] ; then
-      # always use --plus flag, others may be left out if param is optional and not supplied 
+      # always use --plus flag, others may be left out if param is optional and not supplied
       # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
         --organism ${amrfinder_organism} \
@@ -77,8 +77,8 @@ task amrfinderplus_nuc {
         ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + mincov} \
         ~{'--ident_min ' + minid} 2>&1 | tee amrfinder.STDOUT-and-STDERR.log
-    else 
-      # always use --plus flag, others may be left out if param is optional and not supplied 
+    else
+      # always use --plus flag, others may be left out if param is optional and not supplied
       # send STDOUT/ERR to log file for capturing database version
       amrfinder --plus \
         ~{'--name ' + samplename} \
@@ -92,7 +92,7 @@ task amrfinderplus_nuc {
     # capture the database version from the stdout and stderr file that was just created
     grep "Database version:" amrfinder.STDOUT-and-STDERR.log | sed 's|Database version: ||' >AMRFINDER_DB_VERSION
 
-    # Element Type possibilities: AMR, STRESS, and VIRULENCE 
+    # Element Type possibilities: AMR, STRESS, and VIRULENCE
     # create headers for 3 output files; tee to 3 files and redirect STDOUT to dev null so it doesn't print to log file
     head -n 1 ~{samplename}_amrfinder_all.tsv | tee ~{samplename}_amrfinder_stress.tsv ~{samplename}_amrfinder_virulence.tsv ~{samplename}_amrfinder_amr.tsv >/dev/null
     # looks for all rows with STRESS, AMR, or VIRULENCE and append to TSVs
@@ -107,15 +107,15 @@ task amrfinderplus_nuc {
     virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
-    if [ -z "${amr_genes}" ]; then
-       amr_genes="No AMR genes detected by NCBI-AMRFinderPlus"
-    fi 
-    if [ -z "${stress_genes}" ]; then
-       stress_genes="No STRESS genes detected by NCBI-AMRFinderPlus"
-    fi 
-    if [ -z "${virulence_genes}" ]; then
-       virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
-    fi 
+    #if [ -z "${amr_genes}" ]; then
+    #   amr_genes="No AMR genes detected by NCBI-AMRFinderPlus"
+    #fi
+    #if [ -z "${stress_genes}" ]; then
+    #   stress_genes="No STRESS genes detected by NCBI-AMRFinderPlus"
+    #fi
+    #if [ -z "${virulence_genes}" ]; then
+    #   virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
+    #fi
 
     # create final output strings
     echo "${amr_genes}" > AMR_GENES
