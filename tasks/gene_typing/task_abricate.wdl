@@ -22,11 +22,7 @@ task abricate {
       ~{'--mincov ' + mincov} \
       ~{assembly} > ~{samplename}_abricate_hits.tsv
 
-    genes=$(awk -F '\t' '{ print $6 }' ~{samplename}_abricate_hits.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
-
-    # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
-    if [ -z "${genes}" ]; then
-       genes="No ~{gene_type} genes detected"
+    genes = "genes"
 
 
     # create final output strings
