@@ -37,7 +37,7 @@ task abricate {
     File abricate_results = "~{samplename}_abricate_hits.tsv"
     String abricate_database = database
     String abricate_version = read_string("ABRICATE_VERSION")
-    String abricate_genes = read_string(~{gene_type}_GENES)
+    String abricate_genes = read_string("~{gene_type}_GENES")
   }
   runtime {
     memory: "8 GB"
