@@ -26,7 +26,7 @@ task abricate {
 
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${genes}" ]; then
-       amr_genes="No ~{gene_type} genes detected"
+       genes="No ~{gene_type} genes detected"
 
 
     # create final output strings
