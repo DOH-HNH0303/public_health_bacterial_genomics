@@ -126,9 +126,11 @@ task join_genus_species {
     String? species
     Int mem_size_gb = 8
   }
-  command <<< >>>
+  command <<<
+  echo "~{genus} ~{species}" >GENUS_SPECIES
+  >>>
   output {
-    String genus_species = "~{genus} ~{species}"
+    String genus_species = read_string("GENUS_SPECIES")
   }
   runtime {
     docker: "amancevice/pandas:1.4.2-alpine"
