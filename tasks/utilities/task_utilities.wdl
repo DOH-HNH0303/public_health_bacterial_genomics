@@ -133,7 +133,7 @@ task join_genus_species {
     String genus_species = read_string("GENUS_SPECIES")
   }
   runtime {
-    docker: "quay.io/theiagen/utility:1.1e"
+    docker: "quay.io/theiagen/utility:1.1"
     memory: "~{mem_size_gb} GB"
     cpu: 4
     disks: "local-disk 100 SSD"
