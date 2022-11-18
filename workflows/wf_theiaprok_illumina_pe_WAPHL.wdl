@@ -245,7 +245,7 @@ workflow theiaprok_illumina_pe {
     input:
       assembly = shovill_pe.assembly_fasta,
       samplename = samplename,
-      database = "ncbi"
+      database = "ncbi",
       gene_type = "AMR"
   }
   call abricate.abricate as abricate_virulence {
