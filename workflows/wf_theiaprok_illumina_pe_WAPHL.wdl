@@ -246,6 +246,7 @@ workflow theiaprok_illumina_pe {
       assembly = shovill_pe.assembly_fasta,
       samplename = samplename,
       database = "ncbi"
+      gene_type = "AMR"
   }
   call abricate.abricate as abricate_virulence {
     input:
@@ -376,6 +377,7 @@ workflow theiaprok_illumina_pe {
     File? abricate_amr_results = abricate_amr.abricate_results
     String? abricate_amr_database = abricate_amr.abricate_database
     String? abricate_amr_version = abricate_amr.abricate_version
+    String? abricate_amr_genes = abricate_amr.abricate_genes
 
 
     # Resfinder Outputs
@@ -392,6 +394,7 @@ workflow theiaprok_illumina_pe {
     File? abricate_virulence_results = abricate_virulence.abricate_results
     String? abricate_virulence_database = abricate_virulence.abricate_database
     String? abricate_virulence_version = abricate_virulence.abricate_version
+    String? abricate_virulence_genes = abricate_virulence.abricate_genes
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st

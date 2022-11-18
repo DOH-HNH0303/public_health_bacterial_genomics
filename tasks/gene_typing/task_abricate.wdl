@@ -5,7 +5,8 @@ task abricate {
     File assembly
     String samplename
     String database
-    # Parameters 
+    String gene_type = "VIRULENCE"
+    # Parameters
     #  --minid Minimum DNA %identity [80]
     # --mincov Minimum DNA %coverage [80]
     Int? minid
@@ -14,18 +15,29 @@ task abricate {
   command <<<
     date | tee DATE
     abricate -v | tee ABRICATE_VERSION
-    
+
     abricate \
       --db ~{database} \
       ~{'--minid ' + minid} \
       ~{'--mincov ' + mincov} \
       ~{assembly} > ~{samplename}_abricate_hits.tsv
-    
+
+    genes=$(awk -F '\t' '{ print $6 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+
+    # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
+    if [ -z "${genes}" ]; then
+       amr_genes="No ~{gene_type} genes detected"
+
+
+    # create final output strings
+    echo "${genes}" > ~{gene_type}_GENES
+
   >>>
   output {
     File abricate_results = "~{samplename}_abricate_hits.tsv"
     String abricate_database = database
     String abricate_version = read_string("ABRICATE_VERSION")
+    String abricate_genes = read_string(~{gene_type}_GENES)
   }
   runtime {
     memory: "8 GB"
