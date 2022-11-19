@@ -335,6 +335,7 @@ workflow theiaprok_illumina_pe {
     String?    fastani_species   =fastANI.fastani_species
     String?    fastani_strain   =fastANI.fastani_strain
     Float?    fastani_ani_estimate   =fastANI.fastani_aniestimate
+    String?   fastani_genus_species = join_genus_species.genus_species
 
     File?    dt_omega_tsv=ncbi_blast.tblastn_dt_omega_report
     File?    dt_beta_tsv=ncbi_blast.tblastn_dt_beta_report
