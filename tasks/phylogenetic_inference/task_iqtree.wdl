@@ -28,13 +28,35 @@ task iqtree {
       ~{iqtree_opts}
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
+      cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree
     fi
     ls
+
+    python <<CODE
+    if ~{iqtree_model} == "TESTNEW":
+      with open("~{cluster_name}_msa.iqtree") as file:
+        metadata=file.readlines()
+        for line in metadata:
+          if "Best-fit model according to BIC" in line:
+              model= line
+              f = open(IQTREE_MODEL, "w")
+              f.write(model)
+              f.close()
+          else:
+              pass
+    else:
+      f = open(IQTREE_MODEL, "w")
+      f.write(~{iqtree_model})
+      f.close()
+
+    CODE
   >>>
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_msa.tree"
+    File iqtree_report = "~{cluster_name}_msa.iqtree"
+    File iqtree_model = read_string("IQTREE_MODEL")
   }
   runtime {
     docker: "~{docker}"
