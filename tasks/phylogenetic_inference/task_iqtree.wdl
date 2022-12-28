@@ -29,6 +29,7 @@ task iqtree {
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
     fi
+    ls
   >>>
   output {
     String date = read_string("DATE")
