@@ -32,24 +32,15 @@ task iqtree {
     fi
     ls
 
-    python <<CODE
-    if ~{iqtree_model} == "TESTNEW":
-      with open("~{cluster_name}_msa.iqtree") as file:
-        metadata=file.readlines()
-        for line in metadata:
-          if "Best-fit model according to BIC" in line:
-              model= line
-              f = open(IQTREE_MODEL, "w")
-              f.write(model)
-              f.close()
-          else:
-              pass
-    else:
-      f = open(IQTREE_MODEL, "w")
-      f.write(~{iqtree_model})
-      f.close()
+    if grep -q "Model of substitution:" "~{cluster_name}_msa.iqtree"; then
+      cat ~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed s/"Model of substitution: "//>IQTREE_MODEL # SomeString was found
+    elif grep -q "Best-fit model according to BIC" "core_iqtree_wa_cluster_msa.iqtree"; then
+    cat core_iqtree_wa_cluster_msa.iqtree | grep "Best-fit model according to BIC" | sed s/"Best-fit model according to BIC"//>IQTREE_MODEL
+    else
+      echo ~{iqtree_model}>IQTREE_MODEL
+    fi
 
-    CODE
+
   >>>
   output {
     String date = read_string("DATE")
