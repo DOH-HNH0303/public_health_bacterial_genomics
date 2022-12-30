@@ -12,17 +12,28 @@ workflow recomb_aware_phylo_analysis {
     Array[String] samplename
     File reference_genome
     String cluster_name
-	}
-	call ska.ska as ska {
-		input:
-			assembly_fasta = assembly_fasta,
+    String iqtree_model = "NEWTEST"
+  }
+  call ska.ska as ska {
+    input:
+      assembly_fasta = assembly_fasta,
       samplename = samplename,
       cluster_name = cluster_name,
       reference = reference_genome
 }
-
+  call iqtree.iqtree as ska_iqtree {
+    input:
+      alignment = ska.ska_aln,
+      cluster_name = cluster_name,
+      iqtree_model = iqtree_model
+  }
   output {
     File ska_aln = ska.ska_aln
     String ska_docker = ska.ska_docker_image
+    String ska_tree_date = ska_tree.date
+    String ska_tree_version = ska_tree.version
+    File ska_tree_ml = ska_tree.ml_tree
+    File ska_tree_report = ska_tree.iqtree_report
+    File ska_tree_model = ska_tree.iqtree_model
   }
 }
