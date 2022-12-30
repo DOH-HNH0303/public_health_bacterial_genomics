@@ -32,8 +32,8 @@ workflow recomb_aware_phylo_analysis {
     String ska_docker = ska.ska_docker_image
     String ska_iqtree_date = ska_iqtree.date
     String ska_iqtree_version = ska_iqtree.version
-    File ska_iqtree_ml = ska_tree.ml_iqtree
-    File ska_iqtree_report = ska_tree.iqtree_report
-    File ska_iqtree_model = ska_tree.iqtree_model
+    File ska_iqtree_ml = ska_iqtree.ml_iqtree
+    File ska_iqtree_report = ska_iqtree.iqtree_report
+    File ska_iqtree_model = ska_iqtree.iqtree_model
   }
 }
