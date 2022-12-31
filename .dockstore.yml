@@ -65,6 +65,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_rasusa.wdl
    testParameterFiles:
     - empty.json
+ - name: Rrecomb_aware_phylogenetic_analysis
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_recombinant_aware_phylogenetic_analysis_waphl
+   testParameterFiles:
+    - empty.json
  - name: Core_Gene_SNP
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_core_gene_snp.wdl
