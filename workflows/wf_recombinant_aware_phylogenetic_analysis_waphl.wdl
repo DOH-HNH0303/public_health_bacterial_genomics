@@ -21,19 +21,25 @@ workflow recomb_aware_phylo_analysis {
       cluster_name = cluster_name,
       reference = reference_genome
 }
-  call iqtree.iqtree as ska_iqtree {
+call gubbins.gubbins as gubbins {
+  input:
+    alignment = ska.ska_aln,
+    cluster_name = cluster_name
+}
+  /* call iqtree.iqtree as ska_iqtree {
     input:
       alignment = ska.ska_aln,
       cluster_name = cluster_name,
       iqtree_model = iqtree_model
-  }
+  } */
   output {
     File ska_aln = ska.ska_aln
+    String gubbins_date = gubbins.date
     String ska_docker = ska.ska_docker_image
     String ska_iqtree_date = ska_iqtree.date
     String ska_iqtree_version = ska_iqtree.version
-    File ska_iqtree_ml = ska_iqtree.ml_tree
+    /* File ska_iqtree_ml = ska_iqtree.ml_tree
     File ska_iqtree_report = ska_iqtree.iqtree_report
-    File ska_iqtree_model = ska_iqtree.iqtree_model
+    File ska_iqtree_model = ska_iqtree.iqtree_model */
   }
 }
