@@ -19,10 +19,11 @@ task gubbins {
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
     if [ $numGenomes -gt 3 ]
     then
-      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose ~{alignment}
+      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree ~{alignment}
 
       mv gubbins_output.aln ~{cluster_name}_gubbins_output.aln
     fi
+    ls
   >>>
   output {
     String date = read_string("DATE")
