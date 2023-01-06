@@ -6,7 +6,6 @@ task gubbins {
     String cluster_name # For comparison to other tools use HKY for bactopia, GTR+F+I for grandeur, GTR+G4 for nullarbor, GTR+G for dryad
     String docker = "sangerpathogens/gubbins:v3.0.0"
     File? treefile
-    Int cpu = 4
     Int threads = 8
   }
   command <<<
@@ -43,7 +42,7 @@ task gubbins {
   runtime {
     docker: "~{docker}"
     memory: "32 GB"
-    cpu: ~{cpu}
+    cpu: 4
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3
