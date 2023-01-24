@@ -32,18 +32,12 @@ call gubbins.gubbins as gubbins_clade {
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name
 }
-call gubbins.mask_gubbins as mask_gubbins_clade  {
-  input:
-    alignment = pirate.pirate_core_alignment_fasta,
-    cluster_name = cluster_name,
-    recomb = gubbins_clade.recomb_predictions
-}
 if (pan == true) {
   call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
     input:
       alignment = pirate.pirate_pangenome_alignment_fasta,
       cluster_name = cluster_name,
-      recomb = gubbins_clade.recomb_predictions
+      recomb = gubbins_clade.recomb_gff
   }
   call iqtree.iqtree as pan_iqtree {
     input:
@@ -62,7 +56,7 @@ if (pan == true) {
       input:
         alignment = pirate.pirate_core_alignment_fasta,
         cluster_name = cluster_name,
-        recomb = gubbins_clade.recomb_predictions
+        recomb = gubbins_clade.recomb__gf
     }
     call iqtree.iqtree as core_iqtree {
       input:
