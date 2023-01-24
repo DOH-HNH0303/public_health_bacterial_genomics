@@ -59,7 +59,7 @@ if (pan == true) {
     }
     call iqtree.iqtree as core_iqtree {
       input:
-        alignment = mask_gubbins_core_clade.pirate_core_alignment_fasta,
+        alignment = mask_gubbins_core_clade.masked_aln,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
     }
