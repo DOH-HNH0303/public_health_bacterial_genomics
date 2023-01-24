@@ -140,3 +140,114 @@ task join_genus_species {
     preemptible: 0
   }
 }
+
+task split_by_clade {
+  input {
+    File snp_matrix
+    String cluster_name
+    String docker = "quay.io/broadinstitute/py3-bio:0.1.2"
+    Int threads = 6
+    Int snp_clade
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+    python3<<CODE
+
+    import pandas as pd
+
+    '''Takes snp_distance_matrix.tsv as input and returns txt file with list
+    of '''
+    input = "~{snp_matrix}"
+    output = "~{cluster_name}_output.txt"
+    #cluster_dist = 150 #SNP ingdistance determines cluster
+    cluster_dist = ~{snp_clade}
+
+    if not cluster_dist:
+      cluster_dist = 150
+
+    df =pd.read_csv(input, sep='\t', header=0)
+
+    seqs=df[df.columns[0]].tolist()
+    df = df.replace("-",0)
+
+    done_list=[]
+    seq_list =[]
+    for i in seqs:
+      snp_dist=df[i].tolist()
+      res = [idx for idx, val in enumerate(snp_dist) if int(val) <= cluster_dist]
+
+      ids=[]
+      for j in res:
+        val=df.iloc[j].loc[df.columns[0]]
+        ids.append(val)
+
+      if res not in done_list:
+        done_list.append(res)
+        seq_list.append(ids)
+
+    with open(output, 'w') as fp:
+        for li in seq_list:
+            for item in li:
+                fp.write("%s\t" % item)
+            fp.write("\n")
+        print('Done')
+
+    CODE
+  >>>
+  output {
+    String date = read_string("DATE")
+    File clade_list_file = "~{cluster_name}_output.txt"
+    Array[Array[String]] clade_list = read_tsv("~{cluster_name}_output.txt")
+  }
+  runtime {
+    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+task scatter_by_clade {
+  input {
+    Array[File] assembly_files
+    String file_type
+    String cluster_name
+    String docker = "quay.io/broadinstitute/py3-bio:0.1.2"
+    Int threads = 6
+    Array[String] clade_list
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+    mkdir fastas
+    for x in ~{sep=' ' assembly_fastas}
+    do
+        mv "${x}" ./$(basename "${x}")
+    done;
+    ls
+    echo ""
+    for x in ~{sep=' ' clade_list}
+    do
+        mv "${x}_contigs.fasta" files/"${x}_contigs.fasta"
+    done;
+    python3<<CODE
+    import pandas as pd
+
+    CODE
+    ls fastas
+  >>>
+  output {
+    String date = read_string("DATE")
+    Array[File] clade_fastas = glob("filess/*")
+  }
+  runtime {
+    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}

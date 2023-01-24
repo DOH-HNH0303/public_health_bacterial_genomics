@@ -105,3 +105,8 @@ workflows:
    primaryDescriptorPath: /workflows/wf_build_bacterial_consensus.wdl
    testParameterFiles:
     - empty.json
+ - name: recomb_clade_analysis
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_clade_analysis_WAPHL.wdl
+   testParameterFiles:
+    - empty.json

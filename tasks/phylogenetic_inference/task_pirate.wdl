@@ -4,7 +4,7 @@ task pirate {
   input {
     Array[File] prokka_gff
     String cluster_name
-    Boolean? align # align all genes and produce core/pangenome alignments
+    Boolean? align = true # align all genes and produce core/pangenome alignments
     String? steps = "50,60,70,80,90,95,98" # % identity thresholds to use for pangenome construction [default: 50,60,70,80,90,95,98]
     String? features = "CDS" # features to use for pangenome construction [default: CDS]
     Boolean? nucl = false # CDS are not translated to AA sequence [default: off]
@@ -49,8 +49,6 @@ task pirate {
   mv PIRATE/core_alignment.fasta PIRATE/~{cluster_name}_core_alignment.fasta
   mv PIRATE/core_alignment.gff PIRATE/~{cluster_name}_core_alignment.gff
 
-
-  #perl PIRATE_to_roary.pl -i *.tsv -o ~{cluster_name}_for_scoary_file.csv
 
   >>>
   output {

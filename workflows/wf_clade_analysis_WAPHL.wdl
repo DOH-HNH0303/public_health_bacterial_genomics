@@ -1,0 +1,104 @@
+version 1.0
+
+import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
+import "../tasks/phylogenetic_inference/task_ska.wdl" as ska
+import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
+import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
+import "../tasks/task_versioning.wdl" as versioning
+import "wf_ksnp3_WAPHL.wdl" as ksnp3
+
+workflow recomb_aware_phylo_analysis {
+  input {
+
+    Array[File] assembly_gff
+    Array[String] samplename
+    File reference_genome
+    String cluster_name
+    String iqtree_model = "MFP"
+    Boolean? core == true
+    Boolean? pan == false
+
+  }
+  call pirate.pirate as pirate {
+    input:
+      prokka_gff = prokka_gff,
+      cluster_name = cluster_name,
+      align = align
+  }
+
+call gubbins.gubbins as gubbins_clade {
+  input:
+    alignment = pirate.pirate_pangenome_alignment_fasta,
+    cluster_name = cluster_name
+}
+call gubbins.mask_gubbins as mask_gubbins_clade  {
+  input:
+    alignment = pirate.pirate_core_alignment_fasta,
+    cluster_name = cluster_name,
+    recomb = gubbins_clade.recomb_predictions
+}
+if (pan == true) {
+  call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
+    input:
+      alignment = pirate.pirate_pangenome_alignment_fasta,
+      cluster_name = cluster_name,
+      recomb = gubbins_clade.recomb_predictions
+  }
+  call iqtree.iqtree as pan_iqtree {
+    input:
+      alignment = mask_gubbins_pan_clade.masked_aln,
+      cluster_name = cluster_name,
+      iqtree_model = iqtree_model
+  }
+  call snp_dists.snp_dists as pan_snp_dists {
+    input:
+      alignment = pirate.pirate_pangenome_alignment_fasta,
+      cluster_name = cluster_name
+  }
+  if (core == true) {
+    call gubbins.mask_gubbins as mask_gubbins_core_clade  {
+      input:
+        alignment = pirate.pirate_core_alignment_fasta,
+        cluster_name = cluster_name,
+        recomb = gubbins_clade.recomb_predictions
+    }
+    call iqtree.iqtree as core_iqtree {
+      input:
+        alignment = mask_gubbins_core_clade.pirate_core_alignment_fasta,
+        cluster_name = cluster_name,
+        iqtree_model = iqtree_model
+    }
+    call snp_dists.snp_dists as core_snp_dists {
+      input:
+        alignment = pirate.pirate_core_alignment_fasta,
+        cluster_name = cluster_name
+    }
+  }
+
+  output {
+
+    String gubbins_date = gubbins_clade.date
+    File gubbins_clade_polymorph_fasta = gubbins_clade.polymorph_site_fasta
+    File gubbins_clade_branch_stats = gubbins_clade.branch_stats
+    File gubbins_clade_recomb_gff = gubbins_clade.recomb_gff
+
+    File? masked_aln_core_clade = mask_gubbins_core_clade.masked_aln
+    File? masked_aln_pan_clade = mask_gubbins_pan_clade.masked_aln
+
+    File pirate_pangenome_summary = pirate.pirate_pangenome_summary
+    File pirate_gene_families_ordered = pirate.pirate_gene_families_ordered
+    String pirate_docker_image = pirate.pirate_docker_image
+    String pirate_for_scoary_csv = pirate.pirate_for_scoary_csv
+    # snp_dists outputs
+    String? pirate_snps_dists_version = pan_snp_dists.version
+    File? pirate_core_snp_matrix = core_snp_dists.snp_matrix
+    File? pirate_pan_snp_matrix = pan_snp_dists.snp_matrix
+    # iqtree outputs
+    String? pirate_iqtree_version = pan_iqtree.version
+    File? pirate_iqtree_core_tree = core_iqtree.ml_tree
+    File? pirate_iqtree_pan_tree = pan_iqtree.ml_tree
+    File? pirate_iqtree_pan_model = pan_iqtree.iqtree_model
+    File? pirate_iqtree_core_model = core_iqtree.iqtree_model
+
+  }
+}
