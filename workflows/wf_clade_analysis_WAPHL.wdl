@@ -15,8 +15,8 @@ workflow recomb_aware_phylo_analysis {
     File reference_genome
     String cluster_name
     String iqtree_model = "MFP"
-    Boolean? core == true
-    Boolean? pan == false
+    Boolean? core = true
+    Boolean? pan = false
 
   }
   call pirate.pirate as pirate {
