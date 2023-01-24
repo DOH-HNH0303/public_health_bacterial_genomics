@@ -1,11 +1,11 @@
 version 1.0
 
-import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 import "../tasks/phylogenetic_inference/task_ska.wdl" as ska
 import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
 import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
+import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
-import "wf_ksnp3_WAPHL.wdl" as ksnp3
+
 
 workflow recomb_aware_phylo_analysis {
   input {
