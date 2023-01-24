@@ -55,6 +55,7 @@ if (pan == true) {
       alignment = pirate.pirate_pangenome_alignment_fasta,
       cluster_name = cluster_name
   }
+}
   if (core == true) {
     call gubbins.mask_gubbins as mask_gubbins_core_clade  {
       input:
