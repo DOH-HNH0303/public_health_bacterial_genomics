@@ -11,7 +11,7 @@ import "../tasks/task_versioning.wdl" as versioning
 workflow recomb_aware_phylo_analysis {
   input {
 
-    Array[File] assembly_gff
+    Array[File] prokka_gff
     Array[String] samplename
     File reference_genome
     String cluster_name
