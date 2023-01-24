@@ -24,7 +24,6 @@ workflow recomb_aware_phylo_analysis {
     input:
       prokka_gff = prokka_gff,
       cluster_name = cluster_name,
-      align = align
   }
 
 call gubbins.gubbins as gubbins_clade {
