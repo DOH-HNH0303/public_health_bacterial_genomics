@@ -56,7 +56,7 @@ if (pan == true) {
       input:
         alignment = pirate.pirate_core_alignment_fasta,
         cluster_name = cluster_name,
-        recomb = gubbins_clade.recomb_gf
+        recomb = gubbins_clade.recomb_gff
     }
     call iqtree.iqtree as core_iqtree {
       input:
