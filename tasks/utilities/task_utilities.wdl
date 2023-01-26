@@ -222,7 +222,7 @@ task scatter_by_clade {
     # date and version control
     date | tee DATE
     mkdir fastas
-    for x in ~{sep=' ' assembly_fastas}
+    for x in ~{sep=' ' assembly_files}
     do
         mv "${x}" ./$(basename "${x}")
     done;
@@ -240,7 +240,7 @@ task scatter_by_clade {
   >>>
   output {
     String date = read_string("DATE")
-    Array[File] clade_fastas = glob("filess/*")
+    Array[File] clade_fastas = glob("files/*")
   }
   runtime {
     docker: "quay.io/broadinstitute/py3-bio:0.1.2"
