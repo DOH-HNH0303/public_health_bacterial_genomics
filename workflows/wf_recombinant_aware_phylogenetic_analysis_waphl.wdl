@@ -62,7 +62,6 @@ call clade_analysis.clade_analysis as clade_analysis  {
     String gubbins_date = gubbins_init.date
     String ska_docker = ska.ska_docker_image
 
-    String gubbins_date = gubbins.date
     File gubbins_polymorph_site_fasta = gubbins_init.polymorph_site_fasta
     File gubbins_polymorph_site_phylip = gubbins_init.polymorph_site_phylip
     File gubbins_branch_stats = gubbins_init.branch_stats
