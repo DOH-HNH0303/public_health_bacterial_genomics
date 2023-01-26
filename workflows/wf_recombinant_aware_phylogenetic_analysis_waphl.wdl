@@ -6,6 +6,7 @@ import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
 import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
 import "../tasks/task_versioning.wdl" as versioning
 import "wf_ksnp3_WAPHL.wdl" as ksnp3
+import "../tasks/utilities/task_utilities.wdl" as utilities
 
 workflow recomb_aware_phylo_analysis {
   input {
@@ -42,7 +43,7 @@ call ksnp3.ksnp3_workflow as ksnp3  {
     samplename = samplename,
     cluster_name = cluster_name
 }
-call split_by_clade  {
+call utilities.split_by_clade as split_by_clade  {
   input:
     snp_matrix = ksnp3.ksnp3_core_snp_matrix,
     cluster_name = cluster_name,
