@@ -91,10 +91,10 @@ call clade_analysis.clade_analysis as clade_analysis  {
     File? pirate_core_snp_matrix = clade_analysis.pirate_core_snp_matrix
     File? pirate_pan_snp_matrix = clade_analysis.pirate_pan_snp_matrix
     # iqtree outputs
-    String? pirate_iqtree_version = clade_analysis.version
-    File? pirate_iqtree_core_tree = clade_analysis.ml_tree
-    File? pirate_iqtree_pan_tree = clade_analysis.ml_tree
-    File? pirate_iqtree_pan_model = clade_analysis.iqtree_model
-    File? pirate_iqtree_core_model = clade_analysis.iqtree_model
+    String? pirate_iqtree_version = clade_analysis.pirate_iqtree_version
+    File? pirate_iqtree_core_tree = clade_analysis.pirate_iqtree_core_tree
+    File? pirate_iqtree_pan_tree = clade_analysis.pirate_iqtree_pan_tree
+    File? pirate_iqtree_pan_model = clade_analysis.pirate_iqtree_pan_model
+    File? pirate_iqtree_core_model = clade_analysis.pirate_iqtree_core_model
   }
 }
