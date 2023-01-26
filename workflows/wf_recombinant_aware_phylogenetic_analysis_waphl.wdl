@@ -34,7 +34,7 @@ call gubbins.mask_gubbins as mask_gubbins_init  {
   input:
     alignment = ska.ska_aln,
     cluster_name = cluster_name,
-    recomb = gubbins_init.recomb_predictions
+    recomb = gubbins_init.recomb_gff
 
 }
 call ksnp3.ksnp3_workflow as ksnp3  {
