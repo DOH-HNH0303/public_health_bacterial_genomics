@@ -50,11 +50,17 @@ call utilities.split_by_clade as split_by_clade  {
     snp_clade = snp_clade
 }
 scatter (i in split_by_clade.clade_list) {
-call clade_analysis.clade_analysis as clade_analysis  {
+call utilities.scatter_by_clade as scatter_by_clade  {
   input:
     clade_list = i,
     cluster_name = cluster_name,
     assembly_files = assembly_gff
+}
+call clade_analysis.clade_analysis as clade_analysis  {
+  input:
+    clade_list = i,
+    cluster_name = cluster_name,
+    assembly_files = scatter_by_clade.clade_files
 }
 }
   output {

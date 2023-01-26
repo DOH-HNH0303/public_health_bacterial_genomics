@@ -240,7 +240,7 @@ task scatter_by_clade {
   >>>
   output {
     String date = read_string("DATE")
-    Array[File] clade_fastas = glob("files/*")
+    Array[File] clade_files = glob("files/*")
   }
   runtime {
     docker: "quay.io/broadinstitute/py3-bio:0.1.2"
