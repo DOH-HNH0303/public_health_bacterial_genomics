@@ -8,7 +8,7 @@ import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
 
 
-workflow recomb_aware_phylo_analysis {
+workflow clade_analysis {
   input {
 
     Array[File] prokka_gff
