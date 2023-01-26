@@ -212,7 +212,7 @@ task split_by_clade {
 task scatter_by_clade {
   input {
     Array[File] assembly_files
-    String file_type
+    String filetype = "gff"
     String cluster_name
     String docker = "quay.io/broadinstitute/py3-bio:0.1.2"
     Int threads = 6
@@ -221,7 +221,7 @@ task scatter_by_clade {
   command <<<
     # date and version control
     date | tee DATE
-    mkdir fastas
+    mkdir files_dir
     for x in ~{sep=' ' assembly_files}
     do
         mv "${x}" ./$(basename "${x}")
@@ -230,17 +230,21 @@ task scatter_by_clade {
     echo ""
     for x in ~{sep=' ' clade_list}
     do
-        mv "${x}_contigs.fasta" files/"${x}_contigs.fasta"
+        if [ ~{filetype} == "fasta" ]; then
+            mv "${x}_contigs.fasta" files_dir/"${x}_contigs.fasta"
+        elif [ ~{filetype} == "gff" ]; then
+            mv "${x}.gff" files_dir/"${x}.gff"
+        else
+            echo "Please add filetype to task"
+            ls "${x}"*
+        fi
     done;
-    python3<<CODE
-    import pandas as pd
-
-    CODE
-    ls fastas
+    echo "ls files_dir"
+    ls files_dir
   >>>
   output {
     String date = read_string("DATE")
-    Array[File] clade_files = glob("files/*")
+    Array[File] clade_files = glob("files_dir/*")
   }
   runtime {
     docker: "quay.io/broadinstitute/py3-bio:0.1.2"
