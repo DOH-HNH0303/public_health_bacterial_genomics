@@ -1,6 +1,6 @@
 version 1.0
 
-import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
+import "wf_clade_analysis_WAPHL.wdl" as clade_analysis
 import "../tasks/phylogenetic_inference/task_ska.wdl" as ska
 import "../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
 import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
@@ -49,11 +49,11 @@ call split_by_clade  {
     snp_clade = snp_clade
 }
 scatter (i in split_by_clade.clade_list) {
-call split_by_clade  {
+call clade_analysis.clade_analysis as clade_analysis  {
   input:
     clade_list = i,
     cluster_name = cluster_name,
-    assembly_fastas = assembly_fastas
+    assembly_files = assembly_gff
 }
 }
   output {
@@ -73,5 +73,28 @@ call split_by_clade  {
     Array[File] masked_fasta_list = mask_gubbins_init.masked_fasta_list
 
     File clade_list_file = split_by_clade.clade_list_file
+
+    String gubbins_clade_date = clade_analysis.gubbins_clade_date
+    File gubbins_clade_polymorph_fasta = clade_analysis.gubbins_clade_polymorph_fasta
+    File gubbins_clade_branch_stats = clade_analysis.gubbins_clade_branch_stats
+    File gubbins_clade_recomb_gff = clade_analysis.gubbins_clade_recomb_gff
+
+    File? masked_aln_core_clade = clade_analysis.masked_aln_core_clade
+    File? masked_aln_pan_clade = clade_analysis.masked_aln_pan_clade
+
+    File pirate_pangenome_summary = clade_analysis.pirate_pangenome_summary
+    File pirate_gene_families_ordered = clade_analysis.pirate_gene_families_ordered
+    String pirate_docker_image = clade_analysis.pirate_docker_image
+    String pirate_for_scoary_csv = clade_analysis.pirate_for_scoary_csv
+    # snp_dists outputs
+    String? pirate_snps_dists_version = clade_analysis.pirate_snps_dists_version
+    File? pirate_core_snp_matrix = clade_analysis.pirate_core_snp_matrix
+    File? pirate_pan_snp_matrix = clade_analysis.pirate_pan_snp_matrix
+    # iqtree outputs
+    String? pirate_iqtree_version = clade_analysis.version
+    File? pirate_iqtree_core_tree = clade_analysis.ml_tree
+    File? pirate_iqtree_pan_tree = clade_analysis.ml_tree
+    File? pirate_iqtree_pan_model = clade_analysis.iqtree_model
+    File? pirate_iqtree_core_model = clade_analysis.iqtree_model
   }
 }
