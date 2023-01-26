@@ -49,6 +49,7 @@ workflow pangenome_snp_workflow {
     # Version Capture
     String pirate_wf_version = version_capture.phbg_version
     String pirate_wf_analysis_date = version_capture.date
+    File pirate_pan_aln = pirate.pirate_pangenome_alignment_fasta
     # pirate_outputs
     File pirate_pangenome_summary = pirate.pirate_pangenome_summary
     File pirate_gene_families_ordered = pirate.pirate_gene_families_ordered
