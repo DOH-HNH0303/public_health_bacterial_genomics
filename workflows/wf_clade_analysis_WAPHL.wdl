@@ -40,7 +40,7 @@ call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
 }
 call prokka.prokka {
   input:
-    assembly = mask_gubbins_init.masked_fasta_list,
+    assembly = mask_gubbins_clade.masked_fasta_list,
     samplename = samplename
 }
 call pirate.pirate as realn_pirate {
