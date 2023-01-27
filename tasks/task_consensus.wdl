@@ -345,7 +345,7 @@ task bowtie2_pe_ref_based {
     date | tee DATE
     bwa --version | head -n1 | tee VERSION
     bwa_v=$(cat VERSION)
-    bowtie2-build {~reference_seq} /index/ref_seq
+    bowtie2-build ~{reference_seq} /index/ref_seq
     bowtie2 -x /index/ref_seq -1 ~{read1_trim} -2 ~{read2_trim}
     bowtie2-inspect --summary /index/lambda_virus
     samtools sort -T /tmp/aln.sorted -o ~{id}_aln.sorted.bam ~{id}_aln.bam
