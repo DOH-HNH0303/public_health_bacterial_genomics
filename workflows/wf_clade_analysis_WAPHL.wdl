@@ -32,7 +32,7 @@ call gubbins.gubbins as gubbins_clade {
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name
 }
-call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
+call gubbins.mask_gubbins as mask_gubbins_clade  {
   input:
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name,
