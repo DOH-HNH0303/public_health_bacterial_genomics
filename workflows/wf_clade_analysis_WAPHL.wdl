@@ -38,7 +38,7 @@ call gubbins.mask_gubbins as mask_gubbins_clade  {
     cluster_name = cluster_name,
     recomb = gubbins_clade.recomb_gff
 }
-scatter (pair in as_pairs(collect_by_key(zip(prokka_gff,sample_name)))) {
+scatter (pair in zip(prokka_gff,sample_name)) {
   call prokka.prokka {
     input:
       assembly = pair.left,
