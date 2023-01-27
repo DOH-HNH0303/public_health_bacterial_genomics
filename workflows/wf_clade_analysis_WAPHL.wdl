@@ -38,10 +38,12 @@ call gubbins.mask_gubbins as mask_gubbins_clade  {
     cluster_name = cluster_name,
     recomb = gubbins_clade.recomb_gff
 }
-call prokka.prokka {
-  input:
-    assembly = mask_gubbins_clade.masked_fasta_list,
-    samplename = samplename
+scatter (j in mask_gubbins_clade.masked_fasta_list) {
+  call prokka.prokka {
+    input:
+      assembly = j,
+      samplename = samplename
+  }
 }
 call pirate.pirate as realn_pirate {
   input:
