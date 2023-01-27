@@ -17,7 +17,6 @@ workflow build_bacterial_consensus {
       call consensus.bwa_pe_de_novo{
         input:
           id=id,
-          assembly_fasta=assembly_fasta,
           reference_seq=reference_seq
       }
       call consensus.sam_to_bam as de_novo_s2b{
