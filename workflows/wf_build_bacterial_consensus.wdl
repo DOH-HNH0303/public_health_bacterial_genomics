@@ -46,11 +46,6 @@ workflow build_bacterial_consensus {
           read2_trim=read2_trim,
           reference_seq=reference_seq
       }
-      call consensus.sam_to_bam as ref_based_s2b{
-        input:
-          id=id,
-          samfile=bwa_pe_ref_based.samfile
-        }
       call consensus.bcftools_consensus as ref_based_bcf_consensus {
         input:
           id=id,
