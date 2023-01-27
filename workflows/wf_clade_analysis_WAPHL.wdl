@@ -49,15 +49,9 @@ call pirate.pirate as realn_pirate {
     cluster_name = cluster_name
 }
 if (pan == true) {
-  call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
-    input:
-      alignment = realn_pirate.pirate_pangenome_alignment_fasta,
-      cluster_name = cluster_name,
-      recomb = gubbins_clade.recomb_gff
-  }
   call iqtree.iqtree as pan_iqtree {
     input:
-      alignment = mask_gubbins_pan_clade.masked_aln,
+      alignment = realn_pirate.pirate_pangenome_alignment_fasta,
       cluster_name = cluster_name,
       iqtree_model = iqtree_model
   }
@@ -68,15 +62,9 @@ if (pan == true) {
   }
 }
   if (core == true) {
-    call gubbins.mask_gubbins as mask_gubbins_core_clade  {
-      input:
-        alignment = realn_pirate.pirate_core_alignment_fasta,
-        cluster_name = cluster_name,
-        recomb = gubbins_clade.recomb_gff
-    }
     call iqtree.iqtree as core_iqtree {
       input:
-        alignment = mask_gubbins_core_clade.masked_aln,
+        alignment = realn_pirate.pirate_core_alignment_fasta,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
     }
@@ -94,7 +82,7 @@ if (pan == true) {
     File gubbins_clade_branch_stats = gubbins_clade.branch_stats
     File gubbins_clade_recomb_gff = gubbins_clade.recomb_gff
 
-    File? masked_aln_core_clade = mask_gubbins_core_clade.masked_aln
+
     File? masked_aln_pan_clade = mask_gubbins_pan_clade.masked_aln
 
     File pirate_pangenome_summary = pirate.pirate_pangenome_summary
