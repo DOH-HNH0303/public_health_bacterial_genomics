@@ -14,7 +14,7 @@ workflow build_bacterial_consensus {
     Boolean    de_novo=false
   }
 
-    if (de_novo.read_screen==true) {
+    if (de_novo==true) {
       call consensus.bwa_pe_de_novo{
         input:
           id=id,
@@ -38,7 +38,7 @@ workflow build_bacterial_consensus {
           assembly_fasta= de_novo_bcf_consensus.consensus_seq
       }
     }
-    if (de_novo.read_screen==false) {
+    if (de_novo==false) {
       call consensus.bowtie2_pe_ref_based{
         input:
           id=id,
