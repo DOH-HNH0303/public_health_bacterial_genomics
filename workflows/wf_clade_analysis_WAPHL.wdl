@@ -6,6 +6,7 @@ import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
 import "../tasks/phylogenetic_inference/task_pirate.wdl" as pirate
 import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
+import "../tasks/gene_typing/task_prokka.wdl" as prokka
 
 
 workflow clade_analysis {
@@ -23,7 +24,7 @@ workflow clade_analysis {
   call pirate.pirate as pirate {
     input:
       prokka_gff = prokka_gff,
-      cluster_name = cluster_name,
+      cluster_name = cluster_name
   }
 
 call gubbins.gubbins as gubbins_clade {
@@ -31,10 +32,26 @@ call gubbins.gubbins as gubbins_clade {
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name
 }
+call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
+  input:
+    alignment = pirate.pirate_pangenome_alignment_fasta,
+    cluster_name = cluster_name,
+    recomb = gubbins_clade.recomb_gff
+}
+call prokka.prokka {
+  input:
+    assembly = mask_gubbins_init.masked_fasta_list,
+    samplename = samplename
+}
+call pirate.pirate as realn_pirate {
+  input:
+    prokka_gff = prokka_gff,
+    cluster_name = cluster_name
+}
 if (pan == true) {
   call gubbins.mask_gubbins as mask_gubbins_pan_clade  {
     input:
-      alignment = pirate.pirate_pangenome_alignment_fasta,
+      alignment = realn_pirate.pirate_pangenome_alignment_fasta,
       cluster_name = cluster_name,
       recomb = gubbins_clade.recomb_gff
   }
@@ -46,14 +63,14 @@ if (pan == true) {
   }
   call snp_dists.snp_dists as pan_snp_dists {
     input:
-      alignment = pirate.pirate_pangenome_alignment_fasta,
+      alignment = realn_pirate.pirate_pangenome_alignment_fasta,
       cluster_name = cluster_name
   }
 }
   if (core == true) {
     call gubbins.mask_gubbins as mask_gubbins_core_clade  {
       input:
-        alignment = pirate.pirate_core_alignment_fasta,
+        alignment = realn_pirate.pirate_core_alignment_fasta,
         cluster_name = cluster_name,
         recomb = gubbins_clade.recomb_gff
     }
@@ -65,7 +82,7 @@ if (pan == true) {
     }
     call snp_dists.snp_dists as core_snp_dists {
       input:
-        alignment = pirate.pirate_core_alignment_fasta,
+        alignment = realn_pirate.pirate_core_alignment_fasta,
         cluster_name = cluster_name
     }
   }
