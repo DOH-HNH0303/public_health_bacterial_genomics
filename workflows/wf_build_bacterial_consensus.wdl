@@ -35,7 +35,7 @@ workflow build_bacterial_consensus {
       call consensus.assembly_qc as de_novo_consensus_qc{
         input:
           reference_seq=reference_seq,
-          assembly_fasta=de_novo_bcftools_consensus.consensus_seq
+          assembly_fasta= de_novo_bcf_consensus.consensus_seq
       }
     }
     if (de_novo.read_screen==false) {
@@ -65,7 +65,7 @@ workflow build_bacterial_consensus {
     }
 
   output {
-    File    bwa_pe_de_novo_software=bwa_pe_de_novo.image_software
+    File?    bwa_pe_de_novo_software=bwa_pe_de_novo.image_software
     File?    de_novo_bam=de_novo_s2b.bamfile
     File?    de_novo_sorted_bam=de_novo_s2b.sorted_bam
     File?    de_novo_indexed_bam=de_novo_s2b.indexed_bam
@@ -81,7 +81,7 @@ workflow build_bacterial_consensus {
     Int?  de_novo_consensus_number_Total=de_novo_consensus_qc.assembly_number_Total
     #Float  de_novo_consensus_percent_reference_coverage=consensus_qc.assembly_percent_reference_coverage
 
-  
+
     File?    ref_based_sorted_bam=bowtie2_pe_ref_based.sorted_bam
     File?    ref_based_indexed_bam =bowtie2_pe_ref_based.indexed_bam
 
