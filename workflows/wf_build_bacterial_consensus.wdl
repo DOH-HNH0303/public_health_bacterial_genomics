@@ -60,7 +60,7 @@ workflow build_bacterial_consensus {
       call consensus.assembly_qc as ref_based_consensus_qc{
         input:
           reference_seq=reference_seq,
-          assembly_fasta=ref_based_bcftools_consensus.consensus_seq
+          assembly_fasta=ref_based_bcf_consensus.consensus_seq
       }
     }
 
@@ -87,7 +87,7 @@ workflow build_bacterial_consensus {
 
     File?    ref_based_consensus_seq=ref_based_bcf_consensus.consensus_seq
     File?    ref_based_consensus_variants=ref_based_bcf_consensus.consensus_variants
-    File?    ref_based_bcftools_consensus_software=ref_based_bcf_consensus.image_software
+    File?    ref_based_bcf_consensus_software=ref_based_bcf_consensus.image_software
     File?    ref_based_consensus_qc_software=ref_based_consensus_qc.image_software
 
     Int?  ref_based_consensus_number_N=ref_based_consensus_qc.assembly_number_N
