@@ -83,8 +83,6 @@ if (pan == true) {
     File gubbins_clade_recomb_gff = gubbins_clade.recomb_gff
 
 
-    File? masked_aln_pan_clade = mask_gubbins_pan_clade.masked_aln
-
     File pirate_pangenome_summary = pirate.pirate_pangenome_summary
     File pirate_gene_families_ordered = pirate.pirate_gene_families_ordered
     String pirate_docker_image = pirate.pirate_docker_image
