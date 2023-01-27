@@ -327,3 +327,59 @@ task assembly_qc {
     preemptible:  0
   }
 }
+
+
+
+task bowtie2_pe_ref_based {
+  input {
+    String  id
+    File    read1_trim
+    File    read2_trim
+    File    reference_seq
+    Int?      cpus = 4
+    String      memory = "16 GB"
+    String  docker_image="staphb/bowtie2:2.4.5"
+  }
+
+  command {
+    date | tee DATE
+    bwa --version | head -n1 | tee VERSION
+    bwa_v=$(cat VERSION)
+    bowtie2-build {~reference_seq} /index/ref_seq
+    bowtie2 -x /index/ref_seq -1 ~{read1_trim} ~{read2_trim}
+    bowtie2-inspect --summary /index/lambda_virus
+    samtools sort -T /tmp/aln.sorted -o ~{id}_aln.sorted.bam ~{id}_aln.bam
+    samtools index ~{id}_aln.sorted.bam
+
+    cat DATE>bwa_pe_ref_based_software.txt
+    echo -e "docker image:\t${docker_image}">>bwa_pe_ref_based_software.txt
+    echo -e "docker image platform:">>bwa_pe_ref_based_software.txt
+    uname -a>>bwa_pe_ref_based_software.txt
+    echo -e "main tool used:">>bwa_pe_ref_based_software.txt
+    echo -e "\tBWA\t$bwa_v\t\ta program for aligning sequencing reads against a large reference genome">>bwa_pe_ref_based_software.txt
+    echo -e "licenses available at:">>bwa_pe_ref_based_software.txt
+    echo -e "\thttps://github.com/lh3/bwa/blob/master/COPYING">>bwa_pe_ref_based_software.txt
+    printf '%100s\n' | tr ' ' ->>bwa_pe_ref_based_software.txt
+    dpkg -l>>bwa_pe_ref_based_software.txt
+
+    ls
+
+  }
+
+  output {
+    File    bam ="~{id}_aln.bam"
+    File    sorted_bam ="~{id}_aln.sorted.bam"
+    File    indexed_bam ="~{id}_aln.sorted.bam.bai"
+    File	image_software="bwa_pe_ref_based_software.txt"
+    String     version       = read_string("VERSION")
+  }
+
+  runtime {
+    docker:       "${docker_image}"
+    memory:       "${memory}"
+    cpu:          cpus
+    disks:        "local-disk 100 SSD"
+    preemptible:  0
+    continueOnReturnCode: "True"
+  }
+}
