@@ -7,7 +7,6 @@ workflow build_bacterial_consensus {
 
   input {
     String    id
-    File      assembly_fasta
     File      reference_seq
     File    read1_trim
     File    read2_trim
