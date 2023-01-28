@@ -84,9 +84,6 @@ call clade_analysis.clade_analysis as clade_analysis  {
     Array[File] gubbins_clade_branch_stats = clade_analysis.gubbins_clade_branch_stats
     Array[File] gubbins_clade_recomb_gff = clade_analysis.gubbins_clade_recomb_gff
 
-    Array[File?] masked_aln_core_clade = clade_analysis.masked_aln_core_clade
-    Array[File?] masked_aln_pan_clade = clade_analysis.masked_aln_pan_clade
-
     Array[File] pirate_pangenome_summary = clade_analysis.pirate_pangenome_summary
     Array[File] pirate_gene_families_ordered = clade_analysis.pirate_gene_families_ordered
     Array[String] pirate_docker_image = clade_analysis.pirate_docker_image
