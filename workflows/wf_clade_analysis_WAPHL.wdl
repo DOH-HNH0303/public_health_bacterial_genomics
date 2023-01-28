@@ -47,7 +47,7 @@ scatter (pair in zip(prokka_gff,samplename)) {
 }
 call pirate.pirate as realn_pirate {
   input:
-    prokka_gff = prokka_gff,
+    prokka_gff = prokka.prokka_gff,
     cluster_name = cluster_name
 }
 if (pan == true) {
