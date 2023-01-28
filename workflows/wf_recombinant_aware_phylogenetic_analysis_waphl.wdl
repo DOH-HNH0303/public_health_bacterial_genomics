@@ -60,7 +60,6 @@ call clade_analysis.clade_analysis as clade_analysis  {
   input:
     cluster_name = cluster_name,
     prokka_gff = scatter_by_clade.clade_files,
-    reference_genome = reference_genome,
     samplename = samplename
 }
 }
