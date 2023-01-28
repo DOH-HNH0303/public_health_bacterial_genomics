@@ -37,7 +37,7 @@ call gubbins.mask_gubbins as mask_gubbins_clade  {
     cluster_name = cluster_name,
     recomb = gubbins_clade.recomb_gff
 }
-scatter (pair in zip(masked_fasta_list,samplename)) {
+scatter (pair in zip(mask_gubbins_clade.masked_fasta_list,samplename)) {
   call prokka.prokka {
     input:
       assembly = pair.left,
