@@ -14,7 +14,6 @@ workflow clade_analysis {
 
     Array[File] prokka_gff
     Array[String] samplename
-    File reference_genome
     String cluster_name
     String iqtree_model = "MFP"
     Boolean? core = true
