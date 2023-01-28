@@ -338,7 +338,7 @@ task bowtie2_pe_ref_based {
     File    reference_seq
     Int?      cpus = 4
     String      memory = "16 GB"
-    String  docker_image="staphb/bowtie2:2.4.5"
+    String  docker_image="staphb/bowtie2:2.4.4"
   }
 
   command {
