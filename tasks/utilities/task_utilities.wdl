@@ -219,7 +219,6 @@ task scatter_by_clade {
     Array[String] clade_list
   }
   command <<<
-    # date and version control
     date | tee DATE
     mkdir files_dir
     for x in ~{sep=' ' assembly_files}
@@ -244,7 +243,7 @@ task scatter_by_clade {
     python3<<CODE
 
     import os
-# assign directory
+    # assign directory
     directory = '.'
     filetype = "gff"
     # iterate over files in
