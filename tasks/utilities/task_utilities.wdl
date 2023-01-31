@@ -241,7 +241,7 @@ task scatter_by_clade {
     done;
     echo "ls files_dir"
     ls files_dir
-    python <<CODE
+    python3<<CODE
 
     import os
 # assign directory
