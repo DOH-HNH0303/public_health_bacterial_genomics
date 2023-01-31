@@ -273,7 +273,7 @@ task scatter_by_clade {
       file1.close()
 
     CODE
-  mv file_list.txt ../file_list.txt
+    mv file_list.txt ../file_list.txt
   >>>
   output {
     String date = read_string("DATE")
