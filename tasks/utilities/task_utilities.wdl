@@ -240,6 +240,7 @@ task scatter_by_clade {
     done;
     echo "ls files_dir"
     ls files_dir
+    cd files_dir
     python3<<CODE
 
     import os
@@ -272,6 +273,7 @@ task scatter_by_clade {
       file1.close()
 
     CODE
+  mv file_list.txt ../file_list.txt
   >>>
   output {
     String date = read_string("DATE")
