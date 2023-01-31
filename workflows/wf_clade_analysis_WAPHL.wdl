@@ -13,8 +13,8 @@ workflow clade_analysis {
   input {
 
     Array[File] prokka_gff
-    Array[String] samplename = basename(prokka_gff, ".gff")
     String cluster_name
+    String samplename
     String iqtree_model = "MFP"
     Boolean? core = true
     Boolean? pan = false

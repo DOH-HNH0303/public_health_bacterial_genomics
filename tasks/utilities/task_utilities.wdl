@@ -241,10 +241,43 @@ task scatter_by_clade {
     done;
     echo "ls files_dir"
     ls files_dir
+    python <<CODE
+
+    import os
+# assign directory
+    directory = '.'
+    filetype = "gff"
+    # iterate over files in
+    # that directory
+    with open("file_list.txt", "w") as file1:
+        # Writing data to a file
+      for filename in os.listdir(directory):
+        f = os.path.join(directory, filename)
+        # checking if it is a file
+        if os.path.isfile(f):
+          if filetype == "gff":
+            if f.endswith("gff"):
+              if f.startswith("./"):
+                f = f.split("./")[-1]
+              f = f.split('.')[0]
+              print(f)
+              file1.write(f+"\n")
+          elif filetype == "fasta":
+            if f.endswith("fasta") or f.endswith("fna") or f.endswith("aln"):
+              if f.startswith("./"):
+                f = f.split("./")[-1]
+              f = f.split('.')[0]
+              f = f.split('_contigs')[0]
+              print(f)
+              file1.write(f+"\n")
+      file1.close()
+
+    CODE
   >>>
   output {
     String date = read_string("DATE")
     Array[File] clade_files = glob("files_dir/*")
+    Array[String] samplename = read_lines("file_list.txt")
   }
   runtime {
     docker: "quay.io/broadinstitute/py3-bio:0.1.2"
