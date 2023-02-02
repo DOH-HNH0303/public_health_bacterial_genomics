@@ -26,7 +26,6 @@ workflow clade_analysis {
     input:
       prokka_gff = prokka_gff,
       cluster_name = cluster_name,
-      shard = shard
   }
 
 call gubbins.gubbins as gubbins_clade {
