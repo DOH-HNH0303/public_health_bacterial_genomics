@@ -13,17 +13,20 @@ workflow clade_analysis {
   input {
 
     Array[File] prokka_gff
-    String cluster_name
     Array[String] samplename
     String iqtree_model = "MFP"
     Boolean? core = true
     Boolean? pan = false
+    Int shard
+    String clustername
+    String cluster_name = "~{clustername + '_' + shard}"
 
   }
   call pirate.pirate as pirate {
     input:
       prokka_gff = prokka_gff,
-      cluster_name = cluster_name
+      cluster_name = cluster_name,
+      shard = shard
   }
 
 call gubbins.gubbins as gubbins_clade {

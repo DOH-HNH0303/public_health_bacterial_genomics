@@ -49,10 +49,10 @@ call utilities.split_by_clade as split_by_clade  {
     cluster_name = cluster_name,
     snp_clade = snp_clade
 }
-scatter (i in split_by_clade.clade_list) {
+scatter (pair in zip(split_by_clade.clade_list, range(split_by_clade.clade_list)) {
 call utilities.scatter_by_clade as scatter_by_clade  {
   input:
-    clade_list = i,
+    clade_list = pair.left,
     cluster_name = cluster_name,
     assembly_files = assembly_gff
 }
@@ -60,7 +60,8 @@ call clade_analysis.clade_analysis as clade_analysis  {
   input:
     cluster_name = cluster_name,
     prokka_gff = scatter_by_clade.clade_files,
-    samplename = scatter_by_clade.samplename
+    samplename = scatter_by_clade.samplename,
+    shard = pair.right
 }
 }
   output {
