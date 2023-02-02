@@ -17,7 +17,7 @@ workflow clade_analysis {
     String iqtree_model = "MFP"
     Boolean? core = true
     Boolean? pan = false
-    Int shard
+    String shard
     String clustername
     String cluster_name = "~{clustername + '_' + shard}"
 
