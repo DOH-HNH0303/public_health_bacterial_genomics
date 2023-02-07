@@ -41,28 +41,40 @@ call gubbins.maskrc_svg as mask_gubbins_clade  {
 }
 
 if (pan == true) {
+  call gubbins.maskrc_svg as pan_mask_gubbins_clade  {
+    input:
+      alignment = pirate.pirate_pangenome_alignment_fasta,
+      cluster_name = cluster_name,
+      recomb = gubbins_clade.recomb_gff
+  }
   call iqtree.iqtree as pan_iqtree {
     input:
-      alignment = mask_gubbins_clade.masked_aln,
+      alignment = pan_mask_gubbins_clade.masked_aln,
       cluster_name = cluster_name,
       iqtree_model = iqtree_model
   }
   call snp_dists.snp_dists as pan_snp_dists {
     input:
-      alignment = realn_pirate.pirate_pangenome_alignment_fasta,
+      alignment = pan_mask_gubbins_clade.masked_aln,
       cluster_name = cluster_name
   }
 }
   if (core == true) {
+    call gubbins.maskrc_svg as core_mask_gubbins_clade  {
+      input:
+        alignment = pirate.pirate_core_alignment_fasta,
+        cluster_name = cluster_name,
+        recomb = gubbins_clade.recomb_gff
+    }
     call iqtree.iqtree as core_iqtree {
       input:
-        alignment = realn_pirate.pirate_core_alignment_fasta,
+        alignment = core_mask_gubbins_clade.masked_aln,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
     }
     call snp_dists.snp_dists as core_snp_dists {
       input:
-        alignment = realn_pirate.pirate_core_alignment_fasta,
+        alignment = core_mask_gubbins_clade.masked_aln,
         cluster_name = cluster_name
     }
   }
