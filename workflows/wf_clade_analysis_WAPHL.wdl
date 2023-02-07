@@ -33,7 +33,7 @@ call gubbins.gubbins as gubbins_clade {
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name
 }
-call gubbins.maskrc-svg as mask_gubbins_clade  {
+call gubbins.maskrc_svg as mask_gubbins_clade  {
   input:
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name,

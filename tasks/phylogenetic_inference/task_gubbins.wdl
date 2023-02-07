@@ -72,7 +72,7 @@ task mask_gubbins {
   }
 }
 
-task maskrc-svg {
+task maskrc_svg {
   input {
     File alignment
     File recomb
