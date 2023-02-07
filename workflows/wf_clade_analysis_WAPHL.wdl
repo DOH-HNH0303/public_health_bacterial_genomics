@@ -33,28 +33,17 @@ call gubbins.gubbins as gubbins_clade {
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name
 }
-call gubbins.mask_gubbins as mask_gubbins_clade  {
+call gubbins.maskrc-svg as mask_gubbins_clade  {
   input:
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name,
     recomb = gubbins_clade.recomb_gff
 }
-scatter (pair in zip(mask_gubbins_clade.masked_fasta_list,samplename)) {
-  call prokka.prokka {
-    input:
-      assembly = pair.left,
-      samplename = pair.right
-  }
-}
-call pirate.pirate as realn_pirate {
-  input:
-    prokka_gff = prokka.prokka_gff,
-    cluster_name = cluster_name
-}
+
 if (pan == true) {
   call iqtree.iqtree as pan_iqtree {
     input:
-      alignment = realn_pirate.pirate_pangenome_alignment_fasta,
+      alignment = mask_gubbins_clade.masked_aln,
       cluster_name = cluster_name,
       iqtree_model = iqtree_model
   }

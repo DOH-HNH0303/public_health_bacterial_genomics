@@ -71,3 +71,34 @@ task mask_gubbins {
     maxRetries: 3
   }
 }
+
+task maskrc-svg {
+  input {
+    File alignment
+    File recomb
+    String cluster_name
+    String docker = "hnh0303/maskrc-svg:0.5"
+    Int threads = 6
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+    python3 maskrc-svg.py --aln ~{alignment} --out ~{cluster_name}_masked.aln --gubbins {cluster_name} --svg {cluster_name}_masked.svg --consensus
+    awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID".fasta"} {print >> F}' ~{cluster_name}_masked.aln
+    tar -czvf ~{cluster_name}_masked_fastas.tar.gz *.fasta
+  >>>
+  output {
+    String date = read_string("DATE")
+    File masked_aln = "~{cluster_name}_masked.aln"
+    File masked_fastas = "~{cluster_name}_masked_fastas.tar.gz"
+    Array[File] masked_fasta_list = glob("*.fasta")
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
