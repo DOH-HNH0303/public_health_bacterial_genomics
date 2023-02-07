@@ -199,7 +199,6 @@ task split_by_clade {
     String date = read_string("DATE")
     File clade_list_file = "~{cluster_name}_output.txt"
     Array[Array[String]] clade_list = read_tsv("~{cluster_name}_output.txt")
-    Array[Int] clade_range = range(clade_list)
   }
   runtime {
     docker: "quay.io/broadinstitute/py3-bio:0.1.2"
