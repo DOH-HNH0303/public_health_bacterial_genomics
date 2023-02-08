@@ -31,12 +31,6 @@ call gubbins.gubbins as gubbins_clade {
     alignment = pirate.pirate_pangenome_alignment_fasta,
     cluster_name = cluster_name
 }
-call gubbins.maskrc_svg as mask_gubbins_clade  {
-  input:
-    alignment = pirate.pirate_pangenome_alignment_fasta,
-    cluster_name = cluster_name,
-    recomb = gubbins_clade.recomb_gff
-}
 
 if (pan == true) {
   call gubbins.maskrc_svg as pan_mask_gubbins_clade  {
