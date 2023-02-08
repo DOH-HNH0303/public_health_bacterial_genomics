@@ -49,7 +49,7 @@ call utilities.split_by_clade as split_by_clade  {
     cluster_name = cluster_name,
     snp_clade = snp_clade
 }
-scatter (pair in zip(split_by_clade.clade_list, range(split_by_clade.clade_list))) {
+scatter (pair in zip(split_by_clade.clade_list, range(length(split_by_clade.clade_list)))) {
 call utilities.scatter_by_clade as scatter_by_clade  {
   input:
     clade_list = pair.left,
