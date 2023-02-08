@@ -18,7 +18,7 @@ workflow clade_analysis {
     Boolean? core = true
     Boolean? pan = false
     String shard
-    String clustername = "cluster"
+    String? clustername = "cluster"
     String cluster_name = "~{clustername + '_' + shard + '_'}+clade"
 
   }
