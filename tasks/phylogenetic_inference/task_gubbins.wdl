@@ -83,7 +83,7 @@ task maskrc_svg {
   command <<<
     # date and version control
     date | tee DATE
-    python3 maskrc-svg.py --aln ~{alignment} --out ~{cluster_name}_masked.aln --gubbins {cluster_name} --svg {cluster_name}_masked.svg --consensus
+    python3 /data/maskrc-svg.py --aln ~{alignment} --out ~{cluster_name}_masked.aln --gubbins {cluster_name} --svg {cluster_name}_masked.svg --consensus
     awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID".fasta"} {print >> F}' ~{cluster_name}_masked.aln
     tar -czvf ~{cluster_name}_masked_fastas.tar.gz *.fasta
   >>>
