@@ -19,7 +19,7 @@ workflow clade_analysis {
     Boolean? pan = false
     String shard
     String clustername = "cluster"
-    String cluster_name = "~{clustername + '_' + shard}"
+    String cluster_name = "~{clustername + '_' + shard + '_'}+clade"
 
   }
   call pirate.pirate as pirate {
