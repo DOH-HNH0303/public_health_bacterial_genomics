@@ -6,7 +6,7 @@ task gubbins {
     String cluster_name
     String docker = "sangerpathogens/gubbins:v3.0.0"
     File? treefile
-    Int threads = 6
+    Int threads = 2
   }
   command <<<
     # date and version control
