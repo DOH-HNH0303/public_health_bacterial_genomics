@@ -60,8 +60,7 @@ call clade_analysis.clade_analysis as clade_analysis  {
   input:
     cluster_name = "~{cluster_name + '_' + pair.right + '_'}+clade",
     prokka_gff = scatter_by_clade.clade_files,
-    samplename = scatter_by_clade.samplename,
-    shard = pair.right
+    samplename = scatter_by_clade.samplename
 }
 }
   output {
