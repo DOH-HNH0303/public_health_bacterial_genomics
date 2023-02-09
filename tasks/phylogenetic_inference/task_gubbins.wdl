@@ -82,13 +82,35 @@ task maskrc_svg {
     String cluster_name
     String docker = "hnh0303/maskrc-svg:0.5"
     Int threads = 6
+    File base_reconstruct
+    File recomb_embl
+    File polymorph_site_fasta
+    File polymorph_site_phylip
+    File branch_stats
+    File gubbins_snps
+    File gubbins_final_tre
+    File gubbins_log
+    File gubbins_node_tre
   }
   command <<<
     # date and version control
     date | tee DATE
-    python3 /data/maskrc-svg.py --aln ~{alignment} --out ~{cluster_name}_masked.aln --gubbins {cluster_name} --svg {cluster_name}_masked.svg --consensus
+    mv ~{recomb} .
+    mv ~{recomb} .
+    mv ~{base_reconstruct} .
+    mv ~{recomb_embl} .
+    mv ~{polymorph_site_fasta} .
+    mv ~{polymorph_site_phylip} .
+    mv ~{branch_stats} .
+    mv ~{gubbins_snps} .
+    mv ~{gubbins_final_tre} .
+    mv ~{gubbins_log} .
+    mv ~{gubbins_node_tre} .
+
+    python3 /data/maskrc-svg.py --aln ~{alignment} --out ~{cluster_name}_masked.aln --gubbins ~{cluster_name} --svg ~{cluster_name}_masked.svg --consensus
     awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID".fasta"} {print >> F}' ~{cluster_name}_masked.aln
     tar -czvf ~{cluster_name}_masked_fastas.tar.gz *.fasta
+
   >>>
   output {
     String date = read_string("DATE")
