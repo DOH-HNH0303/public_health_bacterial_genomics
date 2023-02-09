@@ -351,14 +351,14 @@ task bowtie2_pe_ref_based {
     samtools index ~{id}_aln.sorted.bam
 
     cat DATE>bowtie2_pe_ref_based_software.txt
-    echo -e "docker image:\t${docker_image}">>bwa_pe_ref_based_software.txt
-    echo -e "docker image platform:">>bwa_pe_ref_based_software.txt
-    uname -a>>bwa_pe_ref_based_software.txt
+    echo -e "docker image:\t${docker_image}">>bowtie2_pe_ref_based_software.txt
+    echo -e "docker image platform:">>bowtie2_pe_ref_based_software.txt
+    uname -a>>bowtie2_pe_ref_based_software.txt
     echo -e "main tool used:">>bwa_pe_ref_based_software.txt
-    echo -e "\tBWA\t$bwa_v\t\ta program for aligning sequencing reads against a large reference genome">>bwa_pe_ref_based_software.txt
-    echo -e "licenses available at:">>bwa_pe_ref_based_software.txt
-    echo -e "\thttps://github.com/lh3/bwa/blob/master/COPYING">>bwa_pe_ref_based_software.txt
-    printf '%100s\n' | tr ' ' ->>bwa_pe_ref_based_software.txt
+    echo -e "\tBWA\t$bwa_v\t\ta program for aligning sequencing reads against a large reference genome">>bowtie2_pe_ref_based_software.txt
+    echo -e "licenses available at:">>bowtie2_pe_ref_based_software.txt
+    # echo -e "\thttps://github.com/lh3/bwa/blob/master/COPYING">>bwa_pe_ref_based_software.txt
+    printf '%100s\n' | tr ' ' ->>bowtie2_pe_ref_based_software.txt
     dpkg -l>>bowtie2_pe_ref_based_software.txt
 
     ls
