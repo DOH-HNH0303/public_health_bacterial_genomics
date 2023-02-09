@@ -27,6 +27,9 @@ task gubbins {
     File branch_stats = "~{cluster_name}.per_branch_statistics.csv"
     File recomb_gff = "~{cluster_name}.recombination_predictions.gff"
     File gubbins_snps= "~{cluster_name}.summary_of_snp_distribution.vcf"
+    File gubbins_final_tre = "~{cluster_name}.final_tree.tre"
+    File gubbins_log = "~{cluster_name}.log"
+    File gubbins_node_tre = "~{cluster_name}.node_labelled.final_tree.tre"
 
 
 
