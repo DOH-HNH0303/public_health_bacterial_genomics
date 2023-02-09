@@ -350,7 +350,7 @@ task bowtie2_pe_ref_based {
     samtools sort -T /tmp/aln.sorted -o ~{id}_aln.sorted.bam ~{id}_aln.bam
     samtools index ~{id}_aln.sorted.bam
 
-    cat DATE>bwa_pe_ref_based_software.txt
+    cat DATE>bowtie2_pe_ref_based_software.txt
     echo -e "docker image:\t${docker_image}">>bwa_pe_ref_based_software.txt
     echo -e "docker image platform:">>bwa_pe_ref_based_software.txt
     uname -a>>bwa_pe_ref_based_software.txt
@@ -369,7 +369,7 @@ task bowtie2_pe_ref_based {
     File    bam ="~{id}_aln.bam"
     File    sorted_bam ="~{id}_aln.sorted.bam"
     File    indexed_bam ="~{id}_aln.sorted.bam.bai"
-    File	image_software="bwa_pe_ref_based_software.txt"
+    File	image_software="bowtie2_pe_ref_based_software.txt"
     String     version       = read_string("VERSION")
   }
 
