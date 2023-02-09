@@ -343,8 +343,7 @@ task bowtie2_pe_ref_based {
 
   command {
     date | tee DATE
-    bwa --version | head -n1 | tee VERSION
-    bwa_v=$(cat VERSION)
+    bowtie2 --version | head -n1 | tee VERSION
     bowtie2-build ~{reference_seq} /index/ref_seq
     bowtie2 -x /index/ref_seq -1 ~{read1_trim} -2 ~{read2_trim}
     bowtie2-inspect --summary /index/lambda_virus
@@ -360,7 +359,7 @@ task bowtie2_pe_ref_based {
     echo -e "licenses available at:">>bwa_pe_ref_based_software.txt
     echo -e "\thttps://github.com/lh3/bwa/blob/master/COPYING">>bwa_pe_ref_based_software.txt
     printf '%100s\n' | tr ' ' ->>bwa_pe_ref_based_software.txt
-    dpkg -l>>bwa_pe_ref_based_software.txt
+    dpkg -l>>bowtie2_pe_ref_based_software.txt
 
     ls
 
