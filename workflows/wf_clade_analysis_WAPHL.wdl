@@ -37,7 +37,16 @@ if (pan == true) {
     input:
       alignment = pirate.pirate_pangenome_alignment_fasta,
       cluster_name = cluster_name,
-      recomb = gubbins_clade.recomb_gff
+      recomb = gubbins_clade.recomb_gff,
+      base_reconstruct = gubbins_base_reconstruct,
+      recomb_embl = gubbins_recomb_embl,
+      polymorph_site_fasta = gubbins_polymorph_site_fasta,
+      polymorph_site_phylip = gubbins_polymorph_site_phylip,
+      branch_stats = gubbins_branch_stats,
+      gubbins_snps = gubbins_snps,
+      gubbins_final_tre = gubbins_final_tre,
+      gubbins_log = gubbins_log,
+      gubbins_node_tre = gubbins_node_tre
   }
   call iqtree.iqtree as pan_iqtree {
     input:
@@ -56,7 +65,16 @@ if (pan == true) {
       input:
         alignment = pirate.pirate_core_alignment_fasta,
         cluster_name = cluster_name,
-        recomb = gubbins_clade.recomb_gff
+        recomb = gubbins_clade.recomb_gff,
+        base_reconstruct = gubbins_base_reconstruct,
+        recomb_embl = gubbins_recomb_embl,
+        polymorph_site_fasta = gubbins_polymorph_site_fasta,
+        polymorph_site_phylip = gubbins_polymorph_site_phylip,
+        branch_stats = gubbins_branch_stats,
+        gubbins_snps = gubbins_snps,
+        gubbins_final_tre = gubbins_final_tre,
+        gubbins_log = gubbins_log,
+        gubbins_node_tre = gubbins_node_tre
     }
     call iqtree.iqtree as core_iqtree {
       input:
