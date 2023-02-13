@@ -3,6 +3,7 @@ version 1.0
 task pirate {
   input {
     Array[File] prokka_gff
+    #String clustername
     String cluster_name
     Boolean? align = true # align all genes and produce core/pangenome alignments
     String? steps = "50,60,70,80,90,95,98" # % identity thresholds to use for pangenome construction [default: 50,60,70,80,90,95,98]

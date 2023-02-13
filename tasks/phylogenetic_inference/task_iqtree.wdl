@@ -25,6 +25,14 @@ task iqtree {
       -m ~{iqtree_model} \
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
+      ~{iqtree_opts} \
+      || \
+      iqtree \
+      -nt AUTO \
+      -s msa.fasta \
+      -m "GTR+I+G" \
+      -bb ~{iqtree_bootstraps} \
+      -alrt ~{alrt} \
       ~{iqtree_opts}
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
