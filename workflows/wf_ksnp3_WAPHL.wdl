@@ -33,7 +33,7 @@ workflow ksnp3_workflow {
     File ksnp3_core_snp_matrix = core_snp_dists.snp_matrix
     File ksnp3_core_tree = ksnp3_task.ksnp3_core_tree
     File ksnp3_core_vcf = ksnp3_task.ksnp3_core_vcf
-    File ksnp3_core_matrix = ksnp3.ksnp3_core_matrix
+    File ksnp3_core_matrix = ksnp3_task.ksnp3_core_matrix
 
     String ksnp3_docker = ksnp3_task.ksnp3_docker_image
   }
