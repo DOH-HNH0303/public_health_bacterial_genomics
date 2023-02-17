@@ -85,7 +85,7 @@ if (pan == true) {
     }
     call iqtree.iqtree as core_iqtree {
       input:
-        alignment =ksnp3_clade_core.ksnp3_core_snp_matrix,
+        alignment =ksnp3_clade_core.ksnp3_core_matrix,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
     }
