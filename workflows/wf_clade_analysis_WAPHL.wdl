@@ -82,7 +82,7 @@ if (pan == true) {
         assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
         samplename = samplename,
         cluster_name = cluster_name
-    #}
+    }
     call iqtree.iqtree as core_iqtree {
       input:
         alignment =ksnp3_clade_core.ksnp3_core_snp_matrix,
