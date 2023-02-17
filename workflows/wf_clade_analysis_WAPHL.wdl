@@ -77,7 +77,7 @@ if (pan == true) {
         gubbins_log = gubbins_clade.gubbins_log,
         gubbins_node_tre = gubbins_clade.gubbins_node_tre
     }
-    call ksnp3.ksnp3_workflow as ksnp3_clade_Core {
+    call ksnp3.ksnp3 ksnp3_clade_Core {
       input:
         assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
         samplename = samplename,
