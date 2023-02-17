@@ -7,6 +7,7 @@ import "../tasks/phylogenetic_inference/task_pirate.wdl" as pirate
 import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/gene_typing/task_prokka.wdl" as prokka
+import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 
 
 workflow clade_analysis {
@@ -76,9 +77,15 @@ if (pan == true) {
         gubbins_log = gubbins_clade.gubbins_log,
         gubbins_node_tre = gubbins_clade.gubbins_node_tre
     }
+    call ksnp3.ksnp3_workflow as ksnp3_clade_Core {
+      input:
+        assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
+        samplename = samplename,
+        cluster_name = cluster_name
+    #}
     call iqtree.iqtree as core_iqtree {
       input:
-        alignment = core_mask_gubbins_clade.masked_aln,
+        alignment =ksnp3_clade_core.ksnp3_core_snp_matrix,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
     }

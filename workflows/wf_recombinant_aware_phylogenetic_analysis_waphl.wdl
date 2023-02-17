@@ -42,7 +42,13 @@ call ksnp3.ksnp3_workflow as ksnp3  {
     assembly_fasta = mask_gubbins_init.masked_fasta_list,
     samplename = samplename,
     cluster_name = cluster_name
-}
+
+  call iqtree.iqtree as total_iqtree {
+    input:
+      alignment = ksnp3.ksnp3_core_snp_matrix,
+      cluster_name = cluster_name,
+      iqtree_model = iqtree_model
+  }
 call utilities.split_by_clade as split_by_clade  {
   input:
     snp_matrix = ksnp3.ksnp3_core_snp_matrix,
