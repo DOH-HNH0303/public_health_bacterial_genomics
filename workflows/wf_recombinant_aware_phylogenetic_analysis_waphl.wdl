@@ -45,7 +45,7 @@ call ksnp3.ksnp3_workflow as ksnp3  {
 }
   call iqtree.iqtree as total_iqtree {
     input:
-      alignment = ksnp3.ksnp3_core_snp_matrix,
+      alignment = ksnp3.ksnp3_core_matrix,
       cluster_name = cluster_name,
       iqtree_model = iqtree_model
   }
