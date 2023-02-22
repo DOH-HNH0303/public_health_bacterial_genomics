@@ -53,6 +53,7 @@ task ksnp3 {
     File ksnp3_pan_parsimony_tree = "ksnp3/~{cluster_name}_pan_parsiomony.tree"
     Array[File] ksnp_outs = glob("ksnp3/*")
     File ksnp_array = "assembly.txt"
+    File ksnp_input = "ksnp3_input.tsv"
 
     String ksnp3_docker_image = docker_image
   }
