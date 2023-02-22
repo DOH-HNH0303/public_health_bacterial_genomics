@@ -18,20 +18,21 @@ task ksnp3 {
   samplename_array=(~{sep=' ' samplename})
   samplename_array_len=$(echo "${#samplename_array[@]}")
 
-  # Ensure assembly, and samplename arrays are of equal length
-  if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
-    echo $samplename_array
-    echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
-    exit 1
-  fi
-
-  # create file of filenames for kSNP3 input
   touch ksnp3_input.tsv
   for index in ${!assembly_array[@]}; do
     assembly=${assembly_array[$index]}
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
+
+  # Ensure assembly, and samplename arrays are of equal length
+  if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
+    echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
+    exit 1
+  fi
+
+  # create file of filenames for kSNP3 input
+
   # run ksnp3 on input assemblies
   kSNP3 -in ksnp3_input.tsv -outdir ksnp3 -k ~{kmer_size} -core -vcf
 
