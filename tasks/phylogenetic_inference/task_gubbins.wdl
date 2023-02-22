@@ -6,16 +6,19 @@ task gubbins {
     String cluster_name
     String docker = "sangerpathogens/gubbins:v3.0.0"
     File? treefile
-    Int threads = 2
+    Int threads = 4
   }
   command <<<
     # date and version control
     date | tee DATE
-
+    half=$((threads/2))
+    quarter=$((threads/4))
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
     if [ $numGenomes -gt 3 ]
     then
-      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment}
+      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
+      run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
+      run_gubbins.py --prefix ~{cluster_name} --threads $quarter --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} 
     fi
     ls
 
