@@ -19,7 +19,7 @@ task gubbins {
     fi
     ls
 
-    
+
   >>>
   output {
     String date = read_string("DATE")
@@ -111,6 +111,7 @@ task maskrc_svg {
     mv ~{gubbins_node_tre} .
 
     python3 /data/maskrc-svg.py --aln ~{alignment} --out ~{cluster_name}_masked.aln --gubbins ~{cluster_name} --svg ~{cluster_name}_masked.svg --consensus
+    rm *fasta
     awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID".fasta"} {print >> F}' ~{cluster_name}_masked.aln
     tar -czvf ~{cluster_name}_masked_fastas.tar.gz *.fasta
 
