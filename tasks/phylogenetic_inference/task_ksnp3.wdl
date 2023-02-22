@@ -20,6 +20,7 @@ task ksnp3 {
 
   # Ensure assembly, and samplename arrays are of equal length
   if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
+    echo $samplename_array
     echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
     exit 1
   fi
