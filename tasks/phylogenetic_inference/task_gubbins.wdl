@@ -16,7 +16,7 @@ task gubbins {
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
     if [ $numGenomes -gt 3 ]
     then
-      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
+      #run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
       #run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
       run_gubbins.py --prefix ~{cluster_name} --no-cleanup --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment}
     fi
