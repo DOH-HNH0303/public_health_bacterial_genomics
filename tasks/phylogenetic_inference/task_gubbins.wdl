@@ -17,8 +17,8 @@ task gubbins {
     if [ $numGenomes -gt 3 ]
     then
       run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
-      run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
-      run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} 
+      #run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
+      run_gubbins.py --prefix ~{cluster_name} --threads --no-cleanup --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment}
     fi
     ls
 
