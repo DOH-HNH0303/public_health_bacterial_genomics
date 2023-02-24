@@ -7,7 +7,7 @@ task gubbins {
     String docker = "sangerpathogens/gubbins:v3.0.0"
     File? treefile
     Int threads = 4
-    String backup_model = "GTR"
+    #String backup_model = "GTR"
   }
   command <<<
     # date and version control
@@ -20,7 +20,7 @@ task gubbins {
       #run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
       #run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
       run_gubbins.py --prefix ~{cluster_name} --no-cleanup --verbose --tree-builder iqtree --model-fitter iqtree  --first-model-fitter iqtree --model-fitter iqtree ~{alignment} || \
-      run_gubbins.py --prefix ~{cluster_name} --no-cleanup --verbose --tree-builder iqtree -m ~{backup_model} ~{alignment}
+      run_gubbins.py --prefix ~{cluster_name} --no-cleanup --verbose --tree-builder iqtree  ~{alignment}
 
     fi
     ls
