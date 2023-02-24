@@ -7,7 +7,7 @@ task gubbins {
     String docker = "sangerpathogens/gubbins:v3.0.0"
     File? treefile
     Int threads = 4
-    String backup_model = "GTR+I+G"
+    String backup_model = "GTR"
   }
   command <<<
     # date and version control
