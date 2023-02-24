@@ -20,7 +20,7 @@ task gubbins {
       #run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
       #run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
       run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --model-fitter iqtree  --first-model-fitter iqtree --model-fitter iqtree ~{alignment} || \
-      run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree  ~{alignment}
+      run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree -m 'GTRGAMMA' ~{alignment}
 
     fi
     ls
