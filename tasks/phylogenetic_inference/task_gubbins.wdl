@@ -7,20 +7,20 @@ task gubbins {
     String docker = "sangerpathogens/gubbins:v3.0.0"
     File? treefile
     Int threads = 4
+    Float filter_perc = 25.0
     #String backup_model = "GTR"
   }
   command <<<
     # date and version control
     date | tee DATE
     half=$((threads/2))
-    quarter=$((threads/4))
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
     if [ $numGenomes -gt 3 ]
     then
-      #run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
-      #run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
-      run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --model-fitter iqtree  --first-model-fitter iqtree --model-fitter iqtree ~{alignment} || \
-      run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
+      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --filter-percentage ~{filter_perc} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
+      run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
+      run_gubbins.py --prefix ~{cluster_name} --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment}
+      #run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
 
     fi
     ls

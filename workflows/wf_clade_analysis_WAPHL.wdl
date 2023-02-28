@@ -19,6 +19,7 @@ workflow clade_analysis {
     Boolean? core = true
     Boolean? pan = false
     String cluster_name
+    Float filter_perc = 25.0
 
   }
   call pirate.pirate as pirate {
@@ -30,6 +31,7 @@ workflow clade_analysis {
 call gubbins.gubbins as gubbins_clade {
   input:
     alignment = pirate.pirate_pangenome_alignment_fasta,
+    filter_perc = filter_perc,
     cluster_name = cluster_name
 }
 

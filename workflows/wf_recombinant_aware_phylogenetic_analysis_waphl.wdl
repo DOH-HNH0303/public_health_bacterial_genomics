@@ -17,6 +17,7 @@ workflow recomb_aware_phylo_analysis {
     String cluster_name
     String iqtree_model = "MFP"
     Int snp_clade = 150
+    Float filter_perc = 35.0
   }
   call ska.ska as ska {
     input:
@@ -28,6 +29,7 @@ workflow recomb_aware_phylo_analysis {
 call gubbins.gubbins as gubbins_init {
   input:
     alignment = ska.ska_aln,
+    filter_perc = filter_perc,
     cluster_name = cluster_name
 }
 call gubbins.mask_gubbins as mask_gubbins_init  {
@@ -65,6 +67,7 @@ call utilities.scatter_by_clade as scatter_by_clade  {
 call clade_analysis.clade_analysis as clade_analysis  {
   input:
     cluster_name = "~{cluster_name + '_' + pair.right + '_'}+clade",
+    filter_perc = filter_perc,
     prokka_gff = scatter_by_clade.clade_files,
     samplename = scatter_by_clade.samplename
 }
