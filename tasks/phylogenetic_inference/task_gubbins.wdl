@@ -43,7 +43,7 @@ task gubbins {
 
     fi
     ls
-    cat ~{clustername}.log
+    cat ~{cluster_name}.log
 
 
   >>>
