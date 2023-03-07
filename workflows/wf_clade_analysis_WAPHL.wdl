@@ -113,7 +113,7 @@ if (pan == true) {
     }
     call snp_dists.snp_dists as core_snp_dists {
       input:
-        alignment = select_first([core_mask_gubbins_clade.masked_aln,pirate.pirate_core_alignment_fasta])
+        alignment = select_first([core_mask_gubbins_clade.masked_aln,pirate.pirate_core_alignment_fasta]),
         cluster_name = cluster_name
     }
   }
