@@ -25,7 +25,7 @@ task gubbins {
     fi
     if [ -f "gubbins_attempt_3.txt" ]; then
         if grep -Fxq grep "ls" terminal.txt| tail -1 |sed 's/[^l]*//' ; then
-            | grep "ls" | tail -1 |sed 's/[^l]*//'>GUBBINS_COMMENT
+            cat terminal.txt | grep "ls" | tail -1 |sed 's/[^l]*//'>GUBBINS_COMMENT
             echo "false">GUBBINS_BOOL
         fi
 
