@@ -40,6 +40,8 @@ task gubbins {
     fi
     if [ ! -f "GUBBINS_BOOL" ]; then
         echo "true">GUBBINS_BOOL
+
+    fi
     ls
 
 
