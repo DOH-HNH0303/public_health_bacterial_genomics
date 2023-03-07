@@ -60,7 +60,7 @@ if (pan == true) {
     }
 }
   if (gubbins_clade.gubbins_mask == false) {
-    call iqtree.iqtree as umasked_pan_iqtree {
+    call iqtree.iqtree as unmasked_pan_iqtree {
       input:
         alignment = pirate.pirate_pangenome_alignment_fasta,
         cluster_name = cluster_name,
