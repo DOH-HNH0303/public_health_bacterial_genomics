@@ -48,6 +48,7 @@ task gubbins {
   >>>
   output {
     String date = read_string("DATE")
+    File gubbins_log_final = select_first(["gubbins_attempt_3.txt", "gubbins_attempt_2.txt", "gubbins_attempt_1.txt"])
     String? gubbins_comment = read_string("GUBBINS_COMMENT")
     Boolean gubbins_mask = read_string("GUBBINS_BOOL")
     File base_reconstruct = "~{cluster_name}.branch_base_reconstruction.embl"
