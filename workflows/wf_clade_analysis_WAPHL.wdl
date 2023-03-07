@@ -36,37 +36,10 @@ call gubbins.gubbins as gubbins_clade {
 }
 
 if (pan == true) {
-  call gubbins.maskrc_svg as pan_mask_gubbins_clade  {
-    input:
-      alignment = pirate.pirate_pangenome_alignment_fasta,
-      cluster_name = cluster_name,
-      recomb = gubbins_clade.recomb_gff,
-      base_reconstruct = gubbins_clade.base_reconstruct,
-      recomb_embl = gubbins_clade.recomb_embl,
-      polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
-      polymorph_site_phylip = gubbins_clade.polymorph_site_phylip,
-      branch_stats = gubbins_clade.branch_stats,
-      gubbins_snps = gubbins_clade.gubbins_snps,
-      gubbins_final_tre = gubbins_clade.gubbins_final_tre,
-      gubbins_log = gubbins_clade.gubbins_log,
-      gubbins_node_tre = gubbins_clade.gubbins_node_tre
-  }
-  call iqtree.iqtree as pan_iqtree {
-    input:
-      alignment = pan_mask_gubbins_clade.masked_aln,
-      cluster_name = cluster_name,
-      iqtree_model = iqtree_model
-  }
-  call snp_dists.snp_dists as pan_snp_dists {
-    input:
-      alignment = pan_mask_gubbins_clade.masked_aln,
-      cluster_name = cluster_name
-  }
-}
-  if (core == true) {
-    call gubbins.maskrc_svg as core_mask_gubbins_clade  {
+  if (gubbins_clade.gubbins_mask == true) {
+    call gubbins.maskrc_svg as pan_mask_gubbins_clade  {
       input:
-        alignment = pirate.pirate_core_alignment_fasta,
+        alignment = pirate.pirate_pangenome_alignment_fasta,
         cluster_name = cluster_name,
         recomb = gubbins_clade.recomb_gff,
         base_reconstruct = gubbins_clade.base_reconstruct,
@@ -79,17 +52,64 @@ if (pan == true) {
         gubbins_log = gubbins_clade.gubbins_log,
         gubbins_node_tre = gubbins_clade.gubbins_node_tre
     }
-    call ksnp3.ksnp3 as ksnp3_clade_core {
+    call iqtree.iqtree as pan_iqtree {
       input:
-        assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
-        samplename = samplename,
-        cluster_name = cluster_name
-    }
-    call iqtree.iqtree as core_iqtree {
-      input:
-        alignment =ksnp3_clade_core.ksnp3_core_matrix,
+        alignment = pan_mask_gubbins_clade.masked_aln,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
+    }
+}
+  if (gubbins_clade.gubbins_mask == false) {
+    call iqtree.iqtree as pan_iqtree {
+      input:
+        alignment = pan_mask_gubbins_clade.masked_aln,
+        cluster_name = cluster_name,
+        iqtree_model = iqtree_model
+    }
+  }
+  call snp_dists.snp_dists as pan_snp_dists {
+    input:
+      alignment = pan_mask_gubbins_clade.masked_aln,
+      cluster_name = cluster_name
+  }
+}
+  if (core == true) {
+    if (gubbins_clade.gubbins_mask == true) {
+      call gubbins.maskrc_svg as core_mask_gubbins_clade  {
+        input:
+          alignment = pirate.pirate_core_alignment_fasta,
+          cluster_name = cluster_name,
+          recomb = gubbins_clade.recomb_gff,
+          base_reconstruct = gubbins_clade.base_reconstruct,
+          recomb_embl = gubbins_clade.recomb_embl,
+          polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
+          polymorph_site_phylip = gubbins_clade.polymorph_site_phylip,
+          branch_stats = gubbins_clade.branch_stats,
+          gubbins_snps = gubbins_clade.gubbins_snps,
+          gubbins_final_tre = gubbins_clade.gubbins_final_tre,
+          gubbins_log = gubbins_clade.gubbins_log,
+          gubbins_node_tre = gubbins_clade.gubbins_node_tre
+      }
+      call ksnp3.ksnp3 as ksnp3_clade_core {
+        input:
+          assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
+          samplename = samplename,
+          cluster_name = cluster_name
+      }
+      call iqtree.iqtree as core_iqtree {
+        input:
+          alignment =ksnp3_clade_core.ksnp3_core_matrix,
+          cluster_name = cluster_name,
+          iqtree_model = iqtree_model
+      }
+    }
+    if (gubbins_clade.gubbins_mask == false) {
+      call iqtree.iqtree as core_iqtree {
+        input:
+          alignment =pirate.pirate_core_alignment_fasta,
+          cluster_name = cluster_name,
+          iqtree_model = iqtree_model
+      }
     }
     call snp_dists.snp_dists as core_snp_dists {
       input:
@@ -120,6 +140,8 @@ if (pan == true) {
     File? pirate_iqtree_pan_tree = pan_iqtree.ml_tree
     File? pirate_iqtree_pan_model = pan_iqtree.iqtree_model
     File? pirate_iqtree_core_model = core_iqtree.iqtree_model
+    File? iqtree_core_tree = core_iqtree.ml_tree
+    File? iqtree_pan_tree = pan_iqtree.ml_tree
 
   }
 }
