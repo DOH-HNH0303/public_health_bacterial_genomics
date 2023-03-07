@@ -135,13 +135,11 @@ if (pan == true) {
     File? pirate_core_snp_matrix = core_snp_dists.snp_matrix
     File? pirate_pan_snp_matrix = pan_snp_dists.snp_matrix
     # iqtree outputs
-    String? pirate_iqtree_version = pan_iqtree.version
-    File? pirate_iqtree_core_tree = core_iqtree.ml_tree
-    File? pirate_iqtree_pan_tree = pan_iqtree.ml_tree
-    File? pirate_iqtree_pan_model = pan_iqtree.iqtree_model
-    File? pirate_iqtree_core_model = core_iqtree.iqtree_model
-    File? iqtree_core_tree = core_iqtree.ml_tree
-    File? iqtree_pan_tree = pan_iqtree.ml_tree
+    String? clade_iqtree_version = pan_iqtree.version
+    File? clade_iqtree_core_tree = core_iqtree.ml_tree
+    File? clade_iqtree_pan_tree = pan_iqtree.ml_tree
+    File? clade_iqtree_pan_model = pan_iqtree.iqtree_model
+    File? clade_iqtree_core_model = core_iqtree.iqtree_model
 
   }
 }
