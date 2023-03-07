@@ -17,29 +17,29 @@ task gubbins {
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
     if [ $numGenomes -gt 3 ]
     then
-      run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --filter-percentage ~{filter_perc} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment}>gubbins_attempt_1.txt || \
-      run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment}>gubbins_attempt_2.txt || \
-      run_gubbins.py --prefix ~{cluster_name} --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment}>gubbins_attempt_3.txt
-      #run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
+        run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --filter-percentage ~{filter_perc} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment}>gubbins_attempt_1.txt || \
+        run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment}>gubbins_attempt_2.txt || \
+        run_gubbins.py --prefix ~{cluster_name} --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment}>gubbins_attempt_3.txt
+        #run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
 
     fi
     if [ -f "gubbins_attempt_3.txt" ]; then
-      if grep -Fxq "RuntimeWarning: divide by zero encountered in log" gubbins_attempt_3.txt; then
+        if grep -Fxq "RuntimeWarning: divide by zero encountered in log" gubbins_attempt_3.txt; then
             echo "Gubbins cannot test GTR substitution model, no attempt to determine recombinance can be made">GUBBINS_COMMENT
             echo "false">GUBBINS_BOOL
-      fi
+        fi
 
     elif [ -f "gubbins_attempt_2.txt" ]; then
-      pass
+        pass
 
     elif [ -f "gubbins_attempt_1.txt" ]; then
-    	pass
+        pass
     else
-    	echo "Too few genomes, No attempt to determine recombinance can be made">GUBBINS_COMMENT
-      echo "false">GUBBINS_BOOL
+        echo "Too few genomes, No attempt to determine recombinance can be made">GUBBINS_COMMENT
+        echo "false">GUBBINS_BOOL
     fi
     if [ ! -f "GUBBINS_BOOL" ]; then
-      echo "true">GUBBINS_BOOL
+        echo "true">GUBBINS_BOOL
     ls
 
 
