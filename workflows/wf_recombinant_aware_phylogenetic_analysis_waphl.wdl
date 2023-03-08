@@ -97,9 +97,9 @@ call clade_analysis.clade_analysis as clade_analysis  {
 
     File clade_list_file = split_by_clade.clade_list_file
 
-    Array[File] gubbins_clade_polymorph_fasta = clade_analysis.gubbins_clade_polymorph_fasta
-    Array[File] gubbins_clade_branch_stats = clade_analysis.gubbins_clade_branch_stats
-    Array[File] gubbins_clade_recomb_gff = clade_analysis.gubbins_clade_recomb_gff
+    Array[File?] gubbins_clade_polymorph_fasta = clade_analysis.gubbins_clade_polymorph_fasta
+    Array[File?] gubbins_clade_branch_stats = clade_analysis.gubbins_clade_branch_stats
+    Array[File?] gubbins_clade_recomb_gff = clade_analysis.gubbins_clade_recomb_gff
 
     Array[File] pirate_pangenome_summary = clade_analysis.pirate_pangenome_summary
     Array[File] pirate_gene_families_ordered = clade_analysis.pirate_gene_families_ordered
