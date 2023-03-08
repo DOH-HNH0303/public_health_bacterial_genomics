@@ -27,7 +27,7 @@ task gubbins {
         if grep -Fxq grep "Frequencies" terminal.txt| tail -1 |sed 's/[^l]*//' ; then
             cat terminal.txt | grep "Frequencies" | tail -1 |sed 's/[^l]*//' | grep "0.0">FREQ
             freq=$(cat FREQ)
-            if [[$freq == "0.0"]] ; then
+            if [ $freq == "0.0" ] ; then
               echo "Gubbins cannot test nucleotide substitution model,recombinants cannot be determined">GUBBINS_COMMENT
               echo "false">GUBBINS_BOOL
             fi
