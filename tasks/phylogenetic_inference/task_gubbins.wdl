@@ -52,7 +52,7 @@ task gubbins {
     File? recomb_embl = "~{cluster_name}.recombination_predictions.embl"
     File? gubbins_snps= "~{cluster_name}.summary_of_snp_distribution.vcf"
     File? gubbins_final_tre = "~{cluster_name}.final_tree.tre"
-    File gubbins_log = "~{cluster_name}.log"
+    File? gubbins_log = "~{cluster_name}.log"
     File? gubbins_node_tre = "~{cluster_name}.node_labelled.final_tree.tre"
     File? gubbins_nonrecomb_vcf = "~{cluster_name}_pangenome_alignment.fasta.vcf"
 
