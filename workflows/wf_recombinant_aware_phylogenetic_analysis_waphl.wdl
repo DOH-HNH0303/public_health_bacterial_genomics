@@ -98,9 +98,9 @@ call clade_analysis.clade_analysis as clade_analysis  {
     Array[String] pirate_docker_image = clade_analysis.pirate_docker_image
     Array[String] pirate_for_scoary_csv = clade_analysis.pirate_for_scoary_csv
     # snp_dists outputs
-    Array[String?] pirate_snps_dists_version = clade_analysis.pirate_snps_dists_version
-    Array[File?] pirate_core_snp_matrix = clade_analysis.pirate_core_snp_matrix
-    Array[File?] pirate_pan_snp_matrix = clade_analysis.pirate_pan_snp_matrix
+    Array[String?] clade_snps_dists_version = clade_analysis.clade_snps_dists_version
+    Array[File?] clade_core_snp_matrix = clade_analysis.clade_core_snp_matrix
+    Array[File?] clade_pan_snp_matrix = clade_analysis.clade_pan_snp_matrix
     # iqtree outputs
     Array[String?] clade_iqtree_version = clade_analysis.clade_iqtree_version
     Array[File?] clade_iqtree_core_tree = clade_analysis.clade_iqtree_core_tree
