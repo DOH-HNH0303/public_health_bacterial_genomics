@@ -55,7 +55,7 @@ task iqtree {
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_msa.tree"
     File iqtree_report = "~{cluster_name}_msa.iqtree"
-    String iqtree_model = read_string("IQTREE_MODEL")
+    String iqtree_model_used = read_string("IQTREE_MODEL")
   }
   runtime {
     docker: "~{docker}"

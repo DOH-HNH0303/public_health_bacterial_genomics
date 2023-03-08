@@ -141,8 +141,8 @@ if (pan == true) {
     String? clade_iqtree_version = select_first([unmasked_pan_iqtree.version, masked_pan_iqtree.version, unmasked_core_iqtree.version, masked_core_iqtree.version])#pan_iqtree.version
     File? clade_iqtree_core_tree = select_first([masked_core_iqtree.ml_tree, unmasked_core_iqtree.ml_tree])#core_iqtree.ml_tree
     File? clade_iqtree_pan_tree = select_first([masked_pan_iqtree.ml_tree, unmasked_pan_iqtree.ml_tree])#pan_iqtree.ml_tree
-    String? clade_iqtree_pan_model = select_first([masked_pan_iqtree.iqtree_model, unmasked_pan_iqtree.iqtree_model])#pan_iqtree.iqtree_model
-    String? clade_iqtree_core_model = select_first([masked_core_iqtree.iqtree_model, unmasked_core_iqtree.iqtree_model])#core_iqtree.iqtree_model
+    String? clade_iqtree_pan_model = select_first([masked_pan_iqtree.iqtree_model_used, unmasked_pan_iqtree.iqtree_model_used])#pan_iqtree.iqtree_model
+    String? clade_iqtree_core_model = select_first([masked_core_iqtree.iqtree_model_used, unmasked_core_iqtree.iqtree_model_used])#core_iqtree.iqtree_model
 
   }
 }
