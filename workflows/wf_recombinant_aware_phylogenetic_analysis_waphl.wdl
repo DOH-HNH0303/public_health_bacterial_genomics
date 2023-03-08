@@ -36,16 +36,16 @@ call gubbins.maskrc_svg as mask_gubbins_init  {
   input:
     alignment = ska.ska_aln,
     cluster_name = cluster_name,
-    recomb = gubbins.recomb_gff,
-    base_reconstruct = gubbins.base_reconstruct,
-    recomb_embl = gubbins.recomb_embl,
-    polymorph_site_fasta = gubbins.polymorph_site_fasta,
-    polymorph_site_phylip = gubbins.polymorph_site_phylip,
-    branch_stats = gubbins.branch_stats,
-    gubbins_snps = gubbins.gubbins_snps,
-    gubbins_final_tre = gubbins.gubbins_final_tre,
-    gubbins_log = gubbins.gubbins_log,
-    gubbins_node_tre = gubbins.gubbins_node_tre
+    recomb = gubbins_init.recomb_gff,
+    base_reconstruct = gubbins_init.base_reconstruct,
+    recomb_embl = gubbins_init.recomb_embl,
+    polymorph_site_fasta = gubbins_init.polymorph_site_fasta,
+    polymorph_site_phylip = gubbins_init.polymorph_site_phylip,
+    branch_stats = gubbins_init.branch_stats,
+    gubbins_snps = gubbins_init.gubbins_snps,
+    gubbins_final_tre = gubbins_init.gubbins_final_tre,
+    gubbins_log = gubbins_init.gubbins_log,
+    gubbins_node_tre = gubbins_init.gubbins_node_tre
 }
 call ksnp3.ksnp3_workflow as ksnp3  {
   input:
