@@ -23,17 +23,11 @@ task gubbins {
         #run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
         history>terminal.txt
     fi
-    if [ -f "gubbins_attempt_3.txt" ]; then
+    if [ -f "terminal.txt" ]; then
         if grep -Fxq grep "ls" terminal.txt| tail -1 |sed 's/[^l]*//' ; then
             cat terminal.txt | grep "ls" | tail -1 |sed 's/[^l]*//'>GUBBINS_COMMENT
             echo "false">GUBBINS_BOOL
         fi
-
-    elif [ -f "gubbins_attempt_2.txt" ]; then
-        pass
-
-    elif [ -f "gubbins_attempt_1.txt" ]; then
-        pass
     else
         echo "Too few genomes, No attempt to determine recombinance can be made">GUBBINS_COMMENT
         echo "false">GUBBINS_BOOL
@@ -47,7 +41,7 @@ task gubbins {
   >>>
   output {
     String date = read_string("DATE")
-    File gubbins_log_final = select_first(["gubbins_attempt_3.txt", "gubbins_attempt_2.txt", "gubbins_attempt_1.txt"])
+    #File gubbins_log_final = select_first(["gubbins_attempt_3.txt", "gubbins_attempt_2.txt", "gubbins_attempt_1.txt"])
     String? gubbins_comment = read_string("GUBBINS_COMMENT")
     Boolean gubbins_mask = read_string("GUBBINS_BOOL")
     File? base_reconstruct = "~{cluster_name}.branch_base_reconstruction.embl"
@@ -56,7 +50,7 @@ task gubbins {
     File? branch_stats = "~{cluster_name}.per_branch_statistics.csv"
     File? recomb_gff = "~{cluster_name}.recombination_predictions.gff"
     File? recomb_embl = "~{cluster_name}.recombination_predictions.embl"
-    File gubbins_snps= "~{cluster_name}.summary_of_snp_distribution.vcf"
+    File? gubbins_snps= "~{cluster_name}.summary_of_snp_distribution.vcf"
     File? gubbins_final_tre = "~{cluster_name}.final_tree.tre"
     File gubbins_log = "~{cluster_name}.log"
     File? gubbins_node_tre = "~{cluster_name}.node_labelled.final_tree.tre"
