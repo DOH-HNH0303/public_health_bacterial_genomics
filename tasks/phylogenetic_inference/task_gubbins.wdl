@@ -24,12 +24,15 @@ task gubbins {
         history>terminal.txt
     fi
     if [ -f "terminal.txt" ]; then
-        if grep -Fxq grep "ls" terminal.txt| tail -1 |sed 's/[^l]*//' ; then
-            cat terminal.txt | grep "ls" | tail -1 |sed 's/[^l]*//'>GUBBINS_COMMENT
-            echo "false">GUBBINS_BOOL
+        if grep -Fxq grep "Frequencies" terminal.txt| tail -1 |sed 's/[^l]*//' ; then
+            cat terminal.txt | grep "Frequencies" | tail -1 |sed 's/[^l]*//' | grep "0.0">FREQ
+            freq=$(cat FREQ)
+            if [[$freq == "0.0"]] ; then
+              echo "Gubbins cannot test nucleotide substitution model,recombinants cannot be determined">GUBBINS_COMMENT
+              echo "false">GUBBINS_BOOL
         fi
     else
-        echo "Too few genomes, No attempt to determine recombinance can be made">GUBBINS_COMMENT
+        echo "Too few genomes, No attempt to determine recombinants can be made">GUBBINS_COMMENT
         echo "false">GUBBINS_BOOL
     fi
     if [ ! -f "GUBBINS_BOOL" ]; then
