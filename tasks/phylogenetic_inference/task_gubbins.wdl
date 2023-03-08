@@ -17,14 +17,13 @@ task gubbins {
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
     if [ $numGenomes -gt 3 ]
     then
-        run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --filter-percentage ~{filter_perc} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
-        run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment} || \
-        run_gubbins.py --prefix ~{cluster_name} --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment}
+        run_gubbins.py --prefix ~{cluster_name} --threads ~{threads} --filter-percentage ~{filter_perc} --verbose --tree-builder iqtree --model-fitter iqtree  ~{alignment} | tee -a terminal_output.txt || \
+        run_gubbins.py --prefix ~{cluster_name} --threads $half --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment} | tee -a terminal_output.txt || \
+        run_gubbins.py --prefix ~{cluster_name} --verbose --filter-percentage ~{filter_perc} --tree-builder iqtree --model-fitter iqtree  ~{alignment} | tee -a terminal_output.txt
         #run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
-        history>terminal.txt
     fi
-    if [ -f "terminal.txt" ]; then
-        cat terminal.txt | grep "Frequencies" | tail -1 |sed 's/[^l]*//' | grep "0.0">FREQ
+    if [ -f "terminal_output.txt" ]; then
+        cat terminal_output.txt | grep "Frequencies" | tail -1 |sed 's/[^l]*//' | grep "0.0">FREQ
         cat FREQ
         freq=$(cat FREQ)
         if [ "$freq" == *"0.0"* ] ; then
