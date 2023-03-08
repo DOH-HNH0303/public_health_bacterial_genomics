@@ -23,10 +23,10 @@ task gubbins {
         #run_gubbins.py --prefix ~{cluster_name} --verbose --tree-builder iqtree --best-model ~{alignment}
     fi
     if [ -f "terminal_output.txt" ]; then
-        cat terminal_output.txt | grep "Frequencies" | tail -1 |sed 's/[^l]*//' | grep "0.0">FREQ
+        cat terminal_output.txt | grep "Frequencies" | tail -1 |sed 's/[^Freq]*//' | grep "0.0">FREQ
         cat FREQ
         freq=$(cat FREQ)
-        if [ "$freq" == *"0.0"* ] ; then
+        if [[ "$freq" == *"0.0"* ]] ; then
             echo "Gubbins cannot test nucleotide substitution model,recombinants cannot be determined">GUBBINS_COMMENT
             echo "false">GUBBINS_BOOL
         fi
