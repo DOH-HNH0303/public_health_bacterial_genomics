@@ -134,7 +134,7 @@ if (pan == true) {
     String pirate_docker_image = pirate.pirate_docker_image
     String pirate_for_scoary_csv = pirate.pirate_for_scoary_csv
     # snp_dists outputs
-    String? clade_core_snps_dists_version = core_snp_dists.version
+    String? clade_snps_dists_version = select_first([core_snp_dists.version, pan_snp_dists.version])#core_snp_dists.version
     File? clade_core_snp_matrix = core_snp_dists.snp_matrix
     File? clade_pan_snp_matrix = pan_snp_dists.snp_matrix
     # iqtree outputs
