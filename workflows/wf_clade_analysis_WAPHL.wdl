@@ -41,7 +41,7 @@ if (pan == true) {
       input:
         alignment = pirate.pirate_pangenome_alignment_fasta,
         cluster_name = cluster_name,
-        recomb = gubbins_clade.recomb_gff,
+        recomb? = gubbins_clade.recomb_gff,
         base_reconstruct = gubbins_clade.base_reconstruct,
         recomb_embl = gubbins_clade.recomb_embl,
         polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
@@ -79,16 +79,16 @@ if (pan == true) {
         input:
           alignment = pirate.pirate_core_alignment_fasta,
           cluster_name = cluster_name,
-          recomb = gubbins_clade.recomb_gff,
-          base_reconstruct = gubbins_clade.base_reconstruct,
-          recomb_embl = gubbins_clade.recomb_embl,
-          polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
-          polymorph_site_phylip = gubbins_clade.polymorph_site_phylip,
-          branch_stats = gubbins_clade.branch_stats,
-          gubbins_snps = gubbins_clade.gubbins_snps,
-          gubbins_final_tre = gubbins_clade.gubbins_final_tre,
-          gubbins_log = gubbins_clade.gubbins_log,
-          gubbins_node_tre = gubbins_clade.gubbins_node_tre
+          recomb? = gubbins_clade.recomb_gff,
+          base_reconstruct? = gubbins_clade.base_reconstruct,
+          recomb_embl? = gubbins_clade.recomb_embl,
+          polymorph_site_fasta? = gubbins_clade.polymorph_site_fasta,
+          polymorph_site_phylip? = gubbins_clade.polymorph_site_phylip,
+          branch_stats? = gubbins_clade.branch_stats,
+          gubbins_snps? = gubbins_clade.gubbins_snps,
+          gubbins_final_tre? = gubbins_clade.gubbins_final_tre,
+          gubbins_log? = gubbins_clade.gubbins_log,
+          gubbins_node_tre? = gubbins_clade.gubbins_node_tre
       }
       call ksnp3.ksnp3 as ksnp3_clade_core {
         input:
