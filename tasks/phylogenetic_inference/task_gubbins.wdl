@@ -113,15 +113,15 @@ task maskrc_svg {
     String cluster_name
     String docker = "hnh0303/maskrc-svg:0.5"
     Int threads = 6
-    File base_reconstruct
-    File recomb_embl
-    File polymorph_site_fasta
-    File polymorph_site_phylip
-    File branch_stats
-    File gubbins_snps
-    File gubbins_final_tre
-    File gubbins_log
-    File gubbins_node_tre
+    File? base_reconstruct
+    File? recomb_embl
+    File? polymorph_site_fasta
+    File? polymorph_site_phylip
+    File? branch_stats
+    File? gubbins_snps
+    File? gubbins_final_tre
+    File? gubbins_log
+    File? gubbins_node_tre
   }
   command <<<
     # date and version control
