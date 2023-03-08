@@ -30,6 +30,7 @@ task gubbins {
             if [[$freq == "0.0"]] ; then
               echo "Gubbins cannot test nucleotide substitution model,recombinants cannot be determined">GUBBINS_COMMENT
               echo "false">GUBBINS_BOOL
+            fi
         fi
     else
         echo "Too few genomes, No attempt to determine recombinants can be made">GUBBINS_COMMENT
