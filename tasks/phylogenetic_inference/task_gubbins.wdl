@@ -109,7 +109,7 @@ task mask_gubbins {
 task maskrc_svg {
   input {
     File alignment
-    File recomb
+    File? recomb
     String cluster_name
     String docker = "hnh0303/maskrc-svg:0.5"
     Int threads = 6
