@@ -32,6 +32,21 @@ call gubbins.gubbins as gubbins_init {
     filter_perc = filter_perc,
     cluster_name = cluster_name
 }
+call gubbins.maskrc_svg as mask_gubbins_init  {
+  input:
+    alignment = ska.ska_aln,
+    cluster_name = cluster_name,
+    recomb = gubbins.recomb_gff,
+    base_reconstruct = gubbins.base_reconstruct,
+    recomb_embl = gubbins.recomb_embl,
+    polymorph_site_fasta = gubbins.polymorph_site_fasta,
+    polymorph_site_phylip = gubbins.polymorph_site_phylip,
+    branch_stats = gubbins.branch_stats,
+    gubbins_snps = gubbins.gubbins_snps,
+    gubbins_final_tre = gubbins.gubbins_final_tre,
+    gubbins_log = gubbins.gubbins_log,
+    gubbins_node_tre = gubbins.gubbins_node_tre
+}
 call gubbins.mask_gubbins as mask_gubbins_init  {
   input:
     alignment = ska.ska_aln,
