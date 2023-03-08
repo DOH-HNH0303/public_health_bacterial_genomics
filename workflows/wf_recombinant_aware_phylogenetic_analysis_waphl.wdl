@@ -77,11 +77,11 @@ call clade_analysis.clade_analysis as clade_analysis  {
     String gubbins_date = gubbins_init.date
     String ska_docker = ska.ska_docker_image
 
-    File gubbins_polymorph_site_fasta = gubbins_init.polymorph_site_fasta
-    File gubbins_polymorph_site_phylip = gubbins_init.polymorph_site_phylip
-    File gubbins_branch_stats = gubbins_init.branch_stats
-    File gubbins_recomb_gff = gubbins_init.recomb_gff
-    File gubbins_snps= gubbins_init.gubbins_snps
+    File? gubbins_polymorph_site_fasta = gubbins_init.polymorph_site_fasta
+    File? gubbins_polymorph_site_phylip = gubbins_init.polymorph_site_phylip
+    File? gubbins_branch_stats = gubbins_init.branch_stats
+    File? gubbins_recomb_gff = gubbins_init.recomb_gff
+    File? gubbins_snps= gubbins_init.gubbins_snps
 
     File masked_aln = mask_gubbins_init.date
     File masked_fastas = mask_gubbins_init.masked_fastas
