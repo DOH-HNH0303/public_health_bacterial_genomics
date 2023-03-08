@@ -121,12 +121,12 @@ if (pan == true) {
   output {
 
     String gubbins_date = gubbins_clade.date
-    File gubbins_clade_polymorph_fasta = gubbins_clade.polymorph_site_fasta
-    File gubbins_clade_branch_stats = gubbins_clade.branch_stats
-    File gubbins_clade_recomb_gff = gubbins_clade.recomb_gff
+    File? gubbins_clade_polymorph_fasta = gubbins_clade.polymorph_site_fasta
+    File? gubbins_clade_branch_stats = gubbins_clade.branch_stats
+    File? gubbins_clade_recomb_gff = gubbins_clade.recomb_gff
     Boolean clade_recombinants_detected = gubbins_clade.gubbins_mask
     File? gubbins_clade_nonrecomb_vcf = gubbins_clade.gubbins_nonrecomb_vcf
-    File gubbins_clade_snps_vcf = gubbins_clade.gubbins_snps
+    File? gubbins_clade_snps_vcf = gubbins_clade.gubbins_snps
 
 
     File pirate_pangenome_summary = pirate.pirate_pangenome_summary
