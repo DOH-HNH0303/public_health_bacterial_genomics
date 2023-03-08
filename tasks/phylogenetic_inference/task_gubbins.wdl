@@ -50,17 +50,17 @@ task gubbins {
     File gubbins_log_final = select_first(["gubbins_attempt_3.txt", "gubbins_attempt_2.txt", "gubbins_attempt_1.txt"])
     String? gubbins_comment = read_string("GUBBINS_COMMENT")
     Boolean gubbins_mask = read_string("GUBBINS_BOOL")
-    File base_reconstruct? = "~{cluster_name}.branch_base_reconstruction.embl"
-    File polymorph_site_fasta? = "~{cluster_name}.filtered_polymorphic_sites.fasta"
-    File polymorph_site_phylip? = "~{cluster_name}.filtered_polymorphic_sites.phylip"
-    File branch_stats? = "~{cluster_name}.per_branch_statistics.csv"
-    File recomb_gff? = "~{cluster_name}.recombination_predictions.gff"
-    File recomb_embl? = "~{cluster_name}.recombination_predictions.embl"
+    File? base_reconstruct = "~{cluster_name}.branch_base_reconstruction.embl"
+    File? polymorph_site_fasta = "~{cluster_name}.filtered_polymorphic_sites.fasta"
+    File? polymorph_site_phylip = "~{cluster_name}.filtered_polymorphic_sites.phylip"
+    File? branch_stats = "~{cluster_name}.per_branch_statistics.csv"
+    File? recomb_gff = "~{cluster_name}.recombination_predictions.gff"
+    File? recomb_embl = "~{cluster_name}.recombination_predictions.embl"
     File gubbins_snps= "~{cluster_name}.summary_of_snp_distribution.vcf"
-    File gubbins_final_tre? = "~{cluster_name}.final_tree.tre"
+    File? gubbins_final_tre = "~{cluster_name}.final_tree.tre"
     File gubbins_log = "~{cluster_name}.log"
-    File gubbins_node_tre? = "~{cluster_name}.node_labelled.final_tree.tre"
-    File gubbins_nonrecomb_vcf? = "~{cluster_name}_pangenome_alignment.fasta.vcf"
+    File? gubbins_node_tre = "~{cluster_name}.node_labelled.final_tree.tre"
+    File? gubbins_nonrecomb_vcf = "~{cluster_name}_pangenome_alignment.fasta.vcf"
 
 
 
