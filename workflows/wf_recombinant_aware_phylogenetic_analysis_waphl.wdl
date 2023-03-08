@@ -47,13 +47,6 @@ call gubbins.maskrc_svg as mask_gubbins_init  {
     gubbins_log = gubbins.gubbins_log,
     gubbins_node_tre = gubbins.gubbins_node_tre
 }
-call gubbins.mask_gubbins as mask_gubbins_init  {
-  input:
-    alignment = ska.ska_aln,
-    cluster_name = cluster_name,
-    recomb = gubbins_init.recomb_gff
-
-}
 call ksnp3.ksnp3_workflow as ksnp3  {
   input:
     assembly_fasta = mask_gubbins_init.masked_fasta_list,
