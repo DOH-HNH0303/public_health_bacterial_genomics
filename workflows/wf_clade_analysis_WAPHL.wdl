@@ -25,7 +25,7 @@ workflow clade_analysis {
   call pirate.pirate as pirate {
     input:
       prokka_gff = prokka_gff,
-      cluster_name = cluster_name,
+      cluster_name = cluster_name
   }
 
 call gubbins.gubbins as gubbins_clade {
