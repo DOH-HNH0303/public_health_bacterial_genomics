@@ -16,7 +16,7 @@ task iqtree {
     iqtree --version | grep version | sed 's/.*version/version/;s/ for Linux.*//' | tee VERSION
 
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
-    if [ $numGenomes -gt 4 ]
+    if [ $numGenomes -gt 3 ]
     then
       cp ~{alignment} ./msa.fasta
       iqtree \
@@ -26,7 +26,7 @@ task iqtree {
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
       ~{iqtree_opts} \
-      | tee terminal_out.txt || \
+      | tee terminal_output1.txt || \
       iqtree \
       -nt AUTO \
       -s msa.fasta \
@@ -34,13 +34,12 @@ task iqtree {
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
       ~{iqtree_opts} \
-      | tee terminal_out.txt || \
+      | tee terminal_output2.txt || \
       iqtree \
-      -nt AUTO \
       -s msa.fasta \
       -m "GTR+I+G" \
       ~{iqtree_opts} \
-      | tee terminal_out.txt
+      | tee terminal_output3.txt
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
       cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree
@@ -50,9 +49,17 @@ task iqtree {
     if grep -q "Model of substitution:" "~{cluster_name}_msa.iqtree"; then
       cat ~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed s/"Model of substitution: "//>IQTREE_MODEL # SomeString was found
     elif grep -q "Best-fit model according to BIC" "core_iqtree_wa_cluster_msa.iqtree"; then
-    cat core_iqtree_wa_cluster_msa.iqtree | grep "Best-fit model according to BIC" | sed s/"Best-fit model according to BIC"//>IQTREE_MODEL
+      cat core_iqtree_wa_cluster_msa.iqtree | grep "Best-fit model according to BIC" | sed s/"Best-fit model according to BIC"//>IQTREE_MODEL
     else
       echo ~{iqtree_model}>IQTREE_MODEL
+    fi
+
+    if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output3.txt; then
+      echo "Too few unidentical sequences to perform bootstrapping">IQTREE_COMMENT # SomeString was found
+    elif [ $numGenomes -le 3 ]; then
+      echo "Too few unidentical sequences to generate tree">IQTREE_COMMENT
+    else
+      echo "">IQTREE_COMMENT
     fi
 
 
@@ -61,9 +68,10 @@ task iqtree {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_msa.tree"
-    File iqtree_terminal = "terminal_output.txt"
+    File iqtree_terminal = select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output3.txt"])
     File iqtree_report = "~{cluster_name}_msa.iqtree"
     String iqtree_model_used = read_string("IQTREE_MODEL")
+    String iqtree_comment = read_string("IQTREE_COMMENT")
   }
   runtime {
     docker: "~{docker}"
