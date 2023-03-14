@@ -16,7 +16,7 @@ task iqtree {
     iqtree --version | grep version | sed 's/.*version/version/;s/ for Linux.*//' | tee VERSION
 
     numGenomes=`grep -o '>' ~{alignment} | wc -l`
-    if [ $numGenomes -gt 3 ]
+    if [ $numGenomes -gt 4 ]
     then
       cp ~{alignment} ./msa.fasta
       iqtree \
@@ -26,6 +26,7 @@ task iqtree {
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
       ~{iqtree_opts} \
+      | tee terminal_out.txt
       || \
       iqtree \
       -nt AUTO \
@@ -33,7 +34,15 @@ task iqtree {
       -m "GTR+I+G" \
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
-      ~{iqtree_opts}
+      ~{iqtree_opts} \
+      | tee terminal_out.txt
+      || \
+      iqtree \
+      -nt AUTO \
+      -s msa.fasta \
+      -m "GTR+I+G" \
+      ~{iqtree_opts} \
+      | tee terminal_out.txt
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
       cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree
@@ -54,6 +63,7 @@ task iqtree {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_msa.tree"
+    File iqtree_terminal = "terminal_output"
     File iqtree_report = "~{cluster_name}_msa.iqtree"
     String iqtree_model_used = read_string("IQTREE_MODEL")
   }
