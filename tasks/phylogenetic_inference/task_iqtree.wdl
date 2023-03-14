@@ -62,7 +62,7 @@ task iqtree {
       elif grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output2.txt; then
         echo "Too few unique sequences to perform bootstrapping">>IQTREE_COMMENT #
       fi
-    elif if [ -f "terminal_output2.txt" ]; then
+    elif [ -f "terminal_output2.txt" ]; then
         if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output2.txt; then
             echo "Too few unique sequences to perform bootstrapping">IQTREE_COMMENT #
         fi
