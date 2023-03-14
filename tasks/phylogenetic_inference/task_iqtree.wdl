@@ -26,7 +26,7 @@ task iqtree {
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
       ~{iqtree_opts} \
-      | tee terminal_output1.txt || \
+      | tee terminal_output.txt || \
       iqtree \
       -nt AUTO \
       -s msa.fasta \
@@ -34,17 +34,18 @@ task iqtree {
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
       ~{iqtree_opts} \
-      | tee terminal_output2.txt || \
+      | tee terminal_output.txt || \
       iqtree \
       -s msa.fasta \
       -m "GTR+I+G" \
       ~{iqtree_opts} \
-      | tee terminal_output3.txt
+      | tee terminal_output.txt
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
       cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree
     fi
     ls
+
 
     if grep -q "Model of substitution:" "~{cluster_name}_msa.iqtree"; then
       cat ~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed s/"Model of substitution: "//>IQTREE_MODEL # SomeString was found
@@ -54,10 +55,13 @@ task iqtree {
       echo ~{iqtree_model}>IQTREE_MODEL
     fi
 
-    if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output3.txt; then
-      echo "Too few unidentical sequences to perform bootstrapping">IQTREE_COMMENT # SomeString was found
+    if [ -f "terminal_output.txt" ]; then
+
+      if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output.txt; then
+        echo "Too few unique sequences to perform bootstrapping">IQTREE_COMMENT #
+      fi
     elif [ $numGenomes -le 3 ]; then
-      echo "Too few unidentical sequences to generate tree">IQTREE_COMMENT
+      echo "Too few unique sequences to generate tree">IQTREE_COMMENT
     else
       echo "">IQTREE_COMMENT
     fi
@@ -68,7 +72,7 @@ task iqtree {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File ml_tree = "~{cluster_name}_msa.tree"
-    File iqtree_terminal = select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output3.txt"])
+    String iqtree_terminal = read_string(terminal_output.txt) #select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
     File iqtree_report = "~{cluster_name}_msa.iqtree"
     String iqtree_model_used = read_string("IQTREE_MODEL")
     String iqtree_comment = read_string("IQTREE_COMMENT")
