@@ -34,7 +34,10 @@ task gubbins {
         echo "Too few genomes, No attempt to determine recombinants can be made">GUBBINS_COMMENT
         echo "false">GUBBINS_BOOL
     fi
-    if [ ! -f "GUBBINS_BOOL" ]; then
+    if if [ ! -f "~{cluster_name}.recombination_predictions.gff" ]; then
+        echo "false">GUBBINS_BOOL
+        echo "Too few genomes present with enough sequence left after initial filtering to determine recombinants">GUBBINS_COMMENT
+    elif [ ! -f "GUBBINS_BOOL" ]; then
         echo "true">GUBBINS_BOOL
         echo "">GUBBINS_COMMENT
     fi

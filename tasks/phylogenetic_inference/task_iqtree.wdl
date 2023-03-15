@@ -82,7 +82,7 @@ task iqtree {
     File? iqtree_terminal = select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
     File? iqtree_report = "~{cluster_name}_msa.iqtree"
     String? iqtree_model_used = read_string("IQTREE_MODEL")
-    String iqtree_comment = read_string("IQTREE_COMMENT")
+    String? iqtree_comment = read_string("IQTREE_COMMENT")
   }
   runtime {
     docker: "~{docker}"
