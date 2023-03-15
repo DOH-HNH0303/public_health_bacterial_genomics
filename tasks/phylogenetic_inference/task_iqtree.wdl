@@ -78,7 +78,7 @@ task iqtree {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File? ml_tree = "~{cluster_name}_msa.tree"
-    File iqtree_terminal = select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
+    File? iqtree_terminal = select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
     File? iqtree_report = "~{cluster_name}_msa.iqtree"
     String? iqtree_model_used = read_string("IQTREE_MODEL")
     String iqtree_comment = read_string("IQTREE_COMMENT")
