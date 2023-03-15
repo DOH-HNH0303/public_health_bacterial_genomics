@@ -25,21 +25,21 @@ task iqtree {
       -m ~{iqtree_model} \
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
-      ~{iqtree_opts} \
-      | tee terminal_output1.txt || \
+      ~{iqtree_opts} 2>>&1 \
+      | tee terminal_output.txt || \
       iqtree \
       -nt AUTO \
       -s msa.fasta \
       -m "GTR+I+G" \
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
-      ~{iqtree_opts} \
-      | tee terminal_output2.txt || \
+      ~{iqtree_opts} 2>>&1 \
+      | tee terminal_output.txt || \
       iqtree \
       -s msa.fasta \
       -m "GTR+I+G" \
-      ~{iqtree_opts} \
-      | tee terminal_output3.txt
+      ~{iqtree_opts} 2>>&1 \
+      | tee terminal_output.txt
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
       cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree
@@ -56,17 +56,17 @@ task iqtree {
     fi
     fi
 
-    if [ -f "terminal_output3.txt" ]; then
+    if [ -f "terminal_output.txt" ]; then
 
-      if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output3.txt; then
+      if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output.txt; then
         echo "Too few unique sequences to generate tree">>IQTREE_COMMENT #
-      elif grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output2.txt; then
+      elif grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output.txt; then
         echo "Too few unique sequences to perform bootstrapping">>IQTREE_COMMENT #
       fi
-    elif [ -f "terminal_output2.txt" ]; then
-        if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output2.txt; then
-            echo "Too few unique sequences to perform bootstrapping">IQTREE_COMMENT #
-        fi
+    #elif [ -f "terminal_output.txt" ]; then
+    #    if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output2.txt; then
+    #        echo "Too few unique sequences to perform bootstrapping">IQTREE_COMMENT #
+    #    fi
     elif [ $numGenomes -le 3 ]; then
       echo "Too few unique sequences to generate tree">IQTREE_COMMENT
     else
@@ -79,7 +79,7 @@ task iqtree {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File? ml_tree = "~{cluster_name}_msa.tree"
-    File? iqtree_terminal = select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
+    File? iqtree_terminal = "terminal_output.txt"#select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
     File? iqtree_report = "~{cluster_name}_msa.iqtree"
     String? iqtree_model_used = read_string("IQTREE_MODEL")
     String? iqtree_comment = read_string("IQTREE_COMMENT")
