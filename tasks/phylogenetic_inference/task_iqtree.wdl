@@ -46,13 +46,14 @@ task iqtree {
     fi
     ls
 
-
+    if [ -f "~{cluster_name}_msa.iqtree" ]; then
     if grep -q "Model of substitution:" "~{cluster_name}_msa.iqtree"; then
       cat ~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed s/"Model of substitution: "//>IQTREE_MODEL # SomeString was found
     elif grep -q "Best-fit model according to BIC" "core_iqtree_wa_cluster_msa.iqtree"; then
       cat core_iqtree_wa_cluster_msa.iqtree | grep "Best-fit model according to BIC" | sed s/"Best-fit model according to BIC"//>IQTREE_MODEL
     else
       echo ~{iqtree_model}>IQTREE_MODEL
+    fi
     fi
 
     if [ -f "terminal_output3.txt" ]; then
