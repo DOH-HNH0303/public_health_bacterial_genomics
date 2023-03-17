@@ -60,7 +60,7 @@ task iqtree {
       elif grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output.txt; then
         echo "Too few unique sequences to perform bootstrapping">IQTREE_COMMENT
       else
-        echo "">>IQTREE_COMMENT#
+        echo "">IQTREE_COMMENT#
       fi
     #elif [ -f "terminal_output.txt" ]; then
     #    if grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output2.txt; then
@@ -77,8 +77,8 @@ task iqtree {
   output {
     String date = read_string("DATE")
     String version = read_string("VERSION")
-    File ml_tree = select_first(["~{cluster_name}_msa.tree", "none_tree.txt"])
     File? iqtree_terminal = "terminal_output.txt"#select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
+    File ml_tree = select_first(["~{cluster_name}_msa.tree", "none_tree.txt"])
     File iqtree_report = select_first(["~{cluster_name}_msa.iqtree", "none_iqtree.txt"])
     String? iqtree_model_used = read_string("IQTREE_MODEL")
     String? iqtree_comment = read_string("IQTREE_COMMENT")
