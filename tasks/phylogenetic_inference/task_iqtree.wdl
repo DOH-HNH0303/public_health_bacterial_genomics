@@ -25,21 +25,18 @@ task iqtree {
       -m ~{iqtree_model} \
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
-      ~{iqtree_opts} 2>>&1 \
-      | tee terminal_output.txt || \
+      ~{iqtree_opts}>> terminal_output.txt 2>&1|| \
       iqtree \
       -nt AUTO \
       -s msa.fasta \
       -m "GTR+I+G" \
       -bb ~{iqtree_bootstraps} \
       -alrt ~{alrt} \
-      ~{iqtree_opts} 2>>&1 \
-      | tee terminal_output.txt || \
+      ~{iqtree_opts} >> terminal_output.txt 2>&1 || \
       iqtree \
       -s msa.fasta \
       -m "GTR+I+G" \
-      ~{iqtree_opts} 2>>&1 \
-      | tee terminal_output.txt
+      ~{iqtree_opts} >> terminal_output.txt 2>&1
 
       cp msa.fasta.contree ~{cluster_name}_msa.tree
       cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree
