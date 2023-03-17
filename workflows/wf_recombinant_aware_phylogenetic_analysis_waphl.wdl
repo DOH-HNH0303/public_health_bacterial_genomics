@@ -113,7 +113,7 @@ call clade_analysis.clade_analysis as clade_analysis  {
     Array[String?] clade_iqtree_version = clade_analysis.clade_iqtree_version
     Array[File?] clade_iqtree_core_tree = clade_analysis.clade_iqtree_core_tree
     Array[File?] clade_iqtree_pan_tree = clade_analysis.clade_iqtree_pan_tree
-    Array[File?] clade_iqtree_pan_model = clade_analysis.clade_iqtree_pan_model
-    Array[File?] clade_iqtree_core_model = clade_analysis.clade_iqtree_core_model
+    Array[String?] clade_iqtree_pan_model = clade_analysis.clade_iqtree_pan_model
+    Array[String?] clade_iqtree_core_model = clade_analysis.clade_iqtree_core_model
   }
 }
