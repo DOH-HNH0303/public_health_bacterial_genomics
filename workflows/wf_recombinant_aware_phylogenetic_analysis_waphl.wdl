@@ -97,23 +97,23 @@ call clade_analysis.clade_analysis as clade_analysis  {
 
     File clade_list_file = split_by_clade.clade_list_file
 
-    Array[File?] gubbins_clade_polymorph_fasta = clade_analysis.gubbins_clade_polymorph_fasta
-    Array[File?] gubbins_clade_branch_stats = clade_analysis.gubbins_clade_branch_stats
-    Array[File?] gubbins_clade_recomb_gff = clade_analysis.gubbins_clade_recomb_gff
+    Array[File?] gubbins_clade_polymorph_fasta = select_all(clade_analysis.gubbins_clade_polymorph_fasta)
+    Array[File?] gubbins_clade_branch_stats = select_all(clade_analysis.gubbins_clade_branch_stats)
+    Array[File?] gubbins_clade_recomb_gff = select_all(clade_analysis.gubbins_clade_recomb_gff)
 
-    Array[File] pirate_pangenome_summary = clade_analysis.pirate_pangenome_summary
-    Array[File] pirate_gene_families_ordered = clade_analysis.pirate_gene_families_ordered
-    Array[String] pirate_docker_image = clade_analysis.pirate_docker_image
-    Array[String] pirate_for_scoary_csv = clade_analysis.pirate_for_scoary_csv
+    Array[File] pirate_pangenome_summary = select_all(clade_analysis.pirate_pangenome_summary)
+    Array[File] pirate_gene_families_ordered = select_all(clade_analysis.pirate_gene_families_ordered)
+    Array[String] pirate_docker_image = select_all(clade_analysis.pirate_docker_image)
+    Array[String] pirate_for_scoary_csv = select_all(clade_analysis.pirate_for_scoary_csv)
     # snp_dists outputs
-    Array[String?] clade_snps_dists_version = clade_analysis.clade_snps_dists_version
-    Array[File?] clade_core_snp_matrix = clade_analysis.clade_core_snp_matrix
-    Array[File?] clade_pan_snp_matrix = clade_analysis.clade_pan_snp_matrix
+    Array[String?] clade_snps_dists_version = select_all(clade_analysis.clade_snps_dists_version)
+    Array[File?] clade_core_snp_matrix = select_all(clade_analysis.clade_core_snp_matrix)
+    Array[File?] clade_pan_snp_matrix = select_all(clade_analysis.clade_pan_snp_matrix)
     # iqtree outputs
-    Array[String?] clade_iqtree_version = clade_analysis.clade_iqtree_version
-    Array[File?] clade_iqtree_core_tree = clade_analysis.clade_iqtree_core_tree
-    Array[File?] clade_iqtree_pan_tree = clade_analysis.clade_iqtree_pan_tree
-    Array[String?] clade_iqtree_pan_model = clade_analysis.clade_iqtree_pan_model
-    Array[String?] clade_iqtree_core_model = clade_analysis.clade_iqtree_core_model
+    Array[String?] clade_iqtree_version = select_all(clade_analysis.clade_iqtree_version)
+    Array[File?] clade_iqtree_core_tree = select_all(clade_analysis.clade_iqtree_core_tree)
+    Array[File?] clade_iqtree_pan_tree = select_all(clade_analysis.clade_iqtree_pan_tree)
+    Array[String?] clade_iqtree_pan_model = select_all(clade_analysis.clade_iqtree_pan_model)
+    Array[String?] clade_iqtree_core_model = select_all(clade_analysis.clade_iqtree_core_model)
   }
 }
