@@ -56,9 +56,9 @@ task iqtree {
     if [ -f "terminal_output.txt" ]; then
 
       if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output.txt; then
-        echo "Too few unique sequences to generate tree">>IQTREE_COMMENT #
+        echo "Too few unique sequences to generate tree">IQTREE_COMMENT #
       elif grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output.txt; then
-        echo "Too few unique sequences to perform bootstrapping">>IQTREE_COMMENT
+        echo "Too few unique sequences to perform bootstrapping">IQTREE_COMMENT
       else
         echo "">>IQTREE_COMMENT#
       fi
