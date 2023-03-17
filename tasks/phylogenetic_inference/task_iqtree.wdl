@@ -38,8 +38,8 @@ task iqtree {
       -m "GTR+I+G" \
       ~{iqtree_opts} >> terminal_output.txt 2>&1
 
-      cp msa.fasta.contree ~{cluster_name}_msa.tree || touch none_tree.txt
-      cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree || touch none_iqtree.txt
+      cp msa.fasta.contree ~{cluster_name}_msa.tree || touch none.tree
+      cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree || touch none.iqtree
     fi
     ls
 
@@ -73,8 +73,8 @@ task iqtree {
     String date = read_string("DATE")
     String version = read_string("VERSION")
     File? iqtree_terminal = "terminal_output.txt"#select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
-    File ml_tree = select_first(["~{cluster_name}_msa.tree", "none_tree.txt"])
-    File iqtree_report = select_first(["~{cluster_name}_msa.iqtree", "none_iqtree.txt"])
+    File ml_tree = select_first(glob("*.tree"))
+    File iqtree_report = select_first(glob("*.iqtree"))
     String? iqtree_model_used = read_string("IQTREE_MODEL")
     String? iqtree_comment = read_string("IQTREE_COMMENT")
   }
