@@ -48,8 +48,9 @@ task waphl_version_capture {
       echo $item>>input.tsv
     done
 
-    date | tee TODAY
-    echo "~{PHBG-WAPHL v1.0.0-beta}" > PHBG_WAPHL_VERSION
+    ~{default='' 'export TZ=' + timezone}
+    date +"%Y-%m-%d" > TODAY
+    echo "PHBG-WAPHL v1.0.0-beta" > PHBG_WAPHL_VERSION
 
     python3<<CODE
 
