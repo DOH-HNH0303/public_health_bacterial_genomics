@@ -31,6 +31,7 @@ task waphl_version_capture {
     Array[String?] docker_images
     Array[String?] versions
     String version = "PHBG-WAPHL v1.0.0-beta"
+    String? timezone
   }
   meta {
     volatile: true
