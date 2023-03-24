@@ -39,14 +39,16 @@ task waphl_version_capture {
     touch input.tsv
     docker_array=("~{sep=' ' docker_images}")
     version_array=("~{sep=' ' versions}")
+
     for item in "${!docker_array[@]}"; do
       echo $item>>input.tsv
     done
+
     for item in "${!version_array[@]}"; do
       echo $item>>input.tsv
     done
-    ~{default='' 'export TZ=' + timezone}
-    date +"%Y-%m-%d" > TODAY
+
+    date | tee TODAY
     echo "~{PHBG-WAPHL v1.0.0-beta}" > PHBG_WAPHL_VERSION
 
     python3<<CODE
