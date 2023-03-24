@@ -56,8 +56,8 @@ task waphl_version_capture {
 
     with open("input.tsv", "r") as file1, \
      open('versions.tsv', mode='w') as out_file:
-        tool_list = []
-        version_list = []
+        tool_list = ["utilities"]
+        version_list = ["1.1"]
         for l in file1:
             l=l.split(":")
             if len(l)>1:
@@ -67,7 +67,8 @@ task waphl_version_capture {
                     tool_list.append(tool.upper().strip("-").strip("_"))
                     version_list.append(version)
         for i in range(len(tool_list)):
-        out_file.write(tool_list[i]+"\t"+version_list[i]+)
+          out_file.write(tool_list[i]+"\t"+version_list[i]+)
+
     file1.close()
     out_file.close()
 

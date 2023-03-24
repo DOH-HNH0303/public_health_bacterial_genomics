@@ -47,9 +47,10 @@ task gubbins {
   >>>
   output {
     String date = read_string("DATE")
+    String gubbins_docker_image = docker
     #File gubbins_log_final = select_first(["gubbins_attempt_3.txt", "gubbins_attempt_2.txt", "gubbins_attempt_1.txt"])
     File? gubbins_out = "terminal_output.txt"
-    String? freq = read_string("FREQ")
+    #String? freq = read_string("FREQ")
     String? gubbins_comment = read_string("GUBBINS_COMMENT")
     Boolean gubbins_mask = read_boolean("GUBBINS_BOOL")
     File? base_reconstruct = "~{cluster_name}.branch_base_reconstruction.embl"
@@ -150,6 +151,7 @@ task maskrc_svg {
   >>>
   output {
     String date = read_string("DATE")
+    String maskrc_docker_image = docker
     File masked_aln = "~{cluster_name}_masked.aln"
     File masked_fastas = "~{cluster_name}_masked_fastas.tar.gz"
     Array[File] masked_fasta_list = glob("*.fasta")

@@ -22,10 +22,11 @@ workflow clade_analysis {
     Float filter_perc = 25.0
 
   }
-  call pirate.pirate as pirate {
-    input:
-      prokka_gff = prokka_gff,
-      cluster_name = cluster_name
+
+call pirate.pirate as pirate {
+  input:
+    prokka_gff = prokka_gff,
+    cluster_name = cluster_name
   }
 
 call gubbins.gubbins as gubbins_clade {
@@ -115,6 +116,11 @@ if (pan == true) {
       input:
         alignment = select_first([core_mask_gubbins_clade.masked_aln,pirate.pirate_core_alignment_fasta]),
         cluster_name = cluster_name
+    }
+  call versioning.waphl_version_capture as version {
+    input:
+      docker_images = select_all([pirate.pirate_docker_image, gubbins_clade.gubbins_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, core_mask_gubbins_clade.maskrc_docker_image, ksnp3_clade_core.ksnp3_docker_image]),
+      versions = select_all([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version, pan_snp_dists.version, core_snp_dists.version])
     }
   }
 
