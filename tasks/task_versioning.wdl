@@ -35,7 +35,7 @@ task waphl_version_capture {
   meta {
     volatile: true
   }
-  command {
+  command <<<
     touch input.tsv
     docker_array=("~{sep=' ' docker_images}")
     version_array=("~{sep=' ' versions}")
@@ -74,7 +74,7 @@ task waphl_version_capture {
     out_file.close()
 
     CODE
-  }
+  >>>
   output {
     String date = read_string("TODAY")
     String phbg_waphl_version = read_string("PHBG_WAPHL_VERSION")
