@@ -30,7 +30,7 @@ task waphl_version_capture {
   input {
     Array[String?] docker_images
     Array[String?] versions
-    String = "PHBG-WAPHL v1.0.0-beta"
+    String version = "PHBG-WAPHL v1.0.0-beta"
   }
   meta {
     volatile: true
@@ -50,7 +50,7 @@ task waphl_version_capture {
 
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
-    echo "PHBG-WAPHL v1.0.0-beta" > PHBG_WAPHL_VERSION
+    echo "~{version}" > PHBG_WAPHL_VERSION
 
     python3<<CODE
 
