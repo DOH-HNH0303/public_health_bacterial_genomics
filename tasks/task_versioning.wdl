@@ -37,11 +37,11 @@ task waphl_version_capture {
   }
   command {
     touch input.tsv
-    assembly_array="~{sep='\t' docker_images}"
-    for item in "${docker_images[@]}"; do
+    assembly_array=("~{sep=' ' docker_images}")
+    for item in "${!docker_images[@]}"; do
       echo $item>>input.tsv
     done
-    for item in "${versions[@]}"; do
+    for item in "${!versions[@]}"; do
       echo $item>>input.tsv
     done
     ~{default='' 'export TZ=' + timezone}
