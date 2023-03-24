@@ -82,7 +82,7 @@ task waphl_version_capture {
   output {
     String date = read_string("TODAY")
     String phbg_waphl_version = read_string("PHBG_WAPHL_VERSION")
-    String tool_versions = "versions.tsv"
+    File tool_versions = "versions.tsv"
   }
   runtime {
     memory: "1 GB"
