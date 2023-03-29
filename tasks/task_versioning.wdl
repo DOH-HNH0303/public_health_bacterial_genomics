@@ -28,8 +28,6 @@ task version_capture {
 
 task waphl_version_capture {
   input {
-    Array[String?] docker_images
-    Array[String?] versions
     String pirate
     String gubbins
     String? mask_gub
