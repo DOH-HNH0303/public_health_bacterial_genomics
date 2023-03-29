@@ -125,8 +125,8 @@ if (pan == true) {
     input:
       pirate = pirate.pirate_docker_image,
       gubbins = gubbins_clade.gubbins_docker_image,
-      mask_gub? = select_first([core_mask_gubbins_clade.maskrc_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, generate_none.none_string]),
-      ksnp? = ksnp3_clade_core.ksnp3_docker_image,
+      mask_gub = select_first([core_mask_gubbins_clade.maskrc_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, generate_none.none_string]),
+      ksnp = ksnp3_clade_core.ksnp3_docker_image,
       iqtree = select_first([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version]),
       snp_dist = select_first([pan_snp_dists.version, core_snp_dists.version])
     }
