@@ -44,6 +44,7 @@ task waphl_version_capture {
     touch input.tsv
     version_array=()
     docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
+    echo "~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}"
 
     echo $docker_array
 
