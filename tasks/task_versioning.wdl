@@ -41,16 +41,16 @@ task waphl_version_capture {
     volatile: true
   }
   command <<<
-    touch input.tsv
-    version_array=()
-    docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
-    echo "~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}"
+    #touch input.tsv
+    #version_array=()
+    #docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
+    echo "~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}">input.tsv
 
-    echo $docker_array
+    #echo $docker_array
 
-    for item in "${!docker_array[@]}"; do
-      echo $item>>input.tsv
-    done
+    #for item in "${!docker_array[@]}"; do
+    #  echo $item>>input.tsv
+    #done
 
     ~{default='' 'export TZ=' + timezone}
     date +"%Y-%m-%d" > TODAY
@@ -66,7 +66,8 @@ task waphl_version_capture {
      open('versions.tsv', mode='w') as out_file:
         tool_list = ["utilities"]
         version_list = ["1.1"]
-        for l in file1:
+        for line in file1:
+          for l in line.split(" ")
             l=l.split(":")
             if len(l)>1:
                 tool = ''.join(l[:-1]).split("/")[-1]
