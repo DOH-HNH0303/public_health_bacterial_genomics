@@ -6,7 +6,7 @@ import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
 import "../tasks/phylogenetic_inference/task_pirate.wdl" as pirate
 import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
-import "../tasks/utilities/task_versioning.wdl" as utilities
+import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/gene_typing/task_prokka.wdl" as prokka
 import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 
