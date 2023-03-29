@@ -67,7 +67,7 @@ task waphl_version_capture {
         tool_list = ["utilities"]
         version_list = ["1.1"]
         for line in file1:
-          for l in line.split(" ")
+          for l in line.split(" "):
             l=l.split(":")
             if len(l)>1:
                 tool = ''.join(l[:-1]).split("/")[-1]
