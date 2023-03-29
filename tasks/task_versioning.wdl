@@ -76,7 +76,7 @@ task waphl_version_capture {
                     tool_list.append(tool.upper().strip("-").strip("_"))
                     version_list.append(version)
         for i in range(len(tool_list)):
-          out_file.write(tool_list[i]+"\t"+version_list[i])
+          out_file.write(tool_list[i]+"\t"+version_list[i]+"\n")
 
     file1.close()
     out_file.close()
