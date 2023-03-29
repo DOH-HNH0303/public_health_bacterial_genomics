@@ -30,6 +30,12 @@ task waphl_version_capture {
   input {
     Array[String?] docker_images
     Array[String?] versions
+    String pirate
+    String gubbins
+    String? mask_gub
+    String? ksnp
+    String? iqtree
+    String? snp_dist
     String version = "PHBG-WAPHL v1.0.0-beta"
     String? timezone
   }
@@ -38,14 +44,10 @@ task waphl_version_capture {
   }
   command <<<
     touch input.tsv
-    docker_array=("~{sep=' ' docker_images}")
-    version_array=("~{sep=' ' versions}")
+    version_array=()
+    docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
 
     for item in "${!docker_array[@]}"; do
-      echo $item>>input.tsv
-    done
-
-    for item in "${!version_array[@]}"; do
       echo $item>>input.tsv
     done
 

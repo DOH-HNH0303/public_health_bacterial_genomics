@@ -289,3 +289,28 @@ task scatter_by_clade {
     maxRetries: 3
   }
 }
+
+task generate_none {
+  input {
+    String docker = "quay.io/broadinstitute/py3-bio:0.1.2"
+
+  }
+  command <<<
+    date | tee DATE
+    touch none.txt
+  >>>
+  output {
+    String date = read_string("DATE")
+    File none_file = "none.txt"
+    String none_string = ""
+    String none_docker_image = "~docker"
+  }
+  runtime {
+    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}

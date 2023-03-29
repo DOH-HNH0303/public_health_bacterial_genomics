@@ -6,6 +6,7 @@ import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
 import "../tasks/phylogenetic_inference/task_pirate.wdl" as pirate
 import "../tasks/phylogenetic_inference/task_snp_dists.wdl" as snp_dists
 import "../tasks/task_versioning.wdl" as versioning
+import "../tasks/utilities/task_versioning.wdl" as utilities
 import "../tasks/gene_typing/task_prokka.wdl" as prokka
 import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 
@@ -117,10 +118,17 @@ if (pan == true) {
         alignment = select_first([core_mask_gubbins_clade.masked_aln,pirate.pirate_core_alignment_fasta]),
         cluster_name = cluster_name
     }
+  call utilities.generate_none {
+    input:
+    }
   call versioning.waphl_version_capture as version {
     input:
-      docker_images = select_all([pirate.pirate_docker_image, gubbins_clade.gubbins_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, core_mask_gubbins_clade.maskrc_docker_image, ksnp3_clade_core.ksnp3_docker_image]),
-      versions = select_all([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version, pan_snp_dists.version, core_snp_dists.version])
+      pirate = pirate.pirate_docker_image
+      gubbins = gubbins_clade.gubbins_docker_image
+      mask_gub? = select_first([core_mask_gubbins_clade.maskrc_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, generate_none.none_string])
+      ksnp? = ksnp3_clade_core.ksnp3_docker_image
+      iqtree = select_first([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version])
+      snp_dist = select_first([pan_snp_dists.version, core_snp_dists.version])
     }
   }
 
