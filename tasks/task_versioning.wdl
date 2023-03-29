@@ -45,6 +45,8 @@ task waphl_version_capture {
     version_array=()
     docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
 
+    echo $docker_array
+
     for item in "${!docker_array[@]}"; do
       echo $item>>input.tsv
     done
