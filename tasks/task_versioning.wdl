@@ -28,12 +28,20 @@ task version_capture {
 
 task waphl_version_capture {
   input {
-    String pirate
-    String gubbins
-    String? mask_gub
-    String? ksnp
-    String? iqtree
-    String? snp_dist
+    String input_1
+    String? input_2
+    String? input_3
+    String? input_4
+    String? input_5
+    String? input_6
+    String? input_7
+    String? input_8
+    String? input_9
+    String? input_10
+    String? input_11
+    String? input_12
+    String? input_13
+    String? input_14
     String version = "PHBG-WAPHL v1.0.0-beta"
     String? timezone
   }
@@ -44,7 +52,9 @@ task waphl_version_capture {
     #touch input.tsv
     #version_array=()
     #docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
-    echo "~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}">input.tsv
+    echo "~{input_1}" "~{input_2}" "~{input_3}" "~{input_4}" "~{input_5}" \
+    "~{input_6}" "~{input_7}" "~{input_8}" "~{input_9}" "~{input_10}" \
+    "~{input_11}" "~{input_12}" "~{input_13}" "~{input_14}">input.tsv
 
     #echo $docker_array
 

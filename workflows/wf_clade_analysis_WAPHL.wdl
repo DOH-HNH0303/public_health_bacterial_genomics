@@ -123,12 +123,12 @@ if (pan == true) {
     }
   call versioning.waphl_version_capture as version {
     input:
-      pirate = pirate.pirate_docker_image,
-      gubbins = gubbins_clade.gubbins_docker_image,
-      mask_gub = select_first([core_mask_gubbins_clade.maskrc_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, generate_none.none_string]),
-      ksnp = ksnp3_clade_core.ksnp3_docker_image,
-      iqtree = select_first([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version]),
-      snp_dist = select_first([pan_snp_dists.version, core_snp_dists.version])
+      input_1 = pirate.pirate_docker_image,
+      input_2 = gubbins_clade.gubbins_docker_image,
+      input_3 = select_first([core_mask_gubbins_clade.maskrc_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, generate_none.none_string]),
+      input_4 = ksnp3_clade_core.ksnp3_docker_image,
+      input_5 = select_first([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version]),
+      input_6 = select_first([pan_snp_dists.version, core_snp_dists.version])
     }
   }
 
@@ -142,6 +142,12 @@ if (pan == true) {
     File? gubbins_clade_nonrecomb_vcf = gubbins_clade.gubbins_nonrecomb_vcf
     File? gubbins_clade_snps_vcf = gubbins_clade.gubbins_snps
 
+    String pirate_docker_image = pirate.pirate_docker_image
+    String gubbins_docker_image = gubbins_clade.gubbins_docker_image
+    String? maskrc_docker_image = select_first([core_mask_gubbins_clade.maskrc_docker_image, pan_mask_gubbins_clade.maskrc_docker_image, generate_none.none_string])
+    String? ksnp3_docker_image = ksnp3_clade_core.ksnp3_docker_image
+    String? iqtree_version = select_first([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version])
+    String? snp_dist_version = select_first([pan_snp_dists.version, core_snp_dists.version])
 
     File pirate_pangenome_summary = pirate.pirate_pangenome_summary
     File pirate_gene_families_ordered = pirate.pirate_gene_families_ordered

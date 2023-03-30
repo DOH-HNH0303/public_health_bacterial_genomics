@@ -7,6 +7,7 @@ import "../tasks/phylogenetic_inference/task_gubbins.wdl" as gubbins
 import "../tasks/task_versioning.wdl" as versioning
 import "wf_ksnp3_WAPHL.wdl" as ksnp3
 import "../tasks/utilities/task_utilities.wdl" as utilities
+import "../tasks/task_versioning.wdl" as versioning
 
 workflow recomb_aware_phylo_analysis {
   input {
@@ -79,6 +80,23 @@ call clade_analysis.clade_analysis as clade_analysis  {
     prokka_gff = scatter_by_clade.clade_files,
     samplename = scatter_by_clade.samplename
 }
+call versioning.waphl_version_capture as version {
+  input:
+    input_1 = ska.ska_docker_image,
+    input_2 = gubbins_init.gubbins_docker_image,
+    input_3 = mask_gubbins_init.maskrc_docker_image,
+    input_4 = ksnp3.ksnp3_docker_image,
+    input_5 = total_iqtree.version,
+    input_6 = ksnp.ksnp3_snp_dists_version,
+    input_7 = split_by_clade.split_clade_docker_image,
+    input_8 = select_first(scatter_by_clade),
+    input_9 = clade_analysis.pirate_docker_image,
+    input_10 = clade_analysis.gubbins_docker_image,
+    input_11 = clade_analysis.maskrc_docker_image,
+    input_12 = clade_analysis.ksnp3_docker_image,
+    input_13 = clade_analysis.iqtree_version,
+    input_14 = clade_analysis.snp_dist_Version
+  }
 }
   output {
     File ska_aln = ska.ska_aln
@@ -115,5 +133,6 @@ call clade_analysis.clade_analysis as clade_analysis  {
     Array[File?] clade_iqtree_pan_tree = select_all(clade_analysis.clade_iqtree_pan_tree)
     Array[String?] clade_iqtree_pan_model = select_all(clade_analysis.clade_iqtree_pan_model)
     Array[String?] clade_iqtree_core_model = select_all(clade_analysis.clade_iqtree_core_model)
+    File tool_versions = version.input_file
   }
 }
