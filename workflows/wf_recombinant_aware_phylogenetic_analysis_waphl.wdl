@@ -95,7 +95,7 @@ call versioning.waphl_version_capture as version {
     input_11 = clade_analysis.maskrc_docker_image,
     input_12 = clade_analysis.ksnp3_docker_image,
     input_13 = clade_analysis.iqtree_version,
-    input_14 = clade_analysis.snp_dist_Version
+    input_14 = clade_analysis.snp_dist_version
   }
 }
   output {
