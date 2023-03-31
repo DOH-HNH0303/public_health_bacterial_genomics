@@ -50,8 +50,6 @@ task waphl_version_capture {
   }
   command <<<
     #touch input.tsv
-    #version_array=()
-    #docker_array=("~{pirate}" "~{gubbins}" "~{mask_gub}" "~{ksnp}" "~{iqtree}" "~{snp_dist}")
     echo "~{input_1}" "~{input_2}" "~{input_3}" "~{input_4}" "~{input_5}" \
     "~{input_6}" "~{input_7}" "~{input_8}" "~{input_9}" "~{input_10}" \
     "~{input_11}" "~{input_12}" "~{input_13}" "~{input_14}">input.tsv
