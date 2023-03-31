@@ -85,7 +85,7 @@ call versioning.waphl_version_capture as version {
     input_1 = ska.ska_docker_image,
     input_2 = gubbins_init.gubbins_docker_image,
     input_3 = mask_gubbins_init.maskrc_docker_image,
-    input_4 = ksnp3.ksnp3_docker_image,
+    input_4 = ksnp3.ksnp3_docker,
     input_5 = total_iqtree.version,
     input_6 = ksnp.ksnp3_snp_dists_version,
     input_7 = split_by_clade.split_clade_docker_image,
