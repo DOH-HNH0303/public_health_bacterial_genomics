@@ -80,6 +80,8 @@ call clade_analysis.clade_analysis as clade_analysis  {
     prokka_gff = scatter_by_clade.clade_files,
     samplename = scatter_by_clade.samplename
 }
+
+}
 call versioning.waphl_version_capture as version {
   input:
     input_1 = ska.ska_docker_image,
@@ -89,7 +91,7 @@ call versioning.waphl_version_capture as version {
     input_5 = total_iqtree.version,
     input_6 = ksnp3.ksnp3_snp_dists_version,
     input_7 = split_by_clade.split_clade_docker_image,
-    input_8 = scatter_by_clade.scatter_clade_docker_image,
+    input_8 = select_first(scatter_by_clade.scatter_clade_docker_image),
     input_9 = clade_analysis.pirate_docker_image,
     input_10 = clade_analysis.gubbins_docker_image,
     input_11 = clade_analysis.maskrc_docker_image,
@@ -97,7 +99,6 @@ call versioning.waphl_version_capture as version {
     input_13 = clade_analysis.iqtree_version,
     input_14 = clade_analysis.snp_dist_version
   }
-}
   output {
     File ska_aln = ska.ska_aln
     String gubbins_date = gubbins_init.date
