@@ -31,6 +31,7 @@ workflow ksnp3_workflow {
     String knsp3_wf_analysis_date = version_capture.date
     # ksnp3_outputs
     File ksnp3_core_snp_matrix = core_snp_dists.snp_matrix
+    File ksnp3_snp_dist_version = core_snp_dists.version
     File ksnp3_core_tree = ksnp3_task.ksnp3_core_tree
     File ksnp3_core_vcf = ksnp3_task.ksnp3_core_vcf
     File ksnp3_core_matrix = ksnp3_task.ksnp3_core_matrix
