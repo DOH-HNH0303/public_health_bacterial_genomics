@@ -92,12 +92,10 @@ call versioning.waphl_version_capture as version {
     input_6 = ksnp3.ksnp3_snp_dists_version,
     input_7 = split_by_clade.split_clade_docker_image,
     input_8 = select_first(scatter_by_clade.scatter_clade_docker_image),
-    input_9 = clade_analysis.pirate_docker_image,
-    input_10 = clade_analysis.gubbins_docker_image,
-    input_11 = clade_analysis.maskrc_docker_image,
-    input_12 = clade_analysis.ksnp3_docker_image,
-    input_13 = clade_analysis.iqtree_version,
-    input_14 = clade_analysis.snp_dist_version
+    input_9 = select_first(clade_analysis.pirate_docker_image),
+    input_11 = select_first(clade_analysis.maskrc_docker_image),
+    input_13 = select_first(clade_analysis.iqtree_version),
+    input_14 = select_first(clade_analysis.snp_dist_version)
   }
   output {
     File ska_aln = ska.ska_aln
