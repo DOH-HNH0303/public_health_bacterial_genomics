@@ -34,7 +34,7 @@ task fetch_bs {
 
   command <<<
 
-    bs --api-server=~{api} --access-token=~{token} download dataset -n ~{dataset} -o .
+    bs --api-server=~{api} --access-token=~{token} download biosample -n ~{dataset} -o .
 
     mv ~{dataset}*ds*/*_R1_* ~{sample}_R1.fastq.gz
     mv ~{dataset}*ds*/*_R2_* ~{sample}_R2.fastq.gz
