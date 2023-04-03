@@ -1,5 +1,10 @@
 version: 1.2
 workflows:
+- name: WAPHL_bs_fetch
+  subclass: WDL
+  primaryDescriptorPath: /workflows/wf_bs_fetch_waphl.wdl
+  testParameterFiles:
+   - empty.json
  - name: cgMLST
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_cgMLST_waphl.wdl
