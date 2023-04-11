@@ -102,5 +102,6 @@ task waphl_version_capture {
     cpu: 1
     docker: "quay.io/theiagen/utility:1.1"
     disks: "local-disk 10 HDD"
+    continueOnReturnCode: "True"
   }
 }
