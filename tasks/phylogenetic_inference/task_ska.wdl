@@ -56,5 +56,6 @@ task ska {
     disks: "local-disk ~{disk_size} SSD"
     preemptible: 0
     maxRetries: 3
+    continueOnReturnCode: "True"
   }
 }
