@@ -77,9 +77,15 @@ if (pan == true) {
 }
   if (core == true) {
     if (gubbins_clade.gubbins_mask == true) {
+      call ksnp3.ksnp3 as ksnp3_clade_core {
+        input:
+          assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
+          samplename = samplename,
+          cluster_name = cluster_name
+      }
       call gubbins.maskrc_svg as core_mask_gubbins_clade  {
         input:
-          alignment = pirate.pirate_core_alignment_fasta,
+          alignment = ksnp3_clade_core.ksnp3_core_matrix,
           cluster_name = cluster_name,
           recomb = gubbins_clade.recomb_gff,
           base_reconstruct = gubbins_clade.base_reconstruct,
@@ -92,15 +98,9 @@ if (pan == true) {
           gubbins_log = gubbins_clade.gubbins_log,
           gubbins_node_tre = gubbins_clade.gubbins_node_tre
       }
-      call ksnp3.ksnp3 as ksnp3_clade_core {
-        input:
-          assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
-          samplename = samplename,
-          cluster_name = cluster_name
-      }
       call iqtree.iqtree as masked_core_iqtree {
         input:
-          alignment =ksnp3_clade_core.ksnp3_core_matrix,
+          alignment = core_mask_gubbins_clade.masked_alnx,
           cluster_name = cluster_name,
           iqtree_model = iqtree_model
       }
