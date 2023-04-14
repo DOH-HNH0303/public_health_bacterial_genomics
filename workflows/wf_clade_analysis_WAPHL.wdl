@@ -79,7 +79,7 @@ if (pan == true) {
     if (gubbins_clade.gubbins_mask == true) {
       call gubbins.maskrc_svg as core_mask_gubbins_clade  {
         input:
-          alignment = pirate.pirate_pan_alignment_fasta,
+          alignment = pirate.pirate_pangenome_alignment_fasta,
           cluster_name = cluster_name,
           recomb = gubbins_clade.recomb_gff,
           base_reconstruct = gubbins_clade.base_reconstruct,
