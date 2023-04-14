@@ -36,27 +36,26 @@ call gubbins.gubbins as gubbins_clade {
     filter_perc = filter_perc,
     cluster_name = cluster_name
 }
-
+call gubbins.maskrc_svg as core_mask_gubbins  {
+  input:
+    alignment = pirate.pirate_pan_alignment_fasta,
+    cluster_name = cluster_name,
+    recomb = gubbins_clade.recomb_gff,
+    base_reconstruct = gubbins_clade.base_reconstruct,
+    recomb_embl = gubbins_clade.recomb_embl,
+    polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
+    polymorph_site_phylip = gubbins_clade.polymorph_site_phylip,
+    branch_stats = gubbins_clade.branch_stats,
+    gubbins_snps = gubbins_clade.gubbins_snps,
+    gubbins_final_tre = gubbins_clade.gubbins_final_tre,
+    gubbins_log = gubbins_clade.gubbins_log,
+    gubbins_node_tre = gubbins_clade.gubbins_node_tre
+}
 if (pan == true) {
   if (gubbins_clade.gubbins_mask == true) {
-    call gubbins.maskrc_svg as pan_mask_gubbins_clade  {
-      input:
-        alignment = pirate.pirate_pangenome_alignment_fasta,
-        cluster_name = cluster_name,
-        recomb = gubbins_clade.recomb_gff,
-        base_reconstruct = gubbins_clade.base_reconstruct,
-        recomb_embl = gubbins_clade.recomb_embl,
-        polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
-        polymorph_site_phylip = gubbins_clade.polymorph_site_phylip,
-        branch_stats = gubbins_clade.branch_stats,
-        gubbins_snps = gubbins_clade.gubbins_snps,
-        gubbins_final_tre = gubbins_clade.gubbins_final_tre,
-        gubbins_log = gubbins_clade.gubbins_log,
-        gubbins_node_tre = gubbins_clade.gubbins_node_tre
-    }
     call iqtree.iqtree as masked_pan_iqtree {
       input:
-        alignment = pan_mask_gubbins_clade.masked_aln,
+        alignment = mask_gubbins_clade.masked_aln,
         cluster_name = cluster_name,
         iqtree_model = iqtree_model
     }
@@ -77,30 +76,16 @@ if (pan == true) {
 }
   if (core == true) {
     if (gubbins_clade.gubbins_mask == true) {
+
       call ksnp3.ksnp3 as ksnp3_clade_core {
         input:
-          assembly_fasta = core_mask_gubbins_clade.masked_fasta_list,
+          assembly_fasta = mask_gubbins_clade.masked_fasta_list,
           samplename = samplename,
           cluster_name = cluster_name
       }
-      call gubbins.maskrc_svg as core_mask_gubbins_clade  {
-        input:
-          alignment = ksnp3_clade_core.ksnp3_core_matrix,
-          cluster_name = cluster_name,
-          recomb = gubbins_clade.recomb_gff,
-          base_reconstruct = gubbins_clade.base_reconstruct,
-          recomb_embl = gubbins_clade.recomb_embl,
-          polymorph_site_fasta = gubbins_clade.polymorph_site_fasta,
-          polymorph_site_phylip = gubbins_clade.polymorph_site_phylip,
-          branch_stats = gubbins_clade.branch_stats,
-          gubbins_snps = gubbins_clade.gubbins_snps,
-          gubbins_final_tre = gubbins_clade.gubbins_final_tre,
-          gubbins_log = gubbins_clade.gubbins_log,
-          gubbins_node_tre = gubbins_clade.gubbins_node_tre
-      }
       call iqtree.iqtree as masked_core_iqtree {
         input:
-          alignment = core_mask_gubbins_clade.masked_aln,
+          alignment =ksnp3_clade_core.ksnp3_core_matrix,
           cluster_name = cluster_name,
           iqtree_model = iqtree_model
       }
