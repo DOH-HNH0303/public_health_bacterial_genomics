@@ -112,7 +112,7 @@ call versioning.waphl_version_capture as version {
     File masked_fastas = mask_gubbins_init.masked_fastas
     Array[File] masked_fasta_list = mask_gubbins_init.masked_fasta_list
 
-    File tree? = total_iqtree.ml_tree
+    File? tree = total_iqtree.ml_tree
 
     File clade_list_file = split_by_clade.clade_list_file
 
