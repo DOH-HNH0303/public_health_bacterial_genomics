@@ -51,6 +51,7 @@ task iqtree {
     else
       echo ~{iqtree_model}>IQTREE_MODEL
     fi
+    echo "">IQTREE_MODEL
     fi
 
     if [ -f "terminal_output.txt" ]; then
