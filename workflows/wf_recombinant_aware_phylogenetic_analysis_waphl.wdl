@@ -110,7 +110,7 @@ call versioning.waphl_version_capture as version {
     File? gubbins_recomb_gff = gubbins_init.recomb_gff
     File? gubbins_snps= gubbins_init.gubbins_snps
 
-    String? gubbins_date = mask_gubbins_init.date
+   
     File? masked_fastas = mask_gubbins_init.masked_fastas
     #Array[File?] masked_fasta_list = mask_gubbins_init.masked_fasta_list
 
