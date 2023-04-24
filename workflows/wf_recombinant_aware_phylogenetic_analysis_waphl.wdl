@@ -33,7 +33,7 @@ call gubbins.gubbins as gubbins_init {
     filter_perc = filter_perc,
     cluster_name = cluster_name
 }
-if (gubbins_init == true){
+if (gubbins_init.gubbins_mask == true){
 call gubbins.maskrc_svg as mask_gubbins_init  {
   input:
     alignment = ska.ska_aln,
