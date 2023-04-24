@@ -202,7 +202,7 @@ task split_by_clade {
     String split_clade_docker_image = docker
   }
   runtime {
-    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    docker: docker
     memory: "16 GB"
     cpu: 4
     disks: "local-disk 100 SSD"
@@ -283,7 +283,7 @@ task scatter_by_clade {
     String scatter_clade_docker_image = docker
   }
   runtime {
-    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    docker: docker
     memory: "16 GB"
     cpu: 4
     disks: "local-disk 100 SSD"
@@ -308,7 +308,34 @@ task generate_none {
     String none_docker_image = "~docker"
   }
   runtime {
-    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    docker: docker
+    memory: "16 GB"
+    cpu: 4
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+
+task concat_fastq {
+  input {
+    String docker = "quay.io/broadinstitute/py3-bio:0.1.2"
+    File read1_cleaned
+    File read2_cleaned
+    String samplename
+
+  }
+  command <<<
+    date | tee DATE
+    cat ~{read1_cleaned} ~{read2_cleaned}>~{samplename}_total_reads.fastq
+  >>>
+  output {
+    String date = read_string("DATE")
+    File comb_fastq = "~{samplename}_total_reads.fastq"
+    String none_docker_image = "~docker"
+  }
+  runtime {
+    docker: docker
     memory: "16 GB"
     cpu: 4
     disks: "local-disk 100 SSD"

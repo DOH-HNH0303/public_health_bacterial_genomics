@@ -33,6 +33,7 @@ call gubbins.gubbins as gubbins_init {
     filter_perc = filter_perc,
     cluster_name = cluster_name
 }
+if (gubbins_clade.gubbins_mask == true){
 call gubbins.maskrc_svg as mask_gubbins_init  {
   input:
     alignment = ska.ska_aln,
@@ -48,9 +49,10 @@ call gubbins.maskrc_svg as mask_gubbins_init  {
     gubbins_log = gubbins_init.gubbins_log,
     gubbins_node_tre = gubbins_init.gubbins_node_tre
 }
+}
 call ksnp3.ksnp3_workflow as ksnp3  {
   input:
-    assembly_fasta = mask_gubbins_init.masked_fasta_list,
+    assembly_fasta = select_first(mask_gubbins_init.masked_fasta_list, assembly_fasta),
     samplename = samplename,
     cluster_name = cluster_name
 }
