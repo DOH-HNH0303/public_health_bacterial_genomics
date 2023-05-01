@@ -35,11 +35,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_pangenome_snp_waphl.wdl
    testParameterFiles:
     - empty.json
- - name: Prepare_References
-   subclass: WDL
-   primaryDescriptorPath: /workflows/wf_prepare_references.wdl
-   testParameterFiles:
-    - empty.json
+#  - name: Prepare_References
+#    subclass: WDL
+#    primaryDescriptorPath: /workflows/wf_prepare_references.wdl
+#    testParameterFiles:
+#     - empty.json
  - name: WAPHL_report
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_waphl_report.wdl
