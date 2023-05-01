@@ -117,7 +117,7 @@ task plot_roary_waphl {
     # date and version control
     date | tee DATE
     python roary_plots_waphl.py \
-    ~{--recombinants + recomb_gff} \
+    ~{'--recombinants' + recomb_gff} \
     ~{treefile} \
     ~{pirate_for_scoary_csv} \
     ~{pirate_aln_gff}
