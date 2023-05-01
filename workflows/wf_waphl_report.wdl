@@ -26,7 +26,7 @@ workflow waphl_report {
   }
 
   output {
-    File    plot_roary_png  = reports.plot_roary_png
+    File    plot_roary_png  = plot_roary.plot_roary_png
   }
 }
 
