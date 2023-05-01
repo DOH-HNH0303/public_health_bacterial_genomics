@@ -111,7 +111,7 @@ task plot_roary_waphl {
     String cluster_name
     String docker = "hnh0303/plot_roary_waphl:1.0"
     Int threads = 6
-    Int snp_clade
+    Int? snp_clade
   }
   command <<<
     # date and version control
