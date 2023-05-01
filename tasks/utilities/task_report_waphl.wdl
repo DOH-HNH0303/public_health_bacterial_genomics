@@ -131,7 +131,7 @@ task plot_roary_waphl {
   >>>
   output {
     String date = read_string("DATE")
-    File plot_roary_png = selelct_first(["~{cluster_name}_~{snp_clade}_matrix.png", "~{cluster_name}_matrix.png"])
+    File plot_roary_png = select_first(["~{cluster_name}_~{snp_clade}_matrix.png", "~{cluster_name}_matrix.png"])
     String plot_roary_docker_image = docker
   }
   runtime {
