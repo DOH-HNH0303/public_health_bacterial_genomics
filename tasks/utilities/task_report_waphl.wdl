@@ -93,8 +93,51 @@ task cdip_report {
   }
   runtime {
     docker: "~{docker}"
-    memory: "16 GB"
-    cpu: 4
+    memory: "8 GB"
+    cpu: 2
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
+
+task plot_roary_waphl {
+  input {
+    String cluster_name
+    File treefile
+    File? recomb_gff
+    File pirate_aln_gff
+    File pirate_for_scoary_csv
+    String cluster_name
+    String docker = "hnh0303/plot_roary_waphl:1.0"
+    Int threads = 6
+    Int snp_clade
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+    python roary_plots_waphl.py \
+    ~{--recombinants recomb_gff} \
+    ~{treefile} \
+    ~{pirate_for_scoary_csv} \
+    ~{pirate_aln_gff}
+
+    if [[ -z "~{snp_clade}" ]]; then
+      mv pangenome_matrix.png ~{cluster_name}_matrix.png
+    else
+    mv pangenome_matrix.png ~{cluster_name}_~{snp_clade}_matrix.png
+    fi
+
+  >>>
+  output {
+    String date = read_string("DATE")
+    File plot_roary_png = selelct_first(["~{cluster_name}_~{snp_clade}_matrix.png", "~{cluster_name}_matrix.png"])
+    String plot_roary_docker_image = docker
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "8 GB"
+    cpu: 2
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3

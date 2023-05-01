@@ -115,3 +115,8 @@ workflows:
    primaryDescriptorPath: /workflows/wf_bs_fetch_WAPHL.wdl
    testParameterFiles:
     - empty.json
+ - name: WAPHL_bs_fetch
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_waphl_report.wdl
+   testParameterFiles:
+    - empty.json
