@@ -40,6 +40,11 @@ workflows:
    primaryDescriptorPath: /workflows/wf_prepare_references.wdl
    testParameterFiles:
     - empty.json
+ - name: WAPHL_report
+   subclass: WDL
+   primaryDescriptorPath: /workflows/wf_waphl_report.wdl
+   testParameterFiles:
+    - empty.json
  - name: SerotypeFinder
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_serotypefinder.wdl
@@ -113,10 +118,5 @@ workflows:
  - name: WAPHL_bs_fetch
    subclass: WDL
    primaryDescriptorPath: /workflows/wf_bs_fetch_WAPHL.wdl
-   testParameterFiles:
-    - empty.json
- - name: WAPHL_report
-   subclass: WDL
-   primaryDescriptorPath: /workflows/wf_waphl_report.wdl
    testParameterFiles:
     - empty.json
