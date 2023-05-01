@@ -14,7 +14,7 @@ workflow waphl_report {
     Int? snp_clade
   }
 
-  call report.plot_roary {
+  call report.plot_roary_waphl {
     input:
       cluster_namee=cluster_name,
       treefile=treefile,
@@ -26,7 +26,7 @@ workflow waphl_report {
   }
 
   output {
-    File    plot_roary_png  = plot_roary.plot_roary_png
+    File    plot_roary_png  = plot_roary_waphl.plot_roary_png
   }
 }
 
