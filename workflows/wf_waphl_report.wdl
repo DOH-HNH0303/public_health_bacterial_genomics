@@ -16,7 +16,7 @@ workflow waphl_report {
 
   call report.plot_roary_waphl {
     input:
-      cluster_namee=cluster_name,
+      cluster_name=cluster_name,
       treefile=treefile,
       recomb_gff=recomb_gff,
       pirate_aln_gff=pirate_aln_gff,
