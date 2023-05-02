@@ -150,8 +150,8 @@ if (pan == true) {
     String? snp_dist_version = select_first([pan_snp_dists.version, core_snp_dists.version])
 
     File pirate_pangenome_summary = pirate.pirate_pangenome_summary
-    File pirate_aln_pan = pirate = pirate_pangenome_alignment_gff
-    File pirate_aln_core = pirate = pirate_core_alignment_gff
+    File pirate_aln_pan = pirate.pirate_pangenome_alignment_gff
+    File pirate_aln_core = pirate.pirate_core_alignment_gff
     File pirate_gene_families_ordered = pirate.pirate_gene_families_ordered
     String pirate_for_scoary_csv = pirate.pirate_for_scoary_csv
     # snp_dists outputs
