@@ -56,6 +56,12 @@ task iqtree {
     if [ ! -f IQTREE_MODEL ]; then
     touch IQTREE_MODEL
     fi
+    if [ ! -f *.tree ]; then
+    touch none.tree
+    fi
+    if [ ! -f *.iqtree ]; then
+    touch none.iqtree
+    fi
 
     touch IQTREE_COMMENT
     if [ -f "terminal_output.txt" ]; then
