@@ -51,6 +51,9 @@ task iqtree {
     else
       echo ~{iqtree_model} | tee IQTREE_MODEL
     fi
+    fi
+
+    if [ ! -f IQTREE_MODEL ]; then
     touch IQTREE_MODEL
     fi
 
