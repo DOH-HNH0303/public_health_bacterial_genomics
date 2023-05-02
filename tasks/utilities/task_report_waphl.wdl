@@ -116,6 +116,12 @@ task plot_roary_waphl {
   command <<<
     # date and version control
     date | tee DATE
+    ls
+    echo ""
+    ls ../
+    echo ""
+    ls ../../
+    
     python roary_plots_waphl.py \
     ~{'--recombinants' + recomb_gff} \
     ~{treefile} \
