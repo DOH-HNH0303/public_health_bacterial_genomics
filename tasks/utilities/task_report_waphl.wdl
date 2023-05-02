@@ -123,11 +123,8 @@ task plot_roary_waphl {
     ~{pirate_for_scoary_csv} \
     ~{pirate_aln_gff}
 
-    if [[ -z "~{snp_clade}" ]]; then
-      mv pangenome_matrix.png ~{cluster_name}_matrix.png
-    else
+   
     mv pangenome_matrix.png ~{cluster_name}~{"_" + snp_clade}_matrix.png
-    fi
 
   >>>
   output {
