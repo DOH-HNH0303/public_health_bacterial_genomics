@@ -54,6 +54,7 @@ task iqtree {
     echo "">IQTREE_MODEL
     fi
 
+    touch IQTREE_COMMENT
     if [ -f "terminal_output.txt" ]; then
         if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output.txt; then
             echo "Too few unique sequences to generate tree">>IQTREE_COMMENT
@@ -64,8 +65,6 @@ task iqtree {
         fi
     elif [ $numGenomes -le 3 ]; then
         echo "Too few unique sequences to generate tree">>IQTREE_COMMENT
-    else
-        echo "">>IQTREE_COMMENT
     fi
 
 
