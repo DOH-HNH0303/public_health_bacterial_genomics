@@ -229,7 +229,7 @@ task scatter_by_clade {
     ls
     echo ""
     if [ ${#clade_list[@]} -eq 0 ]; then
-    all_list=($(ls -d */*.~{file_type}))
+    all_list=($(ls -d */*.~{filetype}))
     for x in ~{sep=' ' all_list}
     do
         if [ ~{filetype} == "fasta" ]; then
