@@ -235,7 +235,7 @@ task scatter_by_clade {
         if [ ~{filetype} == "fasta" ]; then
             mv "${i}" files_dir/"${i}_contigs.fasta"
         elif [ ~{filetype} == "gff" ]; then
-            mv "${i}" files_dir/"${i}.gff"
+            mv "${i}" files_dir/"${i}"
         else
             echo "Please add filetype to task"
             ls "${i}"*
