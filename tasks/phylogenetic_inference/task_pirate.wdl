@@ -19,6 +19,7 @@ task pirate {
   # date and version control
   date | tee DATE
   PIRATE -v | tee VERSION
+  ls ~~{sep=' ' prokka_gff}
 
   # pirate requires the directory containing the gff files as input
   mkdir INPUT_DIR
