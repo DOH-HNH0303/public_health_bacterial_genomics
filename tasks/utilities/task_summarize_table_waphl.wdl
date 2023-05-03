@@ -35,8 +35,6 @@ task zip_files {
     Array[File]? pirate_gene_presence_absence
     String cluster_name
     String? cluster_tree
-    String? terra_workspace
-    String? terra_table
     Int disk_size = 100
   }
   command <<<   
