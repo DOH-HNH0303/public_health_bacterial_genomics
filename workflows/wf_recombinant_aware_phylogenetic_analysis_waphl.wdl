@@ -8,6 +8,7 @@ import "../tasks/task_versioning.wdl" as versioning
 import "wf_ksnp3_WAPHL.wdl" as ksnp3
 import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/task_versioning.wdl" as versioning
+import "../tasks/utilities/task_summarize_table_waphl.wdl" as summarize
 
 workflow recomb_aware_phylo_analysis {
   input {
@@ -16,6 +17,9 @@ workflow recomb_aware_phylo_analysis {
     Array[String] samplename
     File reference_genome
     String cluster_name
+    String terra_workspace
+    String terra_project
+    String terra_table
     String iqtree_model = "MFP"
     Int snp_clade = 150
     Float filter_perc = 35.0
@@ -84,6 +88,19 @@ call clade_analysis.clade_analysis as clade_analysis  {
 }
 
 }
+call summarize.zip_files as zip_files  {
+  input:
+    clade_trees = select_all(clade_analysis.clade_iqtree_pan_tree),
+    recomb_gff = select_all(clade_analysis.gubbins_clade_recomb_gff),
+    pirate_aln_gff = clade_analysis.pirate_aln_pan,
+    pirate_gene_presence_absence = select_all(clade_analysis.pirate_for_scoary_csv),
+    cluster_name = cluster_name,
+    cluster_tree = total_iqtree.ml_tree,
+    terra_table = terra_table,
+    terra_workspace = terra_workspace,
+    terra_project = terra_project,
+    
+}
 call versioning.waphl_version_capture as version {
   input:
     input_1 = ska.ska_docker_image,
@@ -110,7 +127,6 @@ call versioning.waphl_version_capture as version {
     File? gubbins_recomb_gff = gubbins_init.recomb_gff
     File? gubbins_snps= gubbins_init.gubbins_snps
 
-   
     File? masked_fastas = mask_gubbins_init.masked_fastas
     #Array[File?] masked_fasta_list = mask_gubbins_init.masked_fasta_list
 
@@ -139,5 +155,6 @@ call versioning.waphl_version_capture as version {
     Array[String?] clade_iqtree_pan_model = select_all(clade_analysis.clade_iqtree_pan_model)
     Array[String?] clade_iqtree_core_model = select_all(clade_analysis.clade_iqtree_core_model)
     File tool_versions = version.input_file
+    File zipped_output = zip_files.zipped_output
   }
 }
