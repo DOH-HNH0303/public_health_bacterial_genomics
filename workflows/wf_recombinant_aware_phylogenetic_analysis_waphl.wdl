@@ -17,9 +17,9 @@ workflow recomb_aware_phylo_analysis {
     Array[String] samplename
     File reference_genome
     String cluster_name
-    String terra_workspace
-    String terra_project
-    String terra_table
+    # String terra_workspace
+    #String terra_project
+    # String terra_table
     String iqtree_model = "MFP"
     Int snp_clade = 150
     Float filter_perc = 35.0
