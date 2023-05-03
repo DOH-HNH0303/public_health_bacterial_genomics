@@ -104,24 +104,41 @@ task cdip_report {
 task plot_roary_waphl {
   input {
     String cluster_name
-    File treefile
+    File output_tar
+    File? treefile
     File? recomb_gff
-    File pirate_aln_gff
-    File pirate_for_scoary_csv
-    String cluster_name
+    File? pirate_aln_gff
+    File? pirate_for_scoary_csv
     String docker = "hnh0303/plot_roary_waphl:1.0"
     Int threads = 6
     Int? snp_clade
   }
   command <<<
     # date and version control
+    # This task takes either a zipped input file or individual input files
     date | tee DATE
-
+    if [ -z ~{output_tar} ]; then
+    tar xzf ~{output_tar}
+    if ls **recombination_predictions.gff; then
+    python ../roary_plots_waphl.py \
+    --recombinants *recombination_predictions.gff \
+    *tree* \
+    *scoary* \
+    *alignment.gff
+    else
+    python ../roary_plots_waphl.py \
+    *tree* \
+    *scoary* \
+    *alignment.gff
+    fi
+    else
     python ../roary_plots_waphl.py \
     ~{'--recombinants' + recomb_gff} \
     ~{treefile} \
     ~{pirate_for_scoary_csv} \
     ~{pirate_aln_gff}
+
+    fi
 
    
     mv pangenome_matrix.png ~{cluster_name}~{"_" + snp_clade}_matrix.png

@@ -228,6 +228,20 @@ task scatter_by_clade {
     done;
     ls
     echo ""
+    if [ ${#clade_list[@]} -eq 0 ]; then
+    all_list=($(ls -d */*.~{file_type}))
+    for x in ~{sep=' ' all_list}
+    do
+        if [ ~{filetype} == "fasta" ]; then
+            mv "${x}_contigs.fasta" files_dir/"${x}_contigs.fasta"
+        elif [ ~{filetype} == "gff" ]; then
+            mv "${x}.gff" files_dir/"${x}.gff"
+        else
+            echo "Please add filetype to task"
+            ls "${x}"*
+        fi
+    done;
+    else
     for x in ~{sep=' ' clade_list}
     do
         if [ ~{filetype} == "fasta" ]; then
@@ -239,6 +253,7 @@ task scatter_by_clade {
             ls "${x}"*
         fi
     done;
+    fi
     echo "ls files_dir"
     ls files_dir
     cd files_dir
