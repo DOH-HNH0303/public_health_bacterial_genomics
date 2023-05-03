@@ -53,7 +53,7 @@ task zip_files {
     
   >>>
   output {
-    File zipped_output = "~{cluster_name}-archive.tar"
+    File zipped_output = "~{cluster_name}-archive.tar.gz"
   }
   runtime {
     docker: "broadinstitute/terra-tools:tqdm"
