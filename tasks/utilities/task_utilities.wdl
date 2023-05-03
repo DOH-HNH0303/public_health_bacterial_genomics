@@ -230,7 +230,7 @@ task scatter_by_clade {
     echo ""
     if [ ${#clade_list[@]} -eq 0 ]; then
     all_list=($(ls -d */*.~{filetype}))
-    for x in ~{sep=' ' all_list}
+    for i in "${all_list[@]}"
     do
         if [ ~{filetype} == "fasta" ]; then
             mv "${x}_contigs.fasta" files_dir/"${x}_contigs.fasta"
