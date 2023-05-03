@@ -141,3 +141,44 @@ task plot_roary_waphl {
     maxRetries: 3
   }
 }
+
+task save_output {
+  input {
+    String cluster_name
+    File treefile
+    File? recomb_gff
+    File pirate_aln_gff
+    File pirate_for_scoary_csv
+    String cluster_name
+    String docker = "hnh0303/plot_roary_waphl:1.0"
+    Int threads = 6
+    Int? snp_clade
+  }
+  command <<<
+    # date and version control
+    date | tee DATE
+
+    python ../roary_plots_waphl.py \
+    ~{'--recombinants' + recomb_gff} \
+    ~{treefile} \
+    ~{pirate_for_scoary_csv} \
+    ~{pirate_aln_gff}
+
+   
+    mv pangenome_matrix.png ~{cluster_name}~{"_" + snp_clade}_matrix.png
+
+  >>>
+  output {
+    String date = read_string("DATE")
+    File plot_roary_png = select_first(["~{cluster_name}_matrix.png", "~{cluster_name}_~{snp_clade}_matrix.png"])
+    String plot_roary_docker_image = docker
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: "8 GB"
+    cpu: 2
+    disks: "local-disk 100 SSD"
+    preemptible: 0
+    maxRetries: 3
+  }
+}

@@ -41,15 +41,15 @@ task zip_files {
     # when running on terra, comment out all input_table mentions
     ls
     mkdir ~{cluster_name}
-    mv -s ~{sep=' ' clade_trees} ~{cluster_name}
-    mv -s ~{sep=' ' recomb_gff} ~{cluster_name}
-    mv -s ~{sep=' ' pirate_aln_gff} ~{cluster_name}
-    mv -s ~{sep=' ' pirate_gene_presence_absence} ~{cluster_name}
+    mv ~{sep=' ' clade_trees} ~{cluster_name}
+    mv ~{sep=' ' recomb_gff} ~{cluster_name}
+    mv ~{sep=' ' pirate_aln_gff} ~{cluster_name}
+    mv ~{sep=' ' pirate_gene_presence_absence} ~{cluster_name}
     mv ~{cluster_tree} ~{cluster_name}
 
     cd ~{cluster_name}
-    zip ~{cluster_name}-archive.zip *
-    mv ~{cluster_name}-archive.zip ../
+    tar -cvzf ~{cluster_name}-archive.tar.gz *
+    mv ~{cluster_name}-archive.tar.gz ../
     
   >>>
   output {
