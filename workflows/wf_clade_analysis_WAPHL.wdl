@@ -181,7 +181,7 @@ if (pan == true) {
     String? clade_iqtree_pan_model = select_first([masked_pan_iqtree.iqtree_model_used, unmasked_pan_iqtree.iqtree_model_used])#pan_iqtree.iqtree_model
     String? clade_iqtree_core_model = select_first([masked_core_iqtree.iqtree_model_used, unmasked_core_iqtree.iqtree_model_used])#core_iqtree.iqtree_model
     File? software_versions_clade_analysis = version.tool_versions
-    File? clade_zipped_output = zipped_output
+    File? clade_zipped_output = summarized.zipped_output
 
   }
 }
