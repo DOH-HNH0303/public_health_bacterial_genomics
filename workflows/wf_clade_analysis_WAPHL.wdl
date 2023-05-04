@@ -126,8 +126,7 @@ if (pan == true) {
   if (summarize == true) {
   call summarize.zip_files as zip_files  {
   input:
-    clade_trees = select_all(clade_analysis.clade_iqtree_pan_tree),
-    recomb_gff = select_all(clade_analysis.gubbins_clade_recomb_gff),
+    recomb_gff = select_all([gubbins_clade.recomb_gff]),
     pirate_aln_gff = select_all([pirate.pirate_aln_pan]),
     pirate_gene_presence_absence = select_all([pirate.pirate_for_scoary_csv]),
     cluster_name = cluster_name,
