@@ -9,6 +9,7 @@ import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/gene_typing/task_prokka.wdl" as prokka
 import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
+import "../tasks/utilities/task_summarize_table_waphl.wdl"
 
 
 workflow clade_analysis {
@@ -21,6 +22,7 @@ workflow clade_analysis {
     Boolean? pan = false
     String cluster_name
     Float filter_perc = 25.0
+    Boolean summarize = true
 
   }
 
@@ -121,6 +123,21 @@ if (pan == true) {
   call utilities.generate_none {
     input:
     }
+  if (summarize == true) {
+  call summarize.zip_files as zip_files  {
+  input:
+    clade_trees = select_all(clade_analysis.clade_iqtree_pan_tree),
+    recomb_gff = select_all(clade_analysis.gubbins_clade_recomb_gff),
+    pirate_aln_gff = select_all([pirate.pirate_aln_pan]),
+    pirate_gene_presence_absence = select_all([pirate.pirate_for_scoary_csv]),
+    cluster_name = cluster_name,
+    cluster_tree = select_first([masked_pan_iqtree.ml_tree, unmasked_pan_iqtree.ml_tree, masked_core_iqtree.ml_tree, unmasked_core_iqtree.ml_tree]),
+    #terra_table = terra_table,
+    #terra_workspace = terra_workspace,
+    #terra_project = terra_project,
+    
+}
+}
   call versioning.waphl_version_capture as version {
     input:
       input_1 = pirate.pirate_docker_image,
@@ -165,6 +182,7 @@ if (pan == true) {
     String? clade_iqtree_pan_model = select_first([masked_pan_iqtree.iqtree_model_used, unmasked_pan_iqtree.iqtree_model_used])#pan_iqtree.iqtree_model
     String? clade_iqtree_core_model = select_first([masked_core_iqtree.iqtree_model_used, unmasked_core_iqtree.iqtree_model_used])#core_iqtree.iqtree_model
     File? software_versions_clade_analysis = version.tool_versions
+    File? clade_zipped_output = zipped_output
 
   }
 }
