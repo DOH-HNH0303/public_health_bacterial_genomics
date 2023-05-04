@@ -9,7 +9,7 @@ import "../tasks/task_versioning.wdl" as versioning
 import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/gene_typing/task_prokka.wdl" as prokka
 import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
-import "../tasks/utilities/task_summarize_table_waphl.wdl"
+import "../tasks/utilities/task_summarize_table_waphl.wdl" as summarize
 
 
 workflow clade_analysis {
