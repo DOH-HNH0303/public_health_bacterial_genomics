@@ -8,15 +8,16 @@ workflow waphl_report {
     String cluster_name
     File treefile
     File? recomb_gff
-    File pirate_aln_gff
-    File pirate_for_scoary_csv
-    String cluster_name
+    File? pirate_aln_gff
+    File? pirate_for_scoary_csv
+    File? output_tar
     Int? snp_clade
   }
 
   call report.plot_roary_waphl {
     input:
       cluster_name=cluster_name,
+      output_tar = output_tar,
       treefile=treefile,
       recomb_gff=recomb_gff,
       pirate_aln_gff=pirate_aln_gff,
@@ -24,6 +25,16 @@ workflow waphl_report {
       cluster_name=cluster_name,
       snp_clade=snp_clade
   }
+  #   call report.cdip_report {
+  #   input:
+  #     cluster_name=cluster_name,
+  #     treefile=treefile,
+  #     recomb_gff=recomb_gff,
+  #     pirate_aln_gff=pirate_aln_gff,
+  #     pirate_for_scoary_csv=pirate_for_scoary_csv,
+  #     cluster_name=cluster_name,
+  #     snp_clade=snp_clade
+  # }
 
   output {
     File    plot_roary_png  = plot_roary_waphl.plot_roary_png
