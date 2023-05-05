@@ -5,6 +5,7 @@ task cdip_report {
     Array[File?] assembly_tsvs
     Array[File?] mlst_tsvs
     File tree
+    Array[File?] clade_trees
     Array[File?] phylo_zip
     String cluster_name
     String docker = "hnh0303/seq_report_generator"
@@ -17,14 +18,15 @@ task cdip_report {
     if [ -z ~{phylo_zip} ]; then
     for x in ~{sep=' ' phylo_zip}
     do
-        tar xzf "${x}" --one-top-level=$(basename "${x}" | cut -d. -f1)
+        tar xzf "${x}" --one-top-level=$(basename "${x}" | cut -d. -f1)_phylo
     done;
     fi
+
     if [ -z ~{mlst_tsvs} ]; then
     mkdir mlst_tsvs 
-    for x in ~{sep=' ' tsvs}
+    for x in ~{sep=' ' mlst_tsvs}
     do
-        mv "${x}" tsvs
+        mv "${x}" mlst_tsvs
     done;
     fi
 
@@ -33,6 +35,14 @@ task cdip_report {
     for x in ~{sep=' ' assembly_tsvs}
     do
         mv "${x}" assembly_tsvs
+    done;
+    fi
+
+    if [ -z ~{clade_trees} ]; then
+    mkdir clade_trees
+    for x in ~{sep=' ' clade_trees}
+    do
+        mv "${x}" clade_trees
     done;
     fi
 
@@ -52,20 +62,21 @@ task cdip_report {
     import matplotlib.pyplot as plt
     from pathlib import Path
     import sys
+    import os
     sys.path.append('/epi_reports')
     from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf
 
     #df = pd.read_csv("king_county_cdip_2018_2.tsv", sep="\t")
-    df = np.array([~{samplename},
-       ~{fastani_genus_species},
-       ~{amrfinderplus_amr_genes},
-       ~{amrfinderplus_stress_genes},
-       ~{amrfinderplus_virulence_genes},
-       ~{abricate_amr_genes},
-       ~{abricate_virulence_genes},
-       ~{dt_beta},
-       ~{dt_omega},
-       ~{ts_mlst_predicted_st}]).transpose()
+    for subdir, dirs, files in os.walk('.'):
+    for file in files:
+        print(os.path.join(subdir, file))
+        if subdir == "assembly_tsvs":
+          if not df_assembly:
+            df_assembly = pd.read_csv(os.path.join(subdir, file), sep="\t")
+          else:
+            df_hold = pd.read_csv(os.path.join(subdir, file), sep="\t")
+            df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True) 
+
     df = pd.DataFrame(df, columns=["Seq ID",
        "Species ID",
        "amrfinder_amr",
