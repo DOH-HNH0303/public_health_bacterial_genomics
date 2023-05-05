@@ -2,21 +2,10 @@ version 1.0
 
 task cdip_report {
   input {
-    Array[String] samplename
-    Array[String] fastani_genus_species
-    Array[String] amrfinderplus_amr_genes
-    Array[String] amrfinderplus_stress_genes
-    Array[String] amrfinderplus_virulence_genes
-    Array[String] abricate_amr_genes
-    Array[String] abricate_virulence_genes
-    Array[String?] dt_beta
-    Array[String?] dt_omega
-    Array[String] ts_mlst_predicted_st
-    Array[File] ts_mlst_results
+    Array[File?] assembly_tsvs
+    Array[File?] mlst_tsvs
     File tree
-    Array[File?] clade_iqtree_core_tree
-    Array[File?] clade_iqtree_pan_tree
-    Array[File?] pirate_for_scoary_csv
+    Array[File?] phylo_zip
     String cluster_name
     String docker = "hnh0303/seq_report_generator"
     Int threads = 6
@@ -25,6 +14,34 @@ task cdip_report {
   command <<<
     # date and version control
     date | tee DATE
+    if [ -z ~{phylo_zip} ]; then
+    for x in ~{sep=' ' phylo_zip}
+    do
+        tar xzf "${x}" --one-top-level=$(basename "${x}" | cut -d. -f1)
+    done;
+    fi
+    if [ -z ~{mlst_tsvs} ]; then
+    mkdir mlst_tsvs 
+    for x in ~{sep=' ' tsvs}
+    do
+        mv "${x}" tsvs
+    done;
+    fi
+
+    if [ -z ~{assembly_tsvs} ]; then
+    mkdir assembly_tsvs 
+    for x in ~{sep=' ' assembly_tsvs}
+    do
+        mv "${x}" assembly_tsvs
+    done;
+    fi
+
+    ls
+    echo""
+    ls assembly_tsvs
+    echo ""
+    
+     
     python3<<CODE
 
     from fpdf import FPDF
