@@ -146,7 +146,7 @@ task plot_roary_waphl {
     date | tee DATE
     if [ -z ~{output_tar} ]; then
     tar xzf ~{output_tar}
-    if ls **recombination_predictions.gff; then
+    if ls *recombination_predictions.gff; then
     python ../roary_plots_waphl.py \
     --recombinants *recombination_predictions.gff \
     *tree* \
