@@ -10,6 +10,7 @@ workflow waphl_report {
     Array[File?] roary_plot
     Array[File?] output_tars
     Array[File] isolate_tsvs
+    Array[File] mlst_tsvs
     String organism="corynebacterium"
   }
   if (defined(output_tars)) {
@@ -27,6 +28,8 @@ workflow waphl_report {
     cluster_name=cluster_name,
     treefile=treefile,
     roary_plot=select_first([roary_plot, plot_roary.plot_roary_png]),
+    assembly_tsvs = isolate_tsvs,
+    mlst_tsvs = mlst_tsvs
     
   }
 
