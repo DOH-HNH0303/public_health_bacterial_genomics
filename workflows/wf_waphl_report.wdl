@@ -12,7 +12,7 @@ workflow waphl_report {
     Array[isolate_tsv] isolate_tsvs
     String organism="corynebacterium"
   }
-  if (output_tar) {
+  if (output_tars) {
   scatter ( for output_tar in output_tars) {
   call report.plot_roary_waphl as plot_roary{
     input:
