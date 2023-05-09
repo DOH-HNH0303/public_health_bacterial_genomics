@@ -7,35 +7,30 @@ workflow waphl_report {
   input {
     String cluster_name
     File treefile
-    File? recomb_gff
-    File? pirate_aln_gff
-    File? pirate_for_scoary_csv
-    Array[File?] output_tar
+    Array[File?] output_tars
+    Array[File?] roary_plot
+    Array[isolate_tsv] isolate_tsvs
+    String organism="corynebacterium"
   }
-
-  call report.plot_roary_waphl {
+  if (output_tar)
+  scatter ( for output_tar in output_tars) {}
+  call report.plot_roary_waphl as plot_roary{
     input:
       cluster_name=cluster_name,
       output_tar = output_tar,
-      treefile=treefile,
-      recomb_gff=recomb_gff,
-      pirate_aln_gff=pirate_aln_gff,
-      pirate_for_scoary_csv=pirate_for_scoary_csv,
       cluster_name=cluster_name
   }
-  #   call report.cdip_report {
-  #   input:
-  #     cluster_name=cluster_name,
-  #     treefile=treefile,
-  #     recomb_gff=recomb_gff,
-  #     pirate_aln_gff=pirate_aln_gff,
-  #     pirate_for_scoary_csv=pirate_for_scoary_csv,
-  #     cluster_name=cluster_name,
-  #     snp_clade=snp_clade
-  # }
+}
+  call report.cdip_report {
+  input:
+    cluster_name=cluster_name,
+    treefile=treefile,
+    roary_plot=select_first([roary_plot, plot_roary.plot_roary_png]),
+    
+  }
 
   output {
-    File    plot_roary_png  = plot_roary_waphl.plot_roary_png
+    File    report = plot_roary_waphl.plot_roary_png
   }
 }
 
