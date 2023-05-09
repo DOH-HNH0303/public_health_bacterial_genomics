@@ -115,8 +115,8 @@ task cdip_report {
   >>>
   output {
     String date = read_string("DATE")
-    File clade_list_file = "~{cluster_name}_output.txt"
-    Array[Array[String]] clade_list = read_tsv("~{cluster_name}_output.txt")
+    File report = "~{cluster_name}_output.txt"
+    
     String split_clade_docker_image = docker
   }
   runtime {
