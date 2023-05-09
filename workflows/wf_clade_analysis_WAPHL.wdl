@@ -142,7 +142,7 @@ if (pan == true) {
   input:
     recomb_gff = gubbins_clade.recomb_gff,
     pirate_aln_gff = pirate.pirate_pangenome_alignment_gff,
-    pirate_gene_presence_absence = pirate.pirate_for_scoary_csv,
+    pirate_for_scoary_csv = pirate.pirate_for_scoary_csv,
     cluster_name = cluster_name,
     treefile = select_first([masked_pan_iqtree.ml_tree, unmasked_pan_iqtree.ml_tree, masked_core_iqtree.ml_tree, unmasked_core_iqtree.ml_tree])
     #terra_table = terra_table,
