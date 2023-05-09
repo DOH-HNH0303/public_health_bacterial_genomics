@@ -8,6 +8,7 @@ workflow waphl_report {
     String cluster_name
     File treefile
     Array[File?] roary_plot
+    Array[File?] output_tars
     Array[File] isolate_tsvs
     String organism="corynebacterium"
   }
