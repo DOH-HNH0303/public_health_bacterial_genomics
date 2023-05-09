@@ -184,6 +184,7 @@ task plot_roary_waphl {
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3
+    continueOnReturnCode: "True"
   }
 }
 
