@@ -9,7 +9,7 @@ workflow waphl_report {
     File treefile
     Array[File?] output_tars
     Array[File?] roary_plot
-    Array[isolate_tsv] isolate_tsvs
+    Array[File] isolate_tsvs
     String organism="corynebacterium"
   }
   if (output_tars) {
