@@ -7,6 +7,7 @@ task cdip_report {
     File tree
     Array[File?] clade_trees
     Array[File?] phylo_zip
+    File treefile
     String cluster_name
     String docker = "hnh0303/seq_report_generator"
     Int threads = 6
@@ -51,7 +52,7 @@ task cdip_report {
     ls assembly_tsvs
     echo ""
     
-     
+    mv ${treefile} file.tree
     python3<<CODE
 
     from fpdf import FPDF
