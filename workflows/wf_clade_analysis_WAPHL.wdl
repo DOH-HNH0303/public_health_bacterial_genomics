@@ -143,7 +143,7 @@ if (pan == true) {
     pirate_aln_gff = select_all([pirate.pirate_pangenome_alignment_gff]),
     pirate_gene_presence_absence = select_all([pirate.pirate_for_scoary_csv]),
     cluster_name = cluster_name,
-    cluster_tree = select_first([masked_pan_iqtree.ml_tree, unmasked_pan_iqtree.ml_tree, masked_core_iqtree.ml_tree, unmasked_core_iqtree.ml_tree]),
+    treefile = select_first([masked_pan_iqtree.ml_tree, unmasked_pan_iqtree.ml_tree, masked_core_iqtree.ml_tree, unmasked_core_iqtree.ml_tree])
     #terra_table = terra_table,
     #terra_workspace = terra_workspace,
     #terra_project = terra_project,

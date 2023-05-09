@@ -139,7 +139,6 @@ task plot_roary_waphl {
     File? pirate_for_scoary_csv
     String docker = "hnh0303/plot_roary_waphl:1.0"
     Int threads = 6
-    Int? snp_clade
   }
   command <<<
     # date and version control
@@ -169,13 +168,13 @@ task plot_roary_waphl {
     fi
 
     if [ ! -f none.tree ]; then   
-    mv pangenome_matrix.png ~{cluster_name}~{"_" + snp_clade}_matrix.png
+    mv pangenome_matrix.png ~{cluster_name}_matrix.png
     fi
 
   >>>
   output {
     String date = read_string("DATE")
-    File? plot_roary_png = select_first(["~{cluster_name}_matrix.png", "~{cluster_name}_~{snp_clade}_matrix.png"])
+    File? plot_roary_png = "~{cluster_name}_matrix.png"
     String plot_roary_docker_image = docker
   }
   runtime {
