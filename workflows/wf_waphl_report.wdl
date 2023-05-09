@@ -13,7 +13,7 @@ workflow waphl_report {
     String organism="corynebacterium"
   }
   if (output_tars) {
-  scatter ( for output_tar in output_tars) {
+  scatter (output_tar in output_tars) {
   call report.plot_roary_waphl as plot_roary{
     input:
       cluster_name=cluster_name,
