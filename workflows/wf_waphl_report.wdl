@@ -7,12 +7,11 @@ workflow waphl_report {
   input {
     String cluster_name
     File treefile
-    Array[File?] output_tars
     Array[File?] roary_plot
     Array[File] isolate_tsvs
     String organism="corynebacterium"
   }
-  if (output_tars) {
+  if (defined(output_tars)) {
   scatter (output_tar in output_tars) {
   call report.plot_roary_waphl as plot_roary{
     input:
