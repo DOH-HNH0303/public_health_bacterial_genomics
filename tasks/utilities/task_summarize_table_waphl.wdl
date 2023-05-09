@@ -2,19 +2,19 @@ version 1.0
 
 task summarize_string_data {
   input {
-    Array[String]? sample_names
-    String? terra_project
-    String? terra_workspace
-    String? terra_table
+    String terra_project
+    String terra_workspace
+    String terra_table
+    String samplename
     Int disk_size = 100
   }
   command <<<   
     # when running on terra, comment out all input_table mentions
-    python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{terra_table}-data.tsv 
+    python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{samplename}_~{terra_table}-data.tsv 
     
   >>>
   output {
-    File summarized_data = "~{terra_table}-data.tsv"
+    File summarized_data = "~{samplename}_~{terra_table}-data.tsv"
   }
   runtime {
     docker: "broadinstitute/terra-tools:tqdm"

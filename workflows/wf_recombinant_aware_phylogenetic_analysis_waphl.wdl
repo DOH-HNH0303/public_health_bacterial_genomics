@@ -95,7 +95,7 @@ call summarize.zip_files as zip_files  {
     pirate_aln_gff = clade_analysis.pirate_aln_pan,
     pirate_gene_presence_absence = select_all(clade_analysis.pirate_for_scoary_csv),
     cluster_name = cluster_name,
-    cluster_tree = total_iqtree.ml_tree,
+    cluster_tree = total_iqtree.ml_tree
     #terra_table = terra_table,
     #terra_workspace = terra_workspace,
     #terra_project = terra_project,
