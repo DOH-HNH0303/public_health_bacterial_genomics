@@ -10,6 +10,7 @@ import "../tasks/utilities/task_utilities.wdl" as utilities
 import "../tasks/gene_typing/task_prokka.wdl" as prokka
 import "../tasks/phylogenetic_inference/task_ksnp3.wdl" as ksnp3
 import "../tasks/utilities/task_summarize_table_waphl.wdl" as summarize
+import "../tasks/utilities/task_report_waphl.wdl" as report
 
 
 workflow clade_analysis {
@@ -136,6 +137,17 @@ if (pan == true) {
     #terra_project = terra_project,
     
 }
+  call report.plot_roary_waphl as plot_roary  {
+  input:
+    recomb_gff = select_all([gubbins_clade.recomb_gff]),
+    pirate_aln_gff = select_all([pirate.pirate_pangenome_alignment_gff]),
+    pirate_gene_presence_absence = select_all([pirate.pirate_for_scoary_csv]),
+    cluster_name = cluster_name,
+    cluster_tree = select_first([masked_pan_iqtree.ml_tree, unmasked_pan_iqtree.ml_tree, masked_core_iqtree.ml_tree, unmasked_core_iqtree.ml_tree]),
+    #terra_table = terra_table,
+    #terra_workspace = terra_workspace,
+    #terra_project = terra_project,
+    
 }
   call versioning.waphl_version_capture as version {
     input:
@@ -145,6 +157,7 @@ if (pan == true) {
       input_4 = ksnp3_clade_core.ksnp3_docker_image,
       input_5 = select_first([masked_pan_iqtree.version, unmasked_pan_iqtree.version, masked_core_iqtree.version, unmasked_core_iqtree.version]),
       input_6 = select_first([pan_snp_dists.version, core_snp_dists.version])
+      input_7 = plot_roary.plot_roary_docker_image
     }
   }
 
@@ -182,6 +195,7 @@ if (pan == true) {
     String? clade_iqtree_core_model = select_first([masked_core_iqtree.iqtree_model_used, unmasked_core_iqtree.iqtree_model_used])#core_iqtree.iqtree_model
     File? software_versions_clade_analysis = version.tool_versions
     File? clade_zipped_output = zip_files.zipped_output
+    File? plot_roary = plot_roary.plot_roary_png
 
   }
 }

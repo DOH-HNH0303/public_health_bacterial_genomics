@@ -168,13 +168,14 @@ task plot_roary_waphl {
 
     fi
 
-   
+    if [ ! -f none.tree ]; then   
     mv pangenome_matrix.png ~{cluster_name}~{"_" + snp_clade}_matrix.png
+    fi
 
   >>>
   output {
     String date = read_string("DATE")
-    File plot_roary_png = select_first(["~{cluster_name}_matrix.png", "~{cluster_name}_~{snp_clade}_matrix.png"])
+    File? plot_roary_png = select_first(["~{cluster_name}_matrix.png", "~{cluster_name}_~{snp_clade}_matrix.png"])
     String plot_roary_docker_image = docker
   }
   runtime {

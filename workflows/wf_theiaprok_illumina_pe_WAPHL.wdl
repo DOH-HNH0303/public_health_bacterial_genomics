@@ -28,6 +28,7 @@ import "../tasks/task_taxon_id.wdl" as taxon_id
 import "../tasks/taxon_id/task_fastani.wdl" as fastani
 import "../tasks/task_denovo_assembly.wdl" as assembly
 import "../tasks/task_read_clean.wdl" as read_clean
+import "../tasks/utilities/task_summarize_table_waphl.wdl" as summarize
 
 
 workflow theiaprok_illumina_pe {
@@ -41,8 +42,8 @@ workflow theiaprok_illumina_pe {
     File read2_raw
     String? run_id
     File? taxon_tables
-    String terra_project="NA"
-    String terra_workspace="NA"
+    String terra_project
+    String terra_workspace
 
     Int? genome_size
     String? collection_date
