@@ -10,8 +10,7 @@ workflow waphl_report {
     File? recomb_gff
     File? pirate_aln_gff
     File? pirate_for_scoary_csv
-    File? output_tar
-    Int? snp_clade
+    Array[File?] output_tar
   }
 
   call report.plot_roary_waphl {
@@ -22,8 +21,7 @@ workflow waphl_report {
       recomb_gff=recomb_gff,
       pirate_aln_gff=pirate_aln_gff,
       pirate_for_scoary_csv=pirate_for_scoary_csv,
-      cluster_name=cluster_name,
-      snp_clade=snp_clade
+      cluster_name=cluster_name
   }
   #   call report.cdip_report {
   #   input:
