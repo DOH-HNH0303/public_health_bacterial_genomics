@@ -137,6 +137,7 @@ if (pan == true) {
     #terra_project = terra_project,
     
 }
+}
   call report.plot_roary_waphl as plot_roary  {
   input:
     recomb_gff = select_all([gubbins_clade.recomb_gff]),
