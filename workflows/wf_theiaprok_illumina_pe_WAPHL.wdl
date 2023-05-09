@@ -42,6 +42,7 @@ workflow theiaprok_illumina_pe {
     File read2_raw
     String? run_id
     File? taxon_table
+    String terra_table
     String terra_project
     String terra_workspace
 
