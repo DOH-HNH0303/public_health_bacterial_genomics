@@ -22,7 +22,7 @@ workflow waphl_report {
   }
 }
   }
-  call report.cdip_report {
+  call report.cdip_report as cdip_report {
   input:
     cluster_name=cluster_name,
     treefile=treefile,
@@ -31,7 +31,7 @@ workflow waphl_report {
   }
 
   output {
-    File    report = plot_roary_waphl.plot_roary_png
+    File    report = cdip_report.report
   }
 }
 
