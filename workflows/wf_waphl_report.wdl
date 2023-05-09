@@ -27,7 +27,7 @@ workflow waphl_report {
   input:
     cluster_name=cluster_name,
     treefile=treefile,
-    roary_plot=select_first([roary_plot, plot_roary.plot_roary_png]),
+    plot_roary=select_first([roary_plot, plot_roary.plot_roary_png]),
     assembly_tsvs = isolate_tsvs,
     mlst_tsvs = mlst_tsvs
     
