@@ -39,7 +39,7 @@ workflow waphl_report {
     cluster_name=cluster_name,
     treefile=treefile,
     plot_roary=select_first([roary_plot, plot_roary.plot_roary_png]),
-    assembly_tsv = summarize_Strings.ummarized_data,
+    assembly_tsv = summarize_Strings.summarized_data,
     mlst_tsvs = mlst_tsvs
     
   }
