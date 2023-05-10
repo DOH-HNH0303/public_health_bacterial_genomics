@@ -6,7 +6,7 @@ task cdip_report {
     Array[File?] mlst_tsvs
     File tree
     Array[File?] clade_trees
-    Array[File?] phylo_zip
+    Array[File?] phylo_zip = []
     Array[File?] plot_roary
     File treefile
     String cluster_name
