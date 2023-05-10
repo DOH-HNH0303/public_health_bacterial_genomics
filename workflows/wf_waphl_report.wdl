@@ -1,5 +1,6 @@
 version 1.0
 
+import "../tasks/utilities/task_summarize_table_waphl.wdl" as summarize
 import "../tasks/utilities/task_report_waphl.wdl" as report
 
 workflow waphl_report {
