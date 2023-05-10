@@ -12,7 +12,6 @@ task cdip_report {
     String cluster_name
     String docker = "hnh0303/seq_report_generator:1.0"
     Int threads = 6
-    Int snp_clade
   }
   command <<<
     # date and version control
