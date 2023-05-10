@@ -14,6 +14,7 @@ workflow waphl_report {
     String terra_table
     String terra_workspace
     String terra_project
+    Array[File?]
     String organism="corynebacterium"
   }
   call summarize.summarize_string_data as summarize_strings  {
