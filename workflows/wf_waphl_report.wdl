@@ -12,9 +12,9 @@ workflow waphl_report {
     Array[File?] output_tars
     Array[File] isolate_tsvs
     Array[File] mlst_tsvs
-    String terra_table,
-    String terra_workspace,
-    String terra_project,
+    String terra_table
+    String terra_workspace
+    String terra_project
     String organism="corynebacterium"
   }
   call summarize.summarize_string_data as summarize_strings  {
