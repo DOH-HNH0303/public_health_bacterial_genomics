@@ -11,7 +11,6 @@ workflow waphl_report {
     File treefile
     Array[File?] roary_plot
     Array[File?] output_tars
-    Array[File] isolate_tsvs
     Array[File] mlst_tsvs
     String terra_table
     String terra_workspace
@@ -40,7 +39,7 @@ workflow waphl_report {
     cluster_name=cluster_name,
     treefile=treefile,
     plot_roary=select_first([roary_plot, plot_roary.plot_roary_png]),
-    assembly_tsv = isolate_tsvs,
+    assembly_tsv = summarize_Strings.ummarized_data,
     mlst_tsvs = mlst_tsvs
     
   }
