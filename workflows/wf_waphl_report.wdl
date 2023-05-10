@@ -10,7 +10,6 @@ workflow waphl_report {
 
     File treefile
     Array[File?] roary_plot
-    Array[File?] output_tars
     Array[File] mlst_tsvs
     String terra_table
     String terra_workspace
