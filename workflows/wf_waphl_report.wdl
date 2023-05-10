@@ -23,7 +23,7 @@ workflow waphl_report {
     terra_workspace = terra_workspace,
     terra_project = terra_project
     
-}}
+}
   if (defined(output_tars)) {
   scatter (output_tar in output_tars) {
   call report.plot_roary_waphl as plot_roary{
