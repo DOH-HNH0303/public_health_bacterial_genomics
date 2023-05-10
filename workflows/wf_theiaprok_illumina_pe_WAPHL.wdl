@@ -257,18 +257,6 @@ workflow theiaprok_illumina_pe {
       database = "vfdb"
   }
   }
-
-  call summarize.summarize_string_data as summarize_strings  {
-  input:
-    samplename = samplename,
-    terra_table = terra_table,
-    terra_workspace = terra_workspace,
-    terra_project = terra_project
-    
-}
-
-
-
   }
   output {
     #Version Captures
@@ -473,6 +461,5 @@ workflow theiaprok_illumina_pe {
     String? tbprofiler_sub_lineage = merlin_magic.tbprofiler_sub_lineage
     String? tbprofiler_dr_type = merlin_magic.tbprofiler_dr_type
     String? tbprofiler_resistance_genes = merlin_magic.tbprofiler_resistance_genes
-    File? isolate_tsv = summarize_strings.summarized_data
   }
 }

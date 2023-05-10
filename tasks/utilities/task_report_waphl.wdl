@@ -2,7 +2,7 @@ version 1.0
 
 task cdip_report {
   input {
-    Array[File?] assembly_tsvs
+    File assembly_tsv
     Array[File?] mlst_tsvs
     File tree
     Array[File?] clade_trees
@@ -10,7 +10,7 @@ task cdip_report {
     Array[File?] plot_roary
     File treefile
     String cluster_name
-    String docker = "hnh0303/seq_report_generator"
+    String docker = "hnh0303/seq_report_generator:1.0"
     Int threads = 6
     Int snp_clade
   }
@@ -32,14 +32,6 @@ task cdip_report {
     done;
     fi
 
-    if [ -z ~{assembly_tsvs} ]; then
-    mkdir assembly_tsvs 
-    for x in ~{sep=' ' assembly_tsvs}
-    do
-        mv "${x}" assembly_tsvs
-    done;
-    fi
-
     if [ -z ~{clade_trees} ]; then
     mkdir clade_trees
     for x in ~{sep=' ' clade_trees}
@@ -52,8 +44,8 @@ task cdip_report {
     echo""
     ls assembly_tsvs
     echo ""
-    
-    mv ${treefile} file.tree
+    mv ~{assembly_tsv} assembly.tsv
+    mv ~{treefile} file.tree
     
     mkdir roary
      for x in ~{sep=' ' plot_roary}
@@ -76,7 +68,7 @@ task cdip_report {
 
     #df = pd.read_csv("king_county_cdip_2018_2.tsv", sep="\t")
     for subdir, dirs, files in os.walk('.'):
-    for file in files:
+      for file in files:
         print(os.path.join(subdir, file))
         if subdir == "assembly_tsvs":
           if not df_assembly:
@@ -84,6 +76,9 @@ task cdip_report {
           else:
             df_hold = pd.read_csv(os.path.join(subdir, file), sep="\t")
             df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True) 
+
+    df = df[df['assembly_fasta'].notna()]
+
 
     df = pd.DataFrame(df, columns=["Seq ID",
        "Species ID",
@@ -95,8 +90,8 @@ task cdip_report {
        "dt_beta",
        "dt_omega",
        "ST Type"])
-    #df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
-
+    df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
+    df = create_dt_col(df)
     #df_amr = df[['Seq ID', 'abricate_amr_genes', 'amrfinderplus_amr_genes',]]
     #df_vir = df[['Seq ID', 'abricate_virulence_genes', 'amrfinderplus_virulence_genes']]
 
@@ -117,7 +112,19 @@ task cdip_report {
     add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
     add_table(pdf_report, df_genes)
     pdf_report.output(~{cluster_name}+'_report.pdf', 'F')
-    add_dendrogram_as_pdf(pdf_report, "tree")
+    add_dendrogram_as_pdf(pdf_report, tree_file="file.tree", output_filename"~{cluster_name}")
+    plots = new_pdf()
+    for subdir, dirs, files in os.walk('.'):
+      for file in files:
+        print(os.path.join(subdir, file))
+        if subdir == "plot_roary":
+          if not df_assembly:
+            df_assembly = pd.read_csv(os.path.join(subdir, file), sep="\t")
+          else:
+            df_hold = pd.read_csv(os.path.join(subdir, file), sep="\t")
+            df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True)
+    
+    
 
     CODE
   >>>
