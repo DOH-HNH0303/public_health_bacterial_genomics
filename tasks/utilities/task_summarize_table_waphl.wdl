@@ -28,7 +28,7 @@ task summarize_string_data {
     df.to_csv("~{terra_table}_data_tsv", sep="\t", index=False)
 
     CODE    
-
+    ls
   >>>
   output {
     File summarized_data = "~{terra_table}_data.tsv"
