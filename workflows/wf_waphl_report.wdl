@@ -9,13 +9,13 @@ workflow waphl_report {
     String cluster_name
 
     File treefile
-    Array[File?] roary_plot
+    Array[File]? roary_plot
     Array[File] mlst_tsvs
     Array[String] samplenames
     String terra_table
     String terra_workspace
     String terra_project
-    Array[File?] output_tars = []
+    Array[File]? output_tars = []
     String organism="corynebacterium"
   }
   call summarize.summarize_string_data as summarize_strings  {
