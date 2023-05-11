@@ -11,6 +11,7 @@ workflow waphl_report {
     File treefile
     Array[File?] roary_plot
     Array[File] mlst_tsvs
+    Array[Strings] samplenames
     String terra_table
     String terra_workspace
     String terra_project
@@ -19,6 +20,7 @@ workflow waphl_report {
   }
   call summarize.summarize_string_data as summarize_strings  {
   input:
+    samplenames = samplenames,
     terra_table = terra_table,
     terra_workspace = terra_workspace,
     terra_project = terra_project
