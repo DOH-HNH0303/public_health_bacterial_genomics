@@ -11,7 +11,7 @@ workflow waphl_report {
     File treefile
     Array[File?] roary_plot
     Array[File] mlst_tsvs
-    Array[Strings] samplenames
+    Array[String] samplenames
     String terra_table
     String terra_workspace
     String terra_project
