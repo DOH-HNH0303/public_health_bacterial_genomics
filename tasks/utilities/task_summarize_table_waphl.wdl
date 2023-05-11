@@ -19,7 +19,7 @@ task summarize_string_data {
     import csv
 
     with open("list.txt") as file:
-      tsv_list = list(csv.reader(file, delimiter="\t"))
+      tsv_list = list(csv.reader(file, delimiter=" "))[0]
       print(tsv_list)
 
     df = pd.read_csv("table-data.tsv", sep="\t")   
