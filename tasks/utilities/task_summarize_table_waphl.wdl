@@ -12,9 +12,10 @@ task summarize_string_data {
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename table-data.tsv 
     echo ~{sep=' ' samplenames}>list.txt
-    
+
     python3<<CODE
     import pandas as pd
+    import csv
 
     with open("list.txt") as file:
       tsv_list = csv.reader(file, delimiter="\t")
