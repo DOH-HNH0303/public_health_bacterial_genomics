@@ -31,7 +31,7 @@ task summarize_string_data {
 
   >>>
   output {
-    File summarized_data = "~{terra_table}-data.tsv"
+    File summarized_data = "~{terra_table}_data.tsv"
   }
   runtime {
     docker: "broadinstitute/terra-tools:tqdm"
