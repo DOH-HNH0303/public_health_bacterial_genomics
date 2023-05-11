@@ -3,7 +3,7 @@ version 1.0
 task cdip_report {
   input {
     File assembly_tsv
-    Array[File]? mlst_tsvs
+    Array[File] mlst_tsvs
     File tree
     Array[File]? clade_trees
     Array[File]? phylo_zip
