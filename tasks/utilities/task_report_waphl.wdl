@@ -3,15 +3,15 @@ version 1.0
 task cdip_report {
   input {
     File assembly_tsv
-    Array[File?] mlst_tsvs
+    Array[File?] mlst_tsvs [""]
     File tree
-    Array[File?] clade_trees
-    Array[File?] phylo_zip = []
+    Array[File?] clade_trees = [""]
+    Array[File?] phylo_zip = [""]
     Array[File?] plot_roary
     File treefile
     String cluster_name
     String docker = "hnh0303/seq_report_generator:1.0"
-    Int threads = 6
+    Int threads = 6 
   }
   command <<<
     # date and version control
