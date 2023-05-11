@@ -23,7 +23,7 @@ task summarize_string_data {
       print(tsv_list)
 
     df = pd.read_csv("table-data.tsv", sep="\t")   
-    df = df[df.columns[0].isin(tsv_list)]
+    df = df[df[df.columns[0]].isin(tsv_list)]
 
     df.to_csv("~{terra_table}_data_tsv", sep="\t", index=False)
 
