@@ -25,10 +25,9 @@ task summarize_string_data {
     df = pd.read_csv("table-data.tsv", sep="\t")   
     df = df[df[df.columns[0]].isin(tsv_list)]
 
-    df.to_csv("~{terra_table}_data_tsv", sep="\t", index=False)
+    df.to_csv("~{terra_table}_data.tsv", sep="\t", index=False)
 
     CODE    
-    ls
   >>>
   output {
     File summarized_data = "~{terra_table}_data.tsv"
