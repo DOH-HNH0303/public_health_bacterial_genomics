@@ -19,6 +19,7 @@ task summarize_string_data {
 
     with open("list.txt") as file:
       tsv_list = csv.reader(file, delimiter="\t")
+      print(tsv_list)
 
     df = pd.read_csv("table-data.tsv", sep="\t")   
     df = df[df.columns[0].isin(tsv_list)]
