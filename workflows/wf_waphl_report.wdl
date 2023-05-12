@@ -9,13 +9,11 @@ workflow waphl_report {
     String cluster_name
 
     File treefile
-    Array[File]? roary_plot
     Array[File] mlst_tsvs
     Array[String] samplenames
     String terra_table
     String terra_workspace
     String terra_project
-    Array[File?] output_tars = []
     String organism="corynebacterium"
   }
   call summarize.summarize_string_data as summarize_strings  {
@@ -26,21 +24,11 @@ workflow waphl_report {
     terra_project = terra_project
     
 }
-  if (defined(output_tars)) {
-  scatter (output_tar in output_tars) {
-  call report.plot_roary_waphl as plot_roary{
-    input:
-      cluster_name=cluster_name,
-      output_tar = output_tar,
-      cluster_name=cluster_name
-  }
-}
-  }
+
   call report.cdip_report as cdip_report {
   input:
     cluster_name=cluster_name,
     treefile=treefile,
-    plot_roary=select_first([roary_plot, plot_roary.plot_roary_png]),
     assembly_tsv = summarize_strings.summarized_data,
     mlst_tsvs = mlst_tsvs
     
