@@ -96,8 +96,8 @@ task cdip_report {
     add_page_header(pdf_report, "Corynebacterium Sequencing Report")
     add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
     add_table(pdf_report, df_genes)
-    pdf_report.output(~{cluster_name}+'_report.pdf', 'F')
-    add_dendrogram_as_pdf(pdf_report, tree_file="file.tree", output_filename"~{cluster_name}")
+    pdf_report.output("~{cluster_name}"+'_temp_report.pdf', 'F')
+    add_dendrogram_as_pdf(pdf_report, tree_file="file.tree", output_filename="~{cluster_name}_tree.pdf")
     plots = new_pdf()
     for subdir, dirs, files in os.walk('.'):
       for file in files:
@@ -109,7 +109,8 @@ task cdip_report {
             df_hold = pd.read_csv(os.path.join(subdir, file), sep="\t")
             df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True)
     
-    
+    plots.output("~{cluster_name}"+'_plots.pdf', 'F')
+    join_pdfs(["~cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
 
     CODE
   >>>
