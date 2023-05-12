@@ -62,17 +62,9 @@ task cdip_report {
     sys.path.append('/epi_reports')
     from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf
 
-    #df = pd.read_csv("king_county_cdip_2018_2.tsv", sep="\t")
-    for subdir, dirs, files in os.walk('.'):
-      for file in files:
-        print(os.path.join(subdir, file))
-        if subdir == "assembly_tsvs":
-          if not df_assembly:
-            df = pd.read_csv(os.path.join(subdir, file), sep="\t")
 
-
+    df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
-
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
     df = create_dt_col(df)
     #df_amr = df[['Seq ID', 'abricate_amr_genes', 'amrfinderplus_amr_genes',]]
