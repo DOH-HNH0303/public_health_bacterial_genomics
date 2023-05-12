@@ -7,7 +7,7 @@ task cdip_report {
     File tree
     Array[File]? clade_trees
     Array[File]? phylo_zip
-    Array[File?] plot_roary
+    Array[File] plot_roary
     File treefile
     String cluster_name
     String docker = "hnh0303/seq_report_generator:1.0"
@@ -49,7 +49,7 @@ task cdip_report {
     mkdir roary
      for x in ~{sep=' ' plot_roary}
     do
-        mv "${x}" plot_roary
+        mv ${x} plot_roary
     done;
     python3<<CODE
 
