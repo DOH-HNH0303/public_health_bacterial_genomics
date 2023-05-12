@@ -16,14 +16,14 @@ task cdip_report {
   command <<<
     # date and version control
     date | tee DATE
-    if [ -z ~{phylo_zip} ]; then
+    if [ -z ~{sep=' ' phylo_zip} ]; then
     for x in ~{sep=' ' phylo_zip}
     do
         tar xzf "${x}" --one-top-level=$(basename "${x}" | cut -d. -f1)_phylo
     done;
     fi
 
-    if [ -z ~{mlst_tsvs} ]; then
+    if [ -z ~{sep=' ' mlst_tsvs} ]; then
     mkdir mlst_tsvs 
     for x in ~{sep=' ' mlst_tsvs}
     do
@@ -31,7 +31,7 @@ task cdip_report {
     done;
     fi
 
-    if [ -z ~{clade_trees} ]; then
+    if [ -z ~{sep=' ' clade_trees} ]; then
     mkdir clade_trees
     for x in ~{sep=' ' clade_trees}
     do
