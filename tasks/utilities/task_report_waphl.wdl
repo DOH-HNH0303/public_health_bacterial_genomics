@@ -68,10 +68,8 @@ task cdip_report {
         print(os.path.join(subdir, file))
         if subdir == "assembly_tsvs":
           if not df_assembly:
-            df_assembly = pd.read_csv(os.path.join(subdir, file), sep="\t")
-          else:
-            df_hold = pd.read_csv(os.path.join(subdir, file), sep="\t")
-            df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True) 
+            df = pd.read_csv(os.path.join(subdir, file), sep="\t")
+
 
     df = df[df['assembly_fasta'].notna()]
 
