@@ -51,7 +51,7 @@ task cdip_report {
     python3<<CODE
 
     from fpdf import FPDF
-    from PyPDF2 import PdfFileReader, PdfReader, PdfFileWriter
+    from PyPDF2 import PdfFileReader, PdfReader, PdfWriter
     import numpy as np
     import pandas as pd
     from Bio import Phylo
@@ -67,8 +67,6 @@ task cdip_report {
     df = df[df['assembly_fasta'].notna()]
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
     df = create_dt_col(df)
-    #df_amr = df[['Seq ID', 'abricate_amr_genes', 'amrfinderplus_amr_genes',]]
-    #df_vir = df[['Seq ID', 'abricate_virulence_genes', 'amrfinderplus_virulence_genes']]
 
     amr_col = combine_similar_columns(df, ['abricate_amr_genes', 'amrfinderplus_amr_genes'])
     vir_col = combine_similar_columns(df,['abricate_virulence_genes', 'amrfinderplus_virulence_genes'] )
