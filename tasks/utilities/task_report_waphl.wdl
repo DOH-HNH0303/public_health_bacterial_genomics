@@ -39,10 +39,7 @@ task cdip_report {
     done;
     fi
 
-    ls
-    echo""
-    ls assembly_tsvs
-    echo ""
+
     mv ~{assembly_tsv} assembly.tsv
     mv ~{treefile} file.tree
     
@@ -78,17 +75,6 @@ task cdip_report {
 
     df = df[df['assembly_fasta'].notna()]
 
-
-    df = pd.DataFrame(df, columns=["Seq ID",
-       "Species ID",
-       "amrfinder_amr",
-       "amrfinder_stress",
-       "amrfinderplus_virulence",
-       "abricate_amr",
-       "abricate_virulence",
-       "dt_beta",
-       "dt_omega",
-       "ST Type"])
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
     df = create_dt_col(df)
     #df_amr = df[['Seq ID', 'abricate_amr_genes', 'amrfinderplus_amr_genes',]]
