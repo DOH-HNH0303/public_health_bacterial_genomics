@@ -94,7 +94,7 @@ task cdip_report {
       for file in files:
         print(dirs)
         
-        if subdir == "plot_roary":
+        if subdir == "roary":
           print("os.path.join(subdir, file)",os.path.join(subdir, file))
           print("plot_roary")
           add_image(plots, os.path.join(subdir, file))
