@@ -46,7 +46,7 @@ task cdip_report {
     mkdir roary
      for x in ~{sep=' ' plot_roary}
     do
-        mv ${x} plot_roary
+        mv "${x}" plot_roary
     done;
     python3<<CODE
 
