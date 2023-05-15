@@ -67,10 +67,10 @@ task cdip_report {
     df = df[df['assembly_fasta'].notna()]
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
     df = create_dt_col(df)
-
+    print("Here 1")
     amr_col = combine_similar_columns(df, ['abricate_amr_genes', 'amrfinderplus_amr_genes'])
     vir_col = combine_similar_columns(df,['abricate_virulence_genes', 'amrfinderplus_virulence_genes'] )
-
+    print("Here2")
     df['AMR Genes'] = amr_col
     df['Virulence Genes'] = vir_col
 
@@ -87,15 +87,13 @@ task cdip_report {
     pdf_report.output("~{cluster_name}"+'_temp_report.pdf', 'F')
     add_dendrogram_as_pdf(pdf_report, tree_file="file.tree", output_filename="~{cluster_name}_tree.pdf")
     plots = new_pdf()
+    print("")
     for subdir, dirs, files in os.walk('.'):
       for file in files:
         print(os.path.join(subdir, file))
         if subdir == "plot_roary":
-          if not df_assembly:
-            df_assembly = pd.read_csv(os.path.join(subdir, file), sep="\t")
-          else:
-            df_hold = pd.read_csv(os.path.join(subdir, file), sep="\t")
-            df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True)
+          print("plot_roary")
+          add_image(plots, os.path.join(subdir, file))
     
     plots.output("~{cluster_name}"+'_plots.pdf', 'F')
     join_pdfs(["~{cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
