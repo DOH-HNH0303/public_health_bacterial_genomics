@@ -18,7 +18,8 @@ task cdip_report {
     date | tee DATE
     if [ -z ~{sep=' ' phylo_zip} ]; then
     for x in ~{sep=' ' phylo_zip}
-    do
+    do  
+        echo "test0"
         tar xzf "${x}" --one-top-level=$(basename "${x}" | cut -d. -f1)_phylo
     done;
     fi
@@ -39,13 +40,14 @@ task cdip_report {
     done;
     fi
 
-
+    echo "test1"
     mv ~{assembly_tsv} assembly.tsv
     mv ~{treefile} file.tree
-    
+    echo "test2"
     mkdir roary
-     for x in ~{sep=' ' plot_roary}
+    for x in ~{sep=' ' plot_roary}
     do
+        echo "${x}"
         mv "${x}" plot_roary
     done;
     python3<<CODE
