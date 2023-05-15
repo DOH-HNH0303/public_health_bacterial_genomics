@@ -98,7 +98,7 @@ task cdip_report {
             df_assembly = pd.concat( [df, df_hold],axis=1,ignore_index=True)
     
     plots.output("~{cluster_name}"+'_plots.pdf', 'F')
-    join_pdfs(["~cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
+    join_pdfs(["~{cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
 
     CODE
   >>>
