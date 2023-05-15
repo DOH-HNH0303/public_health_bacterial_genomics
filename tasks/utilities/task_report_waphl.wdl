@@ -104,7 +104,7 @@ task cdip_report {
   >>>
   output {
     String date = read_string("DATE")
-    File report = "~{cluster_name}_output.txt"
+    File report = "~{cluster_name}_report.pdf"
     
     String split_clade_docker_image = docker
   }
