@@ -67,6 +67,7 @@ task cdip_report {
     for subdir, dirs, files in os.walk('.'):
       for file in files:
         if subdir == "./mlst_tsvs":
+          print(os.path.join(subdir, file))
           if mlst_df:
             hold_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
             mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
