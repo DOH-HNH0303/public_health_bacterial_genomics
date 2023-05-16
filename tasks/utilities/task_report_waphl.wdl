@@ -48,7 +48,7 @@ task cdip_report {
     for x in ~{sep=' ' plot_roary}
     do
         echo "${x}"
-        mv "${x}" plot_roary
+        mv "${x}" roary
     done;
     python3<<CODE
 
