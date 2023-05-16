@@ -92,7 +92,8 @@ task cdip_report {
     print("")
     for subdir, dirs, files in os.walk('.'):
       for file in files:
-        print(file, dirs, "dirs")
+        print(file, dir, "dirs")
+        printos.path.join(subdir, file)
         
         if dir == "roary":
           print("os.path.join(dir, file)",os.path.join(dir, file))
