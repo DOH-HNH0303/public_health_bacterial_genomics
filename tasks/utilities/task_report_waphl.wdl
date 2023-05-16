@@ -19,7 +19,6 @@ task cdip_report {
     if [ -z ~{sep=' ' phylo_zip} ]; then
     for x in ~{sep=' ' phylo_zip}
     do  
-        echo "test0"
         tar xzf "${x}" --one-top-level=$(basename "${x}" | cut -d. -f1)_phylo
     done;
     fi
@@ -40,10 +39,9 @@ task cdip_report {
     done;
     fi
 
-    echo "test1"
     mv ~{assembly_tsv} assembly.tsv
     mv ~{treefile} file.tree
-    echo "test2"
+    echo "test2" "~{sep=' ' plot_roary}"
     mkdir roary
     for x in ~{sep=' ' plot_roary}
     do
@@ -92,9 +90,9 @@ task cdip_report {
     print("")
     for subdir, dirs, files in os.walk('.'):
       for file in files:
-        print(dirs)
+        print(dirs, "dirs")
         
-        if subdir == "roary":
+        if dir == "roary":
           print("os.path.join(subdir, file)",os.path.join(subdir, file))
           print("plot_roary")
           add_image(plots, os.path.join(subdir, file))
