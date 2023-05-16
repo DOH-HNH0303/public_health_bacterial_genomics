@@ -62,7 +62,7 @@ task cdip_report {
     import sys
     import os
     sys.path.append('/epi_reports')
-    from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf
+    from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf, add_image
 
 
     df = pd.read_csv("assembly.tsv", sep="\t")
