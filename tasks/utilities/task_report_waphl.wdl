@@ -23,10 +23,12 @@ task cdip_report {
     done;
     fi
 
-    if [ -z ~{sep=' ' mlst_tsvs} ]; then
+
     mkdir mlst_tsvs 
+    
     for x in ~{sep=' ' mlst_tsvs}
     do
+        echo "${x}"
         mv "${x}" mlst_tsvs
     done;
     fi
