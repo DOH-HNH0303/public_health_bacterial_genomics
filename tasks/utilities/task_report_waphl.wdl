@@ -48,6 +48,8 @@ task cdip_report {
         echo "${x}"
         mv "${x}" roary
     done;
+    echo ""
+    ls roary
     python3<<CODE
 
     from fpdf import FPDF
@@ -92,7 +94,7 @@ task cdip_report {
       for file in files:
         print(dirs, "dirs")
         
-        if dir == "roary":
+        if dirs == "roary":
           print("os.path.join(subdir, file)",os.path.join(subdir, file))
           print("plot_roary")
           add_image(plots, os.path.join(subdir, file))
