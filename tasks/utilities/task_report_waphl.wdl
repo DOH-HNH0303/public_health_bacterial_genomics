@@ -66,7 +66,7 @@ task cdip_report {
 
     for subdir, dirs, files in os.walk('.'):
       for file in files:
-      print(os.path.join(subdir, file))
+        print(os.path.join(subdir, file))
         if subdir == "./mlst_tsvs":
           print("ok at least this works")
           if mlst_df:
