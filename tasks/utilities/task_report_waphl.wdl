@@ -64,6 +64,15 @@ task cdip_report {
     from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf, add_image
 
 
+    for subdir, dirs, files in os.walk('.'):
+      for file in files:
+        if subdir == "./mlst_tsvs":
+          if mlst_df:
+            hold_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
+            mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
+          else:
+            mlst_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
+
     df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
@@ -85,6 +94,11 @@ task cdip_report {
     add_page_header(pdf_report, "Corynebacterium Sequencing Report")
     add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
     add_table(pdf_report, df_genes)
+    
+    pdf_report.ln()
+    add_section_header(pdf_report, "MLST Results")
+    add_table(pdf_report, mlst_df)  
+
     pdf_report.output("~{cluster_name}"+'_temp_report.pdf', 'F')
     add_dendrogram_as_pdf(pdf_report, tree_file="file.tree", output_filename="~{cluster_name}_tree.pdf")
     plots = new_pdf()
