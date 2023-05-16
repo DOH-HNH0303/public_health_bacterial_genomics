@@ -50,6 +50,7 @@ task cdip_report {
     done;
     echo ""
     ls roary
+    cat /epi_reports/seq_report_generator.py
     python3<<CODE
 
     from fpdf import FPDF
