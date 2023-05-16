@@ -31,7 +31,7 @@ task cdip_report {
         echo "${x}"
         mv "${x}" mlst_tsvs
     done;
-    fi
+    
 
     if [ -z ~{sep=' ' clade_trees} ]; then
     mkdir clade_trees
