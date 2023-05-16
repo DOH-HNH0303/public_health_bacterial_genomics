@@ -97,9 +97,9 @@ task cdip_report {
         print(os.path.join(subdir, file))
         
         if subdir == "./roary":
-          print("os.path.join(dir, file)",os.path.join(dir, file))
+          print("os.path.join(dir, file)",os.path.join(subdir, file))
           print("plot_roary")
-          add_image(plots, os.path.join(dir, file))
+          add_image(plots, os.path.join(subdir, file))
     
     plots.output("~{cluster_name}"+'_plots.pdf', 'F')
     join_pdfs(["~{cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
