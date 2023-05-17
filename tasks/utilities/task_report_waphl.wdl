@@ -98,6 +98,7 @@ task cdip_report {
               print("first", lines)
               for line in lines:
                 if count == 0:
+                  print("first line, line")
                   cols = line.split("\t")
                 else:  
                   line_count = 0
