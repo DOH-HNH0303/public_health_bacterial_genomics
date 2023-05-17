@@ -71,8 +71,6 @@ task cdip_report {
       for file in files:
         
         if subdir == "./mlst_tsvs":
-          print("ok at least this works")
-          print(os.path.join(subdir, file))
           if "mlst_df" in locals():
 
              with open(os.path.join(subdir, file)) as lines:
@@ -85,10 +83,9 @@ task cdip_report {
                   line = line.split()
                   row = line[:3]
                   allele_row = str(", ".join(line[3:]))
-                  row.append(allele_row)
-                  print(row)
-                  #mlst_df = pd.DataFrame([row], columns=cols)   
-                  mlst_df.append(row) 
+                  #row.append(allele_row)
+                  hold_df = pd.DataFrame([row], columns=cols)   
+                  mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
                 count += 1
             #mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
             #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
@@ -108,7 +105,7 @@ task cdip_report {
                   print(row)
                   mlst_df = pd.DataFrame([row], columns=cols)    
                 count += 1
-
+    print(mlst_df)
     mlst_df.to_csv('file1.tsv', sep="\t")
     df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
