@@ -82,7 +82,7 @@ task cdip_report {
           else:
             mlst_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
             print(mlst_df)
-
+    mlst_df.to_csv('file1.tsv', sep="\t")
     df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
@@ -127,7 +127,7 @@ task cdip_report {
   output {
     String date = read_string("DATE")
     File report = "~{cluster_name}_report.pdf"
-    
+    File compiled_mlst "'file1.tsv'"  
     String split_clade_docker_image = docker
   }
   runtime {
