@@ -76,11 +76,13 @@ task cdip_report {
           if "mlst_df" in locals():
 
             hold_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
+            print("col names", hold_df.columns)
             mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
             #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
             print(hold_df, mlst_df)
           else:
             mlst_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
+            print("first")
             print(mlst_df)
     mlst_df.to_csv('file1.tsv', sep="\t")
     df = pd.read_csv("assembly.tsv", sep="\t")
