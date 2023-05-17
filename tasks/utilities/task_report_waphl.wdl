@@ -88,8 +88,9 @@ task cdip_report {
                   row.append(allele_row)
                   hold_df = pd.DataFrame([row], columns=cols)  
                   print("hold_df", hold_df) 
+                  print("mlst_df before", mlst_df)
                   mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
-                  print("mlst_df", mlst_df)
+                  print("mlst_df after", mlst_df)
                 count += 1
             #mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
             #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
