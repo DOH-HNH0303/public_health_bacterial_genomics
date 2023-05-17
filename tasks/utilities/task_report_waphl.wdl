@@ -89,6 +89,7 @@ task cdip_report {
                   hold_df = pd.DataFrame([row], columns=cols)  
                   print("hold_df", hold_df) 
                   mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
+                  print("mlst_df", mlst_df)
                 count += 1
             #mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
             #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
