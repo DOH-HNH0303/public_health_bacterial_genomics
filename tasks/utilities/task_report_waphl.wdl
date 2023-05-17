@@ -85,7 +85,7 @@ task cdip_report {
                   line = line.split()
                   row = line[:3]
                   allele_row = str(", ".join(line[3:]))
-                  #row.append(allele_row)
+                  row.append(allele_row)
                   hold_df = pd.DataFrame([row], columns=cols)  
                   print("hold_df", hold_df) 
                   mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
