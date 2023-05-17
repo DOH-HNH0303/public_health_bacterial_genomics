@@ -51,7 +51,7 @@ task cdip_report {
         mv "${x}" roary
     done;
 
-    cat /epi_reports/seq_report_generator.py
+    # cat /epi_reports/seq_report_generator.py
     python3<<CODE
 
     from fpdf import FPDF
@@ -84,7 +84,8 @@ task cdip_report {
                   row = line[:3]
                   allele_row = str(", ".join(line[3:]))
                   #row.append(allele_row)
-                  hold_df = pd.DataFrame([row], columns=cols)   
+                  hold_df = pd.DataFrame([row], columns=cols)  
+                  print("hold_df", hold_df) 
                   mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
                 count += 1
             #mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
