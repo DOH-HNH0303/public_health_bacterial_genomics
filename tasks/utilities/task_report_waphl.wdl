@@ -127,7 +127,7 @@ task cdip_report {
   output {
     String date = read_string("DATE")
     File report = "~{cluster_name}_report.pdf"
-    File compiled_mlst "'file1.tsv'"  
+    File compiled_mlst = "file1.tsv"  
     String split_clade_docker_image = docker
   }
   runtime {
