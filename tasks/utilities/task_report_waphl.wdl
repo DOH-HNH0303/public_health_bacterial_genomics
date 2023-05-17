@@ -74,10 +74,14 @@ task cdip_report {
           print("ok at least this works")
           print(os.path.join(subdir, file))
           if "mlst_df" in locals():
+
             hold_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
             mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
+            test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
+            print(test_df,hold_df, mlst_df)
           else:
             mlst_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
+            print(mlst_df)
 
     df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
