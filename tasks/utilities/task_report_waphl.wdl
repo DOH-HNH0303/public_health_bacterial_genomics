@@ -78,7 +78,8 @@ task cdip_report {
               print("not first", lines)
               for line in lines:
                 if count == 0:
-                  pass
+
+                  print("not first, first line", line)
                 else:  
                   line_count = 0
                   line = line.split()
@@ -98,7 +99,7 @@ task cdip_report {
               print("first", lines)
               for line in lines:
                 if count == 0:
-                  print("first line, line")
+                  print("first line", line)
                   cols = line.split("\t")
                 else:  
                   line_count = 0
