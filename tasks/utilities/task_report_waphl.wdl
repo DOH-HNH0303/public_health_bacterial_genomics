@@ -75,15 +75,40 @@ task cdip_report {
           print(os.path.join(subdir, file))
           if "mlst_df" in locals():
 
-            hold_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
-            print("col names", hold_df.columns)
-            mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
+             with open(os.path.join(subdir, file)) as lines:
+              count = 0
+              for line in lines:
+                if count == 0:
+                  pass
+                else:  
+                  line_count = 0
+                  line = line.split()
+                  row = line[:3]
+                  allele_row = str(", ".join(line[3:]))
+                  row.append(allele_row)
+                  print(row)
+                  #mlst_df = pd.DataFrame([row], columns=cols)   
+                  mlst_df.append(row) 
+                count += 1
+            #mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
             #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
-            print(hold_df, mlst_df)
+            #print(hold_df, mlst_df)
           else:
-            mlst_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
-            print("first")
-            print(mlst_df)
+            with open(os.path.join(subdir, file)) as lines:
+              count = 0
+              for line in lines:
+                if count == 0:
+                  cols = line.split("\t")
+                else:  
+                  line_count = 0
+                  line = line.split()
+                  row = line[:3]
+                  allele_row = str(", ".join(line[3:]))
+                  row.append(allele_row)
+                  print(row)
+                  mlst_df = pd.DataFrame([row], columns=cols)    
+                count += 1
+
     mlst_df.to_csv('file1.tsv', sep="\t")
     df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
