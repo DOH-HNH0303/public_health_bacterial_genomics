@@ -77,8 +77,8 @@ task cdip_report {
 
             hold_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
             mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
-            test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
-            print(test_df,hold_df, mlst_df)
+            #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
+            print(hold_df, mlst_df)
           else:
             mlst_df = pd.read_csv(os.path.join(subdir, file), sep="\t")
             print(mlst_df)
