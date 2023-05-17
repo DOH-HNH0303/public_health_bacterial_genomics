@@ -75,6 +75,7 @@ task cdip_report {
 
              with open(os.path.join(subdir, file)) as lines:
               count = 0
+              print("not first", lines)
               for line in lines:
                 if count == 0:
                   pass
@@ -94,6 +95,7 @@ task cdip_report {
           else:
             with open(os.path.join(subdir, file)) as lines:
               count = 0
+              print("first", lines)
               for line in lines:
                 if count == 0:
                   cols = line.split("\t")
