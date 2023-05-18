@@ -194,7 +194,7 @@ task cdip_report {
         if subdir == "./roary":
           add_image(plots, os.path.join(subdir, file))
     
-    add_paragraph(plots, 
+    add_paragraph(plots, \
     "1.* Recombination evens were not predicted in present gene\n\
      2.* Recombination is unique and is the only one on the gene in dataset\n\
      3.* Multiple recombination events on gene\n\
