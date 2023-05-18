@@ -177,6 +177,7 @@ task cdip_report {
     pdf_report = new_pdf()
     add_page_header(pdf_report, "Corynebacterium Sequencing Report")
     add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
+    add_section_header(pdf_report, "General Sequencing Results")
     add_table(pdf_report, df_genes)
     
     pdf_report.ln()
