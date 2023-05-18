@@ -63,6 +63,7 @@ task cdip_report {
     from pathlib import Path
     import sys
     import os
+    import re
     sys.path.append('/epi_reports')
     from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf, add_image
 
@@ -93,9 +94,6 @@ task cdip_report {
                   mlst_df = pd.concat([mlst_df, hold_df], axis=0)#.reset_index(drop=True, inplace=True)
                   print("mlst_df after", mlst_df)
                 count += 1
-            #mlst_df = pd.concat([mlst_df, hold_df], axis=0).reset_index(drop=True, inplace=True)
-            #test_df = pd.read_csv("./mlst_tsvs"+file, sep="\t")
-            #print(hold_df, mlst_df)
           else:
             with open(os.path.join(subdir, file)) as lines:
               count = 0
@@ -116,6 +114,48 @@ task cdip_report {
                 count += 1
     print(mlst_df)
     mlst_df.to_csv('file1.tsv', sep="\t")
+
+    # Reformat mlst df to be a by-allele table
+    id_list = []
+    for i in df_mlst.columns[0]:
+      id_list.append(i.split("_"))
+    print(df_mlst)
+    new_cols = ["Sequence ID", "Sequence Type"]
+    mlst_count = 0
+    alleles = df_mlst.columns[3]
+    #print(alleles)
+    new_mlst = []
+    print(range(len(df_mlst[alleles].tolist())))
+    for i in range(len(df_mlst[alleles].tolist())):
+      #print(i, df_mlst[alleles].tolist()[i])
+      if i == 0:
+        #print(df_mlst[alleles].tolist()[i])
+        
+        test=re.sub("[\(\[].*?[\)\]]", "", df_mlst[alleles].tolist()[i])
+        #new_cols.append(allele)
+        #print("new col", test)
+        for allele in test.split(", "):
+          new_cols.append(allele)
+      #hold = []
+      #for allele in list(df_mlst[alleles].tolist()[i]):
+      hold = []
+        #print("allele", allele)
+      for char in df_mlst[alleles].tolist()[i]:
+          #print(char)
+          if char.isalpha():
+            pass
+          else:
+            #print(str(char).split("(")[0].split(")")[0])
+            hold.append(str(char).split("(")[0].split(")")[0])
+      hold = "".join(hold).split(", ")
+      hold.insert(0,df_mlst[df_mlst.columns[2]].tolist()[i])
+      hold.insert(0, df_mlst[df_mlst.columns[0]].tolist()[i].split("_")[0])
+      print(hold, type(hold))
+      new_mlst.append(hold)
+      
+    df_mlst = pd.DataFrame(new_mlst, columns=new_cols) 
+
+
     df = pd.read_csv("assembly.tsv", sep="\t")
     df = df[df['assembly_fasta'].notna()]
     df.rename(columns={df.columns[0]: 'Seq ID', "ts_mlst_predicted_st": 'ST Type', "fastani_genus_species": "Species ID"},inplace=True)
@@ -140,7 +180,7 @@ task cdip_report {
     
     pdf_report.ln()
     add_section_header(pdf_report, "MLST Results")
-    add_table(pdf_report, mlst_df)  
+    add_table(pdf_report, df_mlst)  
 
     pdf_report.output("~{cluster_name}"+'_temp_report.pdf', 'F')
     add_dendrogram_as_pdf(pdf_report, tree_file="file.tree", output_filename="~{cluster_name}_tree.pdf")
