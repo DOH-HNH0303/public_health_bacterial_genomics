@@ -87,7 +87,7 @@ task iqtree {
     elif [ $numGenomes -le 3 ]; then
         echo "Too few unique sequences to generate tree">>IQTREE_COMMENT
     fi
-    print("test end")
+    echo "test end"
 
 
   >>>
