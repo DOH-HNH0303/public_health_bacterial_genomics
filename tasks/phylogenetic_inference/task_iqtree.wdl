@@ -38,18 +38,27 @@ task iqtree {
       -m "GTR+I+G" \
       ~{iqtree_opts} >> terminal_output.txt 2>&1
 
+      echo "test1"
       cp msa.fasta.contree ~{cluster_name}_msa.tree || touch none.tree
       cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree || touch none.iqtree
     fi
     ls
 
+    echo "test2"
     if [ -f "~{cluster_name}_msa.iqtree" ]; then
+    echo "test3"
     if grep -q "Model of substitution:" "~{cluster_name}_msa.iqtree"; then
+      echo "test4"
       cat ~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed -r 's/Model of substitution: //' | tee IQTREE_MODEL # SomeString was found
+      echo "test5"
     elif grep -q "Best-fit model according to BIC" ~{cluster_name}_msa.iqtree; then
+      echo "test6"
       cat ~{cluster_name}_msa.iqtree | grep "Best-fit model according to BIC" | sed -r 's/Best-fit model according to BIC//' | tee IQTREE_MODEL
+      echo "test7"
     else
+      echo "test8"
       echo ~{iqtree_model} | tee IQTREE_MODEL
+      echo "test9"
     fi
     fi
 
@@ -59,10 +68,13 @@ task iqtree {
     if [ ! -f *.tree ]; then
     touch none.tree
     fi
+    echo "test10"
     if [ ! -f *.iqtree ]; then
+    echo "test11"
     touch none.iqtree
+    echo "test12"
     fi
-
+    echo "test13"
     touch IQTREE_COMMENT
     if [ -f "terminal_output.txt" ]; then
         if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output.txt; then
