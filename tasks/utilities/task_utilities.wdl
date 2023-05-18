@@ -290,6 +290,7 @@ task scatter_by_clade {
     preemptible: 0
     maxRetries: 3
   }
+}
 
 task generate_none {
   input {
