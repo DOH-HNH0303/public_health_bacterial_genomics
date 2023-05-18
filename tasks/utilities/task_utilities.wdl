@@ -228,7 +228,7 @@ task scatter_by_clade {
     done;
     ls
     echo ""
-    if [ ${#clade_list[@]} -eq 0 ]; then
+    if [ "${#clade_list[@]}" -eq 0 ]; then
     all_list=($(ls -1 *.~{filetype}))
     for i in "${all_list[@]}"
     do
