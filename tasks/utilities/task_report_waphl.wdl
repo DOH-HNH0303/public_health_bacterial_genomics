@@ -196,9 +196,9 @@ task cdip_report {
     
     add_paragraph(plots, \
     "1.* Recombination evens were not predicted in present gene\n\
-     2.* Recombination is unique and is the only one on the gene in dataset\n\
-     3.* Multiple recombination events on gene\n\
-     4.* Recombination is NOT terminal and is the only recombination event on gene in dataset")
+    2.* Recombination is unique and is the only one on the gene in dataset\n\
+    3.* Multiple recombination events on gene\n\
+    4.* Recombination is NOT terminal and is the only recombination event on gene in dataset")
 
     plots.output("~{cluster_name}"+'_plots.pdf', 'F')
     join_pdfs(["~{cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
