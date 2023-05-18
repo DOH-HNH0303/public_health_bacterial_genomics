@@ -281,9 +281,10 @@ task scatter_by_clade {
     String date = read_string("DATE")
     Array[File] clade_files = glob("files_dir/*")
     Array[String] samplename = read_lines("file_list.txt")
+    String scatter_clade_docker_image = docker
   }
   runtime {
-    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
+    docker: docker
     memory: "16 GB"
     cpu: 4
     disks: "local-disk 100 SSD"
