@@ -7,7 +7,6 @@ workflow waphl_report {
 
   input {
     String cluster_name
-
     File treefile
     Array[File] mlst_tsvs
     Array[String] samplenames
