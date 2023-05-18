@@ -87,6 +87,7 @@ task iqtree {
     elif [ $numGenomes -le 3 ]; then
         echo "Too few unique sequences to generate tree">>IQTREE_COMMENT
     fi
+    print("test end")
 
 
   >>>
@@ -95,7 +96,7 @@ task iqtree {
     String version = read_string("VERSION")
     File? iqtree_terminal = "terminal_output.txt"#select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
     File? ml_tree = select_first(glob("*.tree"))
-    File? iqtree_report = select_first(glob("*.iqtree"))
+    File? iqtree_report = select_first(["~{cluster_name}_msa.iqtree", "none.iqtree"]) #glob("*.iqtree"))
     String? iqtree_model_used = read_string("IQTREE_MODEL")
     String? iqtree_comment = read_string("IQTREE_COMMENT")
   }
