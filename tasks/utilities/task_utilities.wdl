@@ -210,6 +210,7 @@ task split_by_clade {
     maxRetries: 3
   }
 }
+
 task scatter_by_clade {
   input {
     Array[File] assembly_files
@@ -228,20 +229,6 @@ task scatter_by_clade {
     done;
     ls
     echo ""
-    if [ "${#clade_list[@]}" -eq 0 ]; then
-    all_list=($(ls -1 *.~{filetype}))
-    for i in "${all_list[@]}"
-    do
-        if [ ~{filetype} == "fasta" ]; then
-            mv "${i}" files_dir/"${i}_contigs.fasta"
-        elif [ ~{filetype} == "gff" ]; then
-            mv "${i}" files_dir/"${i}"
-        else
-            echo "Please add filetype to task"
-            ls "${i}"*
-        fi
-    done;
-    else
     for x in ~{sep=' ' clade_list}
     do
         if [ ~{filetype} == "fasta" ]; then
@@ -253,7 +240,6 @@ task scatter_by_clade {
             ls "${x}"*
         fi
     done;
-    fi
     echo "ls files_dir"
     ls files_dir
     cd files_dir
@@ -295,17 +281,15 @@ task scatter_by_clade {
     String date = read_string("DATE")
     Array[File] clade_files = glob("files_dir/*")
     Array[String] samplename = read_lines("file_list.txt")
-    String scatter_clade_docker_image = docker
   }
   runtime {
-    docker: docker
+    docker: "quay.io/broadinstitute/py3-bio:0.1.2"
     memory: "16 GB"
     cpu: 4
     disks: "local-disk 100 SSD"
     preemptible: 0
     maxRetries: 3
   }
-}
 
 task generate_none {
   input {
