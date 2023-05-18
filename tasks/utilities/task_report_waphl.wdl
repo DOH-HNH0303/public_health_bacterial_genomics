@@ -114,6 +114,7 @@ task cdip_report {
                 count += 1
     print(mlst_df)
     mlst_df.to_csv('file1.tsv', sep="\t")
+    df_mlst = mlst_df.copy()
 
     # Reformat mlst df to be a by-allele table
     id_list = []
