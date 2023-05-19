@@ -236,7 +236,7 @@ task plot_roary_waphl {
     # This task takes either a zipped input file or individual input files
     date | tee DATE
     python ../roary_plots_waphl.py \
-    ~{'--recombinants' + recomb_gff} \
+    ~{'--recombinants ' + recomb_gff} \
     ~{treefile} \
     ~{pirate_for_scoary_csv} \
     ~{pirate_aln_gff}
