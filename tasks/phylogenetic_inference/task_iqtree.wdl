@@ -76,7 +76,7 @@ task iqtree {
     fi
     echo "test13"
     touch IQTREE_COMMENT
-    if [ -f "terminal_output.txt" ]; then
+    if [[ -f "terminal_output.txt" ]]; then
         echo "test14"
         if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output.txt; then
             echo "test15"
