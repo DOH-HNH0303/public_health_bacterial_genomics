@@ -223,7 +223,7 @@ task cdip_report {
 task plot_roary_waphl {
   input {
     String cluster_name
-    File? treefile
+    File treefile
     File? recomb_gff
     File? pirate_aln_gff
     File? pirate_for_scoary_csv
