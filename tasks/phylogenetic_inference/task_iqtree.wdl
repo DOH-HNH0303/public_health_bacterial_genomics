@@ -77,14 +77,20 @@ task iqtree {
     echo "test13"
     touch IQTREE_COMMENT
     if [ -f "terminal_output.txt" ]; then
+        echo "test14"
         if grep -q "WARNING: Your alignment contains too many identical sequences!" terminal_output.txt; then
+            echo "test15"
             echo "Too few unique sequences to generate tree">>IQTREE_COMMENT
         elif grep -q "ERROR: It makes no sense to perform bootstrap with less than 4 sequences" terminal_output.txt; then
+            echo "test15"
             echo "Too few unique sequences to perform bootstrapping">>IQTREE_COMMENT
         else
+            echo "test16"
             touch IQTREE_COMMENT
         fi
+    echo "test17"
     elif [ $numGenomes -le 3 ]; then
+        echo "test18"
         echo "Too few unique sequences to generate tree">>IQTREE_COMMENT
     fi
     echo "test end"
