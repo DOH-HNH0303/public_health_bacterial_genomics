@@ -229,6 +229,7 @@ task plot_roary_waphl {
     File? pirate_for_scoary_csv
     String docker = "hnh0303/plot_roary_waphl:1.0"
     Int threads = 6
+    String stripped = basename(treefile, ".tree") 
   }
   command <<<
     # date and version control
@@ -240,9 +241,7 @@ task plot_roary_waphl {
     ~{pirate_for_scoary_csv} \
     ~{pirate_aln_gff}
 
-    fi
-
-    if [ ! -f none.tree ]; then   
+    if  [[ "~{stripped}" != "None" ]]; then   
     mv pangenome_matrix.png ~{cluster_name}_matrix.png
     fi
 
