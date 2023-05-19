@@ -229,7 +229,7 @@ task plot_roary_waphl {
     File? pirate_for_scoary_csv
     String docker = "hnh0303/plot_roary_waphl:1.0"
     Int threads = 6
-    String stripped = basename(treefile, ".tree") 
+    String? stripped = basename(treefile, ".tree") 
   }
   command <<<
     # date and version control
