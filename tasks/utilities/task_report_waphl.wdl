@@ -240,9 +240,9 @@ task plot_roary_waphl {
     if ls *recombination_predictions.gff; then
     python ../roary_plots_waphl.py \
     --recombinants *recombination_predictions.gff \
-    *tree* \
-    *scoary* \
-    *alignment.gff
+    ~{treefile} \
+    ~{recomb_gff} \
+    ~{pirate_aln_gff}
     else
     python ../roary_plots_waphl.py \
     *tree* \
