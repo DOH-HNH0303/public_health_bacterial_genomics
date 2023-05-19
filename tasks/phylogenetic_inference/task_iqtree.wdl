@@ -66,6 +66,7 @@ task iqtree {
     touch IQTREE_MODEL
     fi
     if [ ! -f *.tree ]; then
+    print("test9.2")
     touch none.tree
     fi
     echo "test10"
@@ -95,7 +96,7 @@ task iqtree {
     fi
     echo "test end"
 
-
+    ls
   >>>
   output {
     String date = read_string("DATE")
