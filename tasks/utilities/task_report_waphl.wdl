@@ -223,7 +223,6 @@ task cdip_report {
 task plot_roary_waphl {
   input {
     String cluster_name
-    File? output_tar
     File? treefile
     File? recomb_gff
     File? pirate_aln_gff
@@ -235,21 +234,6 @@ task plot_roary_waphl {
     # date and version control
     # This task takes either a zipped input file or individual input files
     date | tee DATE
-    if [ -z ~{output_tar} ]; then
-    tar xzf ~{output_tar}
-    if ls *recombination_predictions.gff; then
-    python ../roary_plots_waphl.py \
-    --recombinants *recombination_predictions.gff \
-    ~{treefile} \
-    ~{recomb_gff} \
-    ~{pirate_aln_gff}
-    else
-    python ../roary_plots_waphl.py \
-    *tree* \
-    *scoary* \
-    *alignment.gff
-    fi
-    else
     python ../roary_plots_waphl.py \
     ~{'--recombinants' + recomb_gff} \
     ~{treefile} \
