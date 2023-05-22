@@ -9,6 +9,7 @@ task iqtree {
     String alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
     String? iqtree_opts = ""
     String docker = "staphb/iqtree:1.6.7"
+    String? details
   }
   command <<<
     # date and version control
@@ -39,21 +40,21 @@ task iqtree {
       ~{iqtree_opts} >> terminal_output.txt 2>&1
 
       echo "test1"
-      cp msa.fasta.contree ~{cluster_name}_msa.tree || touch none.tree
-      cp msa.fasta.iqtree ~{cluster_name}_msa.iqtree || touch none.iqtree
+      cp msa.fasta.contree ~{details}~{cluster_name}_msa.tree || touch none.tree
+      cp msa.fasta.iqtree ~{details}~{cluster_name}_msa.iqtree || touch none.iqtree
     fi
     ls
 
     echo "test2"
-    if [ -f "~{cluster_name}_msa.iqtree" ]; then
+    if [ -f "~{details}~{cluster_name}_msa.iqtree" ]; then
     echo "test3"
-    if grep -q "Model of substitution:" "~{cluster_name}_msa.iqtree"; then
+    if grep -q "Model of substitution:" "~{details}~{cluster_name}_msa.iqtree"; then
       echo "test4"
-      cat ~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed -r 's/Model of substitution: //' | tee IQTREE_MODEL # SomeString was found
+      cat ~{details}~{cluster_name}_msa.iqtree | grep "Model of substitution" | sed -r 's/Model of substitution: //' | tee IQTREE_MODEL # SomeString was found
       echo "test5"
-    elif grep -q "Best-fit model according to BIC" ~{cluster_name}_msa.iqtree; then
+    elif grep -q "Best-fit model according to BIC" ~{details}~{cluster_name}_msa.iqtree; then
       echo "test6"
-      cat ~{cluster_name}_msa.iqtree | grep "Best-fit model according to BIC" | sed -r 's/Best-fit model according to BIC//' | tee IQTREE_MODEL
+      cat ~{details}~{cluster_name}_msa.iqtree | grep "Best-fit model according to BIC" | sed -r 's/Best-fit model according to BIC//' | tee IQTREE_MODEL
       echo "test7"
     else
       echo "test8"
@@ -104,7 +105,7 @@ task iqtree {
     String version = read_string("VERSION")
     File? iqtree_terminal = "terminal_output.txt"#select_first(["terminal_output3.txt", "terminal_output2.txt", "terminal_output1.txt"])
     File? ml_tree = select_first(glob("*.tree")) # ["~{cluster_name}_msa.tree", "none.tree"])
-    File? iqtree_report = select_first(["~{cluster_name}_msa.iqtree", "none.iqtree"]) #glob("*.iqtree"))
+    File? iqtree_report = select_first(["~{details}~{cluster_name}_msa.iqtree", "none.iqtree"]) #glob("*.iqtree"))
     String? iqtree_model_used = read_string("IQTREE_MODEL")
     String? iqtree_comment = read_string("IQTREE_COMMENT")
   }

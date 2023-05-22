@@ -61,7 +61,8 @@ if (pan == true) {
       input:
         alignment = pan_mask_gubbins_clade.masked_aln,
         cluster_name = cluster_name,
-        iqtree_model = iqtree_model
+        iqtree_model = iqtree_model,
+        details = "masked_pan_"
     }
 }
   if (gubbins_clade.gubbins_mask == false) {
@@ -69,7 +70,8 @@ if (pan == true) {
       input:
         alignment = pirate.pirate_pangenome_alignment_fasta,
         cluster_name = cluster_name,
-        iqtree_model = iqtree_model
+        iqtree_model = iqtree_model,
+        details = "unmasked_pan_"
     }
   }
   call snp_dists.snp_dists as pan_snp_dists {
@@ -105,7 +107,8 @@ if (pan == true) {
         input:
           alignment =ksnp3_clade_core.ksnp3_core_matrix,
           cluster_name = cluster_name,
-          iqtree_model = iqtree_model
+          iqtree_model = iqtree_model,
+          details = "masked_core_"
       }
     }
     if (gubbins_clade.gubbins_mask == false) {
@@ -113,7 +116,8 @@ if (pan == true) {
         input:
           alignment =pirate.pirate_core_alignment_fasta,
           cluster_name = cluster_name,
-          iqtree_model = iqtree_model
+          iqtree_model = iqtree_model,
+          details = "unmasked_core_"
       }
     }
     call snp_dists.snp_dists as core_snp_dists {
