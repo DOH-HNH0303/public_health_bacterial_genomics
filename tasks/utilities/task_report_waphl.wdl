@@ -75,12 +75,12 @@ task cdip_report {
 
              with open(os.path.join(subdir, file)) as lines:
               count = 0
-              print("not first", lines)
+              #print("not first", lines)
               for line in lines:
                 line.replace("\n", "")
                 if count == 0:
 
-                  print("not first, first line", line)
+                  #print("not first, first line", line)
                 else:  
                   line_count = 0
                   line = line.split()
@@ -88,19 +88,19 @@ task cdip_report {
                   allele_row = str(", ".join(line[3:]))
                   row.append(allele_row)
                   hold_df = pd.DataFrame([row], columns=cols)  
-                  print("hold_df", hold_df) 
-                  print("mlst_df before", mlst_df)
+                  #print("hold_df", hold_df) 
+                  #print("mlst_df before", mlst_df)
                   mlst_df = pd.concat([mlst_df, hold_df], axis=0)#.reset_index(drop=True, inplace=True)
-                  print("mlst_df after", mlst_df)
+                  #print("mlst_df after", mlst_df)
                 count += 1
           else:
             with open(os.path.join(subdir, file)) as lines:
               count = 0
-              print("first", lines)
+              #print("first", lines)
               for line in lines:
                 line.replace("\n", "")
                 if count == 0:
-                  print("first line", line)
+                  #print("first line", line)
                   cols = line.split("\t")
                 else:  
                   line_count = 0
@@ -108,10 +108,10 @@ task cdip_report {
                   row = line[:3]
                   allele_row = str(", ".join(line[3:]))
                   row.append(allele_row)
-                  print(row)
+                  #print(row)
                   mlst_df = pd.DataFrame([row], columns=cols)    
                 count += 1
-    print(mlst_df)
+    #print(mlst_df)
     mlst_df.to_csv('file1.tsv', sep="\t")
     df_mlst = mlst_df.copy()
 
@@ -119,34 +119,25 @@ task cdip_report {
     id_list = []
     for i in df_mlst.columns[0]:
       id_list.append(i.split("_"))
-    print(df_mlst)
+
     new_cols = ["Sequence ID", "Sequence Type"]
     mlst_count = 0
     alleles = df_mlst.columns[3]
-    #print(alleles)
+
     new_mlst = []
-    print(range(len(df_mlst[alleles].tolist())))
+    #print(range(len(df_mlst[alleles].tolist())))
     for i in range(len(df_mlst[alleles].tolist())):
-      #print(i, df_mlst[alleles].tolist()[i])
       if i == 0:
-        #print(df_mlst[alleles].tolist()[i])
-        
         test=re.sub("[\(\[].*?[\)\]]", "", df_mlst[alleles].tolist()[i])
-        #new_cols.append(allele)
-        #print("new col", test)
         for allele in test.split(", "):
           new_cols.append(allele)
-      #hold = []
-      #for allele in list(df_mlst[alleles].tolist()[i]):
       hold = []
-        #print("allele", allele)
       for char in df_mlst[alleles].tolist()[i]:
-          #print(char)
           if char.isalpha():
             pass
           else:
-            #print(str(char).split("(")[0].split(")")[0])
             hold.append(str(char).split("(")[0].split(")")[0])
+
       hold = "".join(hold).split(", ")
       hold.insert(0,df_mlst[df_mlst.columns[2]].tolist()[i])
       hold.insert(0, df_mlst[df_mlst.columns[0]].tolist()[i].split("_")[0])
@@ -190,7 +181,9 @@ task cdip_report {
     print("")
     for subdir, dirs, files in os.walk('.'):
       for file in files:
+      print("file", file)
         if subdir == "./roary":
+          print("in roary dir")
           add_image(plots, os.path.join(subdir, file))
     
     add_paragraph(plots, \
@@ -244,7 +237,7 @@ task plot_roary_waphl {
     if  [[ "~{stripped}" != "None" ]]; then   
     mv pangenome_matrix.png ~{cluster_name}_matrix.png
     fi
-
+    ls
   >>>
   output {
     String date = read_string("DATE")
