@@ -79,7 +79,7 @@ task cdip_report {
               for line in lines:
                 line.replace("\n", "")
                 if count == 0:
-
+                  cols = line.split("\t")
                   #print("not first, first line", line)
                 else:  
                   line_count = 0
@@ -183,7 +183,7 @@ task cdip_report {
       for file in files:
       print("file", file)
         if subdir == "./roary":
-          print("in roary dir")
+          print("in roary")
           add_image(plots, os.path.join(subdir, file))
     
     add_paragraph(plots, \
