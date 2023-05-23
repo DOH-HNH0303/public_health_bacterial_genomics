@@ -182,8 +182,8 @@ task cdip_report {
     for subdir, dirs, files in os.walk('.'):
       for file in files:
 
-        print("file", file, subdirs, dir)
-        if subdirs == "./roary":
+        print("file", file, subdir, dir)
+        if subdir == "./roary":
           print("in roary")
           add_image(plots, os.path.join(subdir, file))
     
