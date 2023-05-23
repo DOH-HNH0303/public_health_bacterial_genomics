@@ -43,8 +43,9 @@ task cdip_report {
 
     mv ~{assembly_tsv} assembly.tsv
     mv ~{treefile} file.tree
-    
-    echo "test2" "~{sep=' ' plot_roary}"
+
+    echo "test2" 
+    echo "~{sep=' ' plot_roary}"
     mkdir roary
     for x in ~{sep=' ' plot_roary}
     do
@@ -144,7 +145,7 @@ task cdip_report {
       hold = "".join(hold).split(", ")
       hold.insert(0,df_mlst[df_mlst.columns[2]].tolist()[i])
       hold.insert(0, df_mlst[df_mlst.columns[0]].tolist()[i].split("_")[0])
-      print(hold, type(hold))
+      #print(hold, type(hold))
       new_mlst.append(hold)
       
     df_mlst = pd.DataFrame(new_mlst, columns=new_cols) 
