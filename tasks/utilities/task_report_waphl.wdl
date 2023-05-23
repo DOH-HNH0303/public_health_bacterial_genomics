@@ -43,11 +43,14 @@ task cdip_report {
 
     mv ~{assembly_tsv} assembly.tsv
     mv ~{treefile} file.tree
+    
     echo "test2" "~{sep=' ' plot_roary}"
     mkdir roary
     for x in ~{sep=' ' plot_roary}
     do
+        echo  "${x}"
         mv "${x}" roary
+        echo  "second ${x}"
     done;
 
     # cat /epi_reports/seq_report_generator.py
