@@ -8,6 +8,8 @@ task cdip_report {
     Array[File]? phylo_zip
     Array[File]? plot_roary
     File treefile
+    String author
+    String project_name = ""
     String cluster_name
     String docker = "hnh0303/seq_report_generator:1.0"
     Int threads = 6 
@@ -67,6 +69,7 @@ task cdip_report {
     import sys
     import os
     import re
+    import datetime
     sys.path.append('/epi_reports')
     from seq_report_generator import add_dendrogram_as_pdf, add_page_header, add_section_header, add_paragraph, add_table, combine_similar_columns, create_dt_col, create_dummy_data, join_pdfs, remove_nan_from_list, unique, new_pdf, add_image
 
@@ -170,7 +173,12 @@ task cdip_report {
     data = df_genes.copy()
     pdf_report = new_pdf()
     add_page_header(pdf_report, "Corynebacterium Sequencing Report")
-    add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
+    formatted_date = datetime.date.strftime(current_day, "%m-%d-%Y")
+    header_table = pd.DataFrame([formatted_date, "~{project_name}", "author"], columns=["Date", "Project Name", "Prepared By"]) 
+    add_table(pdf_report, df_genes)
+    pdf_report.ln()
+    #add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
+    
     add_section_header(pdf_report, "General Sequencing Results")
     add_table(pdf_report, df_genes)
     
@@ -186,7 +194,7 @@ task cdip_report {
     for subdir, dirs, files in os.walk('.'):
       for file in files:
 
-        print("file", file, subdir, dir)
+        #print("file", file, subdir, dir)
         if subdir == "./roary":
           print("in roary")
           add_image(plots, os.path.join(subdir, file))
@@ -196,6 +204,15 @@ task cdip_report {
     2.* Recombination is unique and is the only one on the gene in dataset\n\
     3.* Multiple recombination events on gene\n\
     4.* Recombination is NOT terminal and is the only recombination event on gene in dataset")
+
+    plots.ln()
+    add_section_header(plots, "Disclaimer")
+    add_paragraph(plots,"The information included in this report may be used to support \
+    infection prevention measures.  This report should not be used as a substitute for \
+    diagnostic procedures, used to guide clinical decisions, for clinical use, nor \
+    should it be included in patient records.  The performance characteristics of this \
+    test were determined by the Washington State Public Health Laboratories.  \
+    It has not been cleared or approved by the U.S. Food and Drug Administration.", italic=False) 
 
     plots.output("~{cluster_name}"+'_plots.pdf', 'F')
     join_pdfs(["~{cluster_name}_temp_report.pdf", "~{cluster_name}_tree.pdf", "~{cluster_name}_plots.pdf"], "~{cluster_name}_report.pdf")
