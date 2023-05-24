@@ -173,6 +173,7 @@ task cdip_report {
     data = df_genes.copy()
     pdf_report = new_pdf()
     add_page_header(pdf_report, "Corynebacterium Sequencing Report")
+    current_day = datetime.date.today()
     formatted_date = datetime.date.strftime(current_day, "%m-%d-%Y")
     header_table = pd.DataFrame([formatted_date, "~{project_name}", "author"], columns=["Date", "Project Name", "Prepared By"]) 
     add_table(pdf_report, df_genes)
