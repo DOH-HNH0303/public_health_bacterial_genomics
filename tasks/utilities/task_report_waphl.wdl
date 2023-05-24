@@ -176,7 +176,7 @@ task cdip_report {
     current_day = datetime.date.today()
     formatted_date = datetime.date.strftime(current_day, "%m-%d-%Y")
     print("before")
-    header_table = pd.DataFrame([[formatted_date], ["~{project_name}"], ["~{author}"]] columns=["Date", "Project Name", "Prepared By"]) 
+    header_table = pd.DataFrame([[formatted_date], ["~{project_name}"], ["~{author}"]], columns=["Date", "Project Name", "Prepared By"]) 
     print("after")
     print(header_table)
     add_table(pdf_report, df_genes)
