@@ -179,7 +179,7 @@ task cdip_report {
     header_table = pd.DataFrame([[formatted_date, "~{project_name}", "~{author}"]], columns=["Date", "Project Name", "Prepared By"]) 
     print("after")
     print(header_table)
-    add_table(pdf_report, df_genes)
+    add_table(pdf_report, header_table)
     pdf_report.ln()
     #add_paragraph(pdf_report, text = "Are you going to want general outbreak info here? You have the option to pass me a text file to add here as a description")
     
@@ -210,6 +210,9 @@ task cdip_report {
     4.* Recombination is NOT terminal and is the only recombination event on gene in dataset")
 
     plots.ln()
+    plots.ln()
+    plots.ln()
+
     add_section_header(plots, "Disclaimer")
     add_paragraph(plots,"The information included in this report may be used to support \
     infection prevention measures.  This report should not be used as a substitute for \
