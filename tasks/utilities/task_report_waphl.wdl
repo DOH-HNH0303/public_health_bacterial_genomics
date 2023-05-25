@@ -204,7 +204,7 @@ task cdip_report {
           add_image(plots, os.path.join(subdir, file))
     
     add_paragraph(plots, \
-    "1.* Recombination evens were not predicted in present gene\n\
+    "1.* Recombination events were not predicted in present gene\n\
     2.* Recombination is unique and is the only one on the gene in dataset\n\
     3.* Multiple recombination events on gene\n\
     4.* Recombination is NOT terminal and is the only recombination event on gene in dataset")
