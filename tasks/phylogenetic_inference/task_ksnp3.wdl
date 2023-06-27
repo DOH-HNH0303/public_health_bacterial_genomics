@@ -25,6 +25,8 @@ task ksnp3 {
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
 
+  cat ksnp3_input.tsv
+
   # Ensure assembly, and samplename arrays are of equal length
   if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
     echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
